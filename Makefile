@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/10 16:38:03 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/10 17:23:49 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,13 @@
 
 # 📛 Nom du programme
 NAME := minishell
+LIB_NAME := libft
 
 # 📂 Répertoires
 SRCS_DIR := srcs/
 BUILD_DIR := build/
-INCLUDE_DIRS := -Iincludes
+LIB_DIR := $(LIB_NAME)/
+INCLUDE_DIRS := -I$(LIB_DIR)includes -Iincludes
 
 # 📦 Compiler & Flags
 CC := cc
@@ -32,11 +34,15 @@ RM := rm -rf
 
 # 📁 Sources & Objets
 SRCS := $(addprefix $(SRCS_DIR), \
+		signals/signals.c \
 		main.c \
 )
 OBJS := $(patsubst %.c, $(BUILD_DIR)%.o, $(SRCS))
 
 DEPS := $(OBJS:.o=.d)
+
+# 📚 Libft
+LIB_FILE := $(LIB_DIR)libft.a
 
 # ============================================================================== #
 #                               RULES - BUILD FLOW                               #
@@ -47,12 +53,12 @@ all: $(NAME)
 
 # 🧱 Construction de l'exécutable
 $(NAME): $(BUILD_DIR) $(LIB_FILE) $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(INCLUDE_DIRS) -pthread
+	$(CC) $(CFLAGS) -o $(NAME) $(LIB_FILE) $(OBJS) $(INCLUDE_DIRS) -lreadline -lft -L$(LIB_DIR)
 
 # 🔨 Compilation des .c vers .o
 $(BUILD_DIR)%.o: %.c
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -g -MMD $(INCLUDE_DIRS) -c $< -o $@ -pthread
+	$(CC) $(CFLAGS) -g -MMD $(INCLUDE_DIRS) -c $< -o $@
 
 
 # ============================================================================== #
@@ -62,6 +68,11 @@ $(BUILD_DIR)%.o: %.c
 # 📁 Création du dossier de build
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
+
+# 📚 Build libft.a
+$(LIB_FILE): $(LIB_DIR)
+	$(MAKE) -sC $(LIB_DIR)
+
 
 # ============================================================================== #
 #                                   CLEAN RULES                                  #

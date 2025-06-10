@@ -3,6 +3,8 @@
         "readline.h": "c",
         "dirent.h": "c",
         "minishell.h": "c",
-        "history.h": "c"
+        "history.h": "c",
+        "signal.h": "c",
+        "unistd.h": "c"
     }
 }

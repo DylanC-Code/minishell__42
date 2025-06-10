@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 14:54:21 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/10 17:24:45 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/10 17:22:18 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/10 17:24:56 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char const *argv[])
+void	sigs_handler(int signal)
 {
-	(void)argc;
-	(void)argv;
-	init_signals();
-	while (1)
-	{
-		readline(USER_PROMPT);
-	}
-	return (0);
+	if (signal == SIGQUIT)
+		return ;
+}
+
+void	handle_SIGQUIT(void)
+{
+	struct sigaction	act;
+	struct sigaction	old_act;
+
+	ft_bzero(&act, sizeof(struct sigaction));
+	act.sa_handler = &sigs_handler;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+	sigaction(SIGQUIT, NULL, &old_act); // Todo: check returns
+}
+
+void	init_signals(void)
+{
+	handle_SIGQUIT();
 }
