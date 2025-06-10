@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 14:54:21 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/10 16:49:02 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/10 16:47:00 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-void	init_signals(void)
-{
-}
+# include <dirent.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <stdio.h>
+# include <sys/types.h>
+# include <unistd.h>
 
-int	main(int argc, char const *argv[])
-{
-	init_signals();
-	while (1)
-	{
-		readline(USER_PROMPT);
-	}
-	return (0);
-}
+# define USER_PROMPT "minishell>"
+
+#endif
