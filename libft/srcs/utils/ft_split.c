@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 11:09:04 by dcastor           #+#    #+#             */
-/*   Updated: 2025/05/26 10:35:56 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/12 12:44:36 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,20 @@ static size_t	word_len(char *str, char delimiter)
 	return (i);
 }
 
-static char	*ft_strndup(char *s, size_t n)
-{
-	size_t	i;
-	char	*res;
+// static char	*ft_strndup(char *s, size_t n)
+// {
+// 	size_t	i;
+// 	char	*res;
 
-	i = -1;
-	res = malloc(n + 1);
-	if (res == NULL)
-		return (NULL);
-	while (++i < n)
-		res[i] = s[i];
-	res[i] = '\0';
-	return (res);
-}
+// 	i = -1;
+// 	res = malloc(n + 1);
+// 	if (res == NULL)
+// 		return (NULL);
+// 	while (++i < n)
+// 		res[i] = s[i];
+// 	res[i] = '\0';
+// 	return (res);
+// }
 
 static void	free_strs(char **strs)
 {
