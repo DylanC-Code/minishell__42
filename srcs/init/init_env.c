@@ -6,11 +6,13 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 09:42:38 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/12 12:43:09 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/12 15:39:48 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	add_env_back(t_env **env_list, t_env *new_env);
 
 void	init_env(t_app *app, char *envp[])
 {
@@ -29,9 +31,22 @@ void	init_env(t_app *app, char *envp[])
 		if (!new_env->value)
 			exit_with_error("malloc", &app->garb_head);
 		add_to_gc(&app->garb_head, new_env->value);
-		printf("%s\n", new_env->key);
+		add_env_back(&app->env_head, new_env);
 		envp++;
 	}
 }
 
-// static void	add_env_back(t_env **env_list, char)
+static void	add_env_back(t_env **env_list, t_env *new_env)
+{
+	t_env	*next;
+
+	if (!*env_list)
+	{
+		*env_list = new_env;
+		return ;
+	}
+	next = *env_list;
+	while (next->next)
+		next = next->next;
+	next->next = new_env;
+}
