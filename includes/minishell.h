@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/12 12:41:31 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/12 15:33:52 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ typedef struct s_app
 	t_env				*env_head;
 	t_garbage			*garb_head;
 }						t_app;
+
+/* Builtins */
+void					builtin_env(t_app *app);
 
 /* Init */
 void					init(t_app *app, char *envp[]);
