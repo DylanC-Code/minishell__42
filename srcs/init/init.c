@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 10:39:45 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/12 11:37:35 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/12 11:48:32 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ void	init(t_app *app, char *envp[])
 {
 	(void)envp;
 	ft_bzero(app, sizeof(t_app));
-	// init_env(app, envp);
+	init_env(app, envp);
 	// init_signals();
 }

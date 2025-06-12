@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 10:13:03 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/12 11:35:02 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/12 12:00:20 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	*gc_malloc(size_t size, t_garbage **garbage_list)
 
 	new_gb = ft_calloc(1, sizeof(t_garbage));
 	if (!new_gb)
-		return (NULL);
+		exit_with_error("gc_malloc", garbage_list);
 	alloc = malloc(size);
 	if (!alloc)
-		return (free(new_gb), NULL);
+		(free(new_gb), exit_with_error("gc_malloc", garbage_list));
 	new_gb->alloc = alloc;
 	add_gb_to_back(garbage_list, new_gb);
 	return (alloc);

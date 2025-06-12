@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/12 10:47:03 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/12 11:58:40 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,9 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		memory/garbage.c \
 		\
 		signals/signals.c \
+		\
+		utils/error.c \
+		\
 		main.c \
 )
 OBJS := $(patsubst %.c, $(BUILD_DIR)%.o, $(SRCS))

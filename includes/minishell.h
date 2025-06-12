@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/12 11:29:58 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/12 11:58:21 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,8 @@ void					init_signals(void);
 /* Memory */
 void					*gc_malloc(size_t size, t_garbage **garbage_list);
 void					gc_cleanup(t_garbage **garbage_list);
+
+/* Utils */
+void					exit_with_error(char *msg, t_garbage **garbage_list);
 
 #endif
