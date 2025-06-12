@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/10 17:23:49 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/12 10:47:03 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,11 @@ RM := rm -rf
 
 # 📁 Sources & Objets
 SRCS := $(addprefix $(SRCS_DIR), \
+		init/init_env.c \
+		init/init.c \
+		\
+		memory/garbage.c \
+		\
 		signals/signals.c \
 		main.c \
 )
