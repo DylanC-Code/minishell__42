@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 15:17:34 by dcastor           #+#    #+#             */
-/*   Updated: 2025/05/28 12:44:16 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/13 13:30:48 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "libft.h"
 # include <stdlib.h>
-
-# define NEW_LINE '\n'
 
 typedef struct s_fd_node
 {

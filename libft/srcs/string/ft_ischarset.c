@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate.h                                         :+:      :+:    :+:   */
+/*   ft_ischarset.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 16:50:39 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/13 10:59:35 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/13 11:46:33 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/13 11:46:46 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VALIDATE_H
-# define VALIDATE_H
+#include "libft.h"
 
-# include "libft.h"
+int	ft_ischarset(char c, const char *set)
+{
+	size_t	i;
 
-int	is_valid_number(char *str);
-int	ft_isalpha(int c);
-int	ft_isdigit(int c);
-int	ft_isalnum(int c);
-int	ft_isascii(int c);
-int	ft_isprint(int c);
-int	ft_isspace(char c);
-
-#endif
+	i = -1;
+	while (set[++i])
+		if (c == set[i])
+			return (TRUE);
+	return (FALSE);
+}

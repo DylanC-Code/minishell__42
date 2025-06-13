@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:05:53 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/12 12:29:23 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/13 11:47:01 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		ft_ends_with(char *str, char *pattern);
 void	ft_free_strs(char **strs);
 int		ft_starts_with(char *str, char *pattern);
 char	*ft_str_contains_any(char *str, char *set);
+int		ft_ischarset(char c, const char *set);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t siz);
 size_t	ft_strlcat(char *dst, const char *src, size_t siz);
