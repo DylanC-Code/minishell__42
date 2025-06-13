@@ -65,7 +65,7 @@ typedef struct s_cmd_sequence
 
 } 					t_cmd_sequence;
 
-t_cmd *cmd_builder(void);
+t_cmd *cmd_builder(t_token *token);
 t_cmd_sequence *sequence_builder(void);
 t_cmd_sequence *parse_tokens(t_token *head);
 void display_seq(t_cmd_sequence *seq_head);

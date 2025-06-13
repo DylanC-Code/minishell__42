@@ -22,12 +22,12 @@ t_cmd_sequence *parse_tokens(t_token *head)
 	t_token *token;
 
 	seq_head = sequence_builder();
-	cmd_head = cmd_builder();
+	cmd_head = cmd_builder(head);
 	curr_seq = seq_head;
 	curr_seq->cmds = cmd_head;
+	token = head;
 
 	arg_count = 0;
-	token = head;
 
 	while (token)
 	{
@@ -39,7 +39,7 @@ t_cmd_sequence *parse_tokens(t_token *head)
 		else if (token->type == PIPE)
 		{
 			cmd_head->args[arg_count] = NULL;
-			cmd_head->next = cmd_builder();
+			cmd_head->next = cmd_builder(token->next);
 			cmd_head = cmd_head->next;
 			arg_count = 0;
 		}
@@ -82,7 +82,7 @@ t_cmd_sequence *parse_tokens(t_token *head)
 				curr_seq->logical_op = LOGICAL_OR;
 			curr_seq->next = sequence_builder();
 			curr_seq = curr_seq->next;
-			cmd_head = cmd_builder();
+			cmd_head = cmd_builder(token->next);
 			curr_seq->cmds = cmd_head;
 			arg_count = 0;
 		}
