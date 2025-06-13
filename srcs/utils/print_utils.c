@@ -35,10 +35,8 @@ char	*token_to_str(t_token_type type)
 
 void	display_tokens(t_token *head, char *input)
 {
-	int		i;
 	t_token	*lst;
 
-	i = 0;
 	lst = head;
 	printf("initial command -> %s\n", input);
 	while (lst)
