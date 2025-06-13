@@ -41,6 +41,8 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		init/init.c \
 		\
 		input/tokenizer.c \
+		input/parse_tokens.c \
+		input/parse_helpers.c \
 		\
 		memory/garbage.c \
 		\

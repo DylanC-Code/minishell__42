@@ -17,7 +17,7 @@ int	main(int argc, char const *argv[], char *envp[])
 	t_app	app;
 	char	*line;
 	t_token	*token_head;
-
+	t_cmd_sequence *seq_head;
 	(void)argc;
 	(void)argv;
 	init(&app, envp);
@@ -25,7 +25,9 @@ int	main(int argc, char const *argv[], char *envp[])
 	{
 		line = readline(USER_PROMPT);
 		token_head = tokenizer(&app, line);
-		display_tokens(token_head, line);
+		//display_tokens(token_head, line);
+		seq_head = parse_tokens(token_head);
+		display_seq(seq_head);
 	}
 	return (0);
 }

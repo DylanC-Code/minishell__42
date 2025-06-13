@@ -19,7 +19,9 @@ t_cmd *cmd_builder(void)
 	cmd = malloc(sizeof(t_cmd));
 	if(!cmd)
 		return NULL;
-	cmd->args = 0;
+	cmd->args = malloc(sizeof(char *) * 30);
+	if(!cmd->args)
+		return NULL;
 	cmd->input_file = NULL;
 	cmd->output_file = NULL;
 	cmd->append_output = -1;
@@ -41,3 +43,4 @@ t_cmd_sequence *sequence_builder(void)
 
 	return seq;
 }
+

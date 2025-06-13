@@ -13,8 +13,6 @@
 #ifndef INPUT_H
 # define INPUT_H
 
-t_cmd *cmd_builder(void);
-t_cmd_sequence *sequence_builder(void);
 
 typedef enum e_token_type
 {
@@ -57,17 +55,19 @@ typedef struct s_cmd
 /*
 	t_cmd represente une ou plusieurs commandes delimitées par un ou plusieurs pipes
 	t_cmd_sequence represente tous les commandes séparés par un operateur logique
-
-
 */
 
 typedef struct s_cmd_sequence
 {
-	t_cmd			*cmds; // commandes dans la séquence 
-	int				logical_op; // operateur logique (facile de verifier la valeur de retour et savoir si on execute la prochaine sequence)
-	t_cmd_sequence	*next; // prochaine sequence de commandes 
+	t_cmd					*cmds; // commandes dans la séquence 
+	int						logical_op; // operateur logique (facile de verifier la valeur de retour et savoir si on execute la prochaine sequence)
+	struct	s_cmd_sequence	*next; // prochaine sequence de commandes 
 
 } 					t_cmd_sequence;
 
+t_cmd *cmd_builder(void);
+t_cmd_sequence *sequence_builder(void);
+t_cmd_sequence *parse_tokens(t_token *head);
+void display_seq(t_cmd_sequence *seq_head);
 
 #endif
