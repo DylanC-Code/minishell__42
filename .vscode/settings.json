@@ -18,6 +18,7 @@
         "libft.h": "c",
         "types.h": "c",
         "input.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "memory.h": "c"
     }
 }

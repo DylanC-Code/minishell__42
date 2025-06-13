@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/17 12:34:12 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/17 15:08:06 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,8 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		input/validator/check_command_status.c \
 		\
 		input/read_command.c \
+		input/parse_tokens.c \
+		input/parse_helpers.c \
 		\
 		memory/garbage.c \
 		\
