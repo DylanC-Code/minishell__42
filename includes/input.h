@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 14:54:21 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/13 14:25:52 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/13 14:10:59 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef INPUT_H
+# define INPUT_H
 
-int	main(int argc, char const *argv[], char *envp[])
+typedef enum e_token_type
 {
-	t_app	app;
-	char	*line;
-	t_token	*token_head;
+	WORD,
+	OR,
+	AND,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	REDIR_HEREDOC,
+	OPEN_PARENTHESE,
+	CLOSE_PARENTHESE,
+	IO_NUMBER,
+	NEW_LINE,
+}					t_token_type;
 
-	(void)argc;
-	(void)argv;
-	init(&app, envp);
-	while (1)
-	{
-		line = readline(USER_PROMPT);
-		token_head = tokenizer(&app, line);
-		display_tokens(token_head, line);
-	}
-	return (0);
-}
+typedef struct s_token
+{
+	t_token_type	type;
+	char			*value;
+	struct s_token	*next;
+}					t_token;
+
+#endif

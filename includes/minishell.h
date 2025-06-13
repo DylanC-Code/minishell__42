@@ -6,13 +6,14 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/12 15:59:55 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/13 14:26:06 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "input.h"
 # include "libft.h"
 # include <dirent.h>
 # include <readline/history.h>
@@ -53,6 +54,9 @@ void					init(t_app *app, char *envp[]);
 void					init_env(t_app *app, char *envp[]);
 void					init_signals(void);
 
+/* Input */
+t_token					*tokenizer(t_app *app, char *line);
+
 /* Memory */
 void					*gc_malloc(size_t size, t_garbage **garbage_list);
 void					add_to_gc(t_garbage **garbage_list, void *alloc);
@@ -60,5 +64,6 @@ void					gc_cleanup(t_garbage **garbage_list);
 
 /* Utils */
 void					exit_with_error(char *msg, t_garbage **garbage_list);
+void					display_tokens(t_token *head, char *input);
 
 #endif

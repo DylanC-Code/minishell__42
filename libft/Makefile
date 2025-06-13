@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 16:35:34 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/12 12:29:05 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/13 11:47:53 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRCS = $(addprefix $(SRCS_DIR), \
 	string/ft_strlcpy.c \
 	string/ft_strlcat.c \
 	string/ft_strchr.c \
+	string/ft_ischarset.c \
 	string/ft_strrchr.c \
 	string/ft_strncmp.c \
 	string/ft_strcmp.c \
@@ -99,6 +100,7 @@ SRCS = $(addprefix $(SRCS_DIR), \
 	validate/ft_isalnum.c \
 	validate/ft_isascii.c \
 	validate/ft_isprint.c \
+	validate/ft_isspace.c \
 	validate/is_valid_number.c \
 )
 

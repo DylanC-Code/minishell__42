@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/12 16:00:28 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/13 13:29:17 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,11 +40,14 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		init/init_env.c \
 		init/init.c \
 		\
+		input/tokenizer.c \
+		\
 		memory/garbage.c \
 		\
 		signals/signals.c \
 		\
 		utils/error.c \
+		utils/print_utils.c \
 		\
 		main.c \
 )
