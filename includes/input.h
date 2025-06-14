@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 13:53:54 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:06:01 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 typedef enum e_token_type
 {
-	TOKEN_WORD,
+	TOKEN_WORD = 1,
 	TOKEN_OR,
 	TOKEN_AND,
 	TOKEN_PIPE,
@@ -44,7 +44,8 @@ typedef struct s_token
 /* ******* Syntax ******* */
 /* ********************** */
 
-bool				is_valid_syntax(t_token *head_token);
+bool				check_syntax(t_token *head_token);
+bool				syntax_handle_redirection(t_token **token_list);
 
 /* ************************* */
 /* ******* Tokenizer ******* */
