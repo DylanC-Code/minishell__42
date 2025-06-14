@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax.c                                           :+:      :+:    :+:   */
+/*   syntax_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/14 13:45:57 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 15:41:36 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/14 15:16:36 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/14 15:40:56 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	check_syntax(t_token *head_token)
+t_status	syntax_handle_command(t_token **token_list)
 {
-	while (head_token && head_token->type != TOKEN_EOF)
-	{
-		if (!syntax_handle_redirection(&head_token))
-			return (false);
-		if (!syntax_handle_command(&head_token))
-			return (false);
-		break ;
-	}
-	return (true);
+	t_token	*token;
+
+	token = *token_list;
+	if (token->type != TOKEN_WORD)
+		return (NOOP);
+	token = token->next;
+	while (token->type == TOKEN_WORD)
+		token = token->next;
+	while (is_redirection(token))
+		if (!syntax_check_redirection_sequence(&token))
+			return (ERROR);
+	*token_list = token;
+	return (SUCCESS);
 }

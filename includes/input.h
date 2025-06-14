@@ -6,13 +6,14 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 15:06:01 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:39:35 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INPUT_H
 # define INPUT_H
 
+# include "libft.h"
 # include "memory.h"
 # include <stdbool.h>
 
@@ -45,7 +46,14 @@ typedef struct s_token
 /* ********************** */
 
 bool				check_syntax(t_token *head_token);
-bool				syntax_handle_redirection(t_token **token_list);
+
+/* ~ Command ~ */
+t_status			syntax_handle_command(t_token **token_list);
+
+/* ~ Redirection ~ */
+t_status			syntax_handle_redirection(t_token **token_list);
+bool				syntax_check_redirection_sequence(t_token **token_list);
+bool				is_redirection(t_token *token);
 
 /* ************************* */
 /* ******* Tokenizer ******* */
