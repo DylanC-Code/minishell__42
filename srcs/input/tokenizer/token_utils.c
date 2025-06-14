@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 14:54:21 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 10:42:35 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/14 10:27:08 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/14 10:28:44 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/* =============== Importation =============== */
+
 #include "minishell.h"
 
-int	main(int argc, char const *argv[], char *envp[])
-{
-	t_app		app;
-	char		*line;
-	t_token		*token_head;
-	t_garbage	*gc_current_cmd_line;
+/* =============== Declaration =============== */
 
-	(void)argc;
-	(void)argv;
-	init(&app, envp);
-	gc_current_cmd_line = NULL;
-	while (1)
+void	add_token_back(t_token **token_list, t_token *new_token);
+
+/* =============== Definition ================ */
+
+void	add_token_back(t_token **token_list, t_token *new_token)
+{
+	t_token	*next;
+
+	if (!*token_list)
 	{
-		line = readline(USER_PROMPT);
-		token_head = tokenizer(line, &gc_current_cmd_line);
-		display_tokens(token_head, line);
+		*token_list = new_token;
+		return ;
 	}
-	return (0);
+	next = *token_list;
+	while (next->next)
+		next = next->next;
+	next->next = new_token;
 }

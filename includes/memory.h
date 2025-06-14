@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   memory.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 14:54:21 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 10:42:35 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/14 10:39:04 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/14 10:40:02 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MEMORY_H
+# define MEMORY_H
 
-int	main(int argc, char const *argv[], char *envp[])
+# include <sys/types.h>
+
+typedef struct s_garbage
 {
-	t_app		app;
-	char		*line;
-	t_token		*token_head;
-	t_garbage	*gc_current_cmd_line;
+	void				*alloc;
+	struct s_garbage	*next;
+}						t_garbage;
 
-	(void)argc;
-	(void)argv;
-	init(&app, envp);
-	gc_current_cmd_line = NULL;
-	while (1)
-	{
-		line = readline(USER_PROMPT);
-		token_head = tokenizer(line, &gc_current_cmd_line);
-		display_tokens(token_head, line);
-	}
-	return (0);
-}
+void					*gc_malloc(size_t size, t_garbage **garbage_list);
+void					add_to_gc(t_garbage **garbage_list, void *alloc);
+void					gc_cleanup(t_garbage **garbage_list);
+
+#endif
