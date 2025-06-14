@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/14 11:54:25 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/14 13:51:57 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,8 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		input/tokenizer/token_utils.c \
 		input/tokenizer/token_word.c \
 		input/tokenizer/tokenizer.c \
+		\
+		input/syntax/syntax_checker.c \
 		\
 		memory/garbage.c \
 		\

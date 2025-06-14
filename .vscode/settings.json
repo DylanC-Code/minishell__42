@@ -17,6 +17,7 @@
         "utility": "c",
         "libft.h": "c",
         "types.h": "c",
-        "input.h": "c"
+        "input.h": "c",
+        "stdbool.h": "c"
     }
 }
