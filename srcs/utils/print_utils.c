@@ -75,7 +75,7 @@ void	display_seq(t_cmd_sequence *seq_head)
 				i = 0;
 				while (current_cmd->args[i])
 				{
-					printf("%s ", current_cmd->args[i]);
+					printf("[%d]%s ", i, current_cmd->args[i]);
 					i++;
 				}
 			}
