@@ -32,6 +32,8 @@ size_t	count_words(t_token *start_token)
 
 	current = start_token;
 	arg_count = 0;
+	if(current->type == OPEN_PARENTHESE)
+		current = current->next;
 	while (current)
 	{
 		if (is_command_delimiter(current->type))
