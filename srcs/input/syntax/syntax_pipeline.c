@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax.c                                           :+:      :+:    :+:   */
+/*   syntax_pipeline.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/14 13:45:57 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 16:41:59 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/14 16:06:39 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/14 17:05:50 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	check_syntax(t_token *head_token)
+t_status	syntax_handle_pipeline(t_token **token_list)
 {
-	while (head_token && head_token->type != TOKEN_EOF)
-	{
-		// if (!syntax_handle_redirection(&head_token))
-		// 	return (false);
-		if (!syntax_handle_command(&head_token))
-			return (false);
-		break ;
-	}
-	return (true);
+	// if (hand
 }

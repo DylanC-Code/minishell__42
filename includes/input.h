@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 15:39:35 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/14 16:17:45 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ t_status			syntax_handle_command(t_token **token_list);
 t_status			syntax_handle_redirection(t_token **token_list);
 bool				syntax_check_redirection_sequence(t_token **token_list);
 bool				is_redirection(t_token *token);
+
+/* ~ Subshell ~ */
+t_status			syntax_handle_subshell(t_token **token_list);
 
 /* ************************* */
 /* ******* Tokenizer ******* */

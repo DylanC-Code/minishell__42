@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:25:19 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 12:11:54 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/14 16:16:44 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	handle_new_line_token(t_token *token)
 }
 
 void	handle_io_number_token(t_token *token, char io_number)
+// TODO: must handle DIGIT+
 {
 	token->type = TOKEN_IO_NUMBER;
 	token->value = ft_strndup(&io_number, 1);
