@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:35:47 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 10:35:57 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/14 12:14:12 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,23 @@ t_token	*tokenizer(char *line, t_garbage **gb_list);
 
 t_token	*tokenizer(char *line, t_garbage **gb_list)
 {
-	t_token *head_token;
-	t_token *new_token;
-	size_t i;
+	t_token	*head_token;
+	t_token	*new_token;
+	size_t	i;
 
 	i = -1;
 	head_token = NULL;
-	while (line && line[++i])
+	while (line)
 	{
-		if (ft_isspace(line[i]))
+		if (ft_isspace(line[++i]))
 			continue ;
-		new_token = get_token(line + i, gb_list);
+		new_token = get_token(&line[i], gb_list);
 		if (!new_token)
 			return (NULL);
 		add_token_back(&head_token, new_token);
 		i += ft_strlen(new_token->value) - 1;
+		if (new_token->type == TOKEN_EOF)
+			break ;
 	}
 	return (head_token);
 }

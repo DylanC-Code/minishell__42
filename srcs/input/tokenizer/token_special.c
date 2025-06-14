@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_value.c                                      :+:      :+:    :+:   */
+/*   token_special.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:25:19 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 10:29:38 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/14 12:11:54 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,41 +16,26 @@
 
 /* =============== Declaration =============== */
 
-char	*get_word(char *str);
-char	*get_value_between(char *str, char quote_delimiter);
-char	*get_operator(char *str);
+void	handle_new_line_token(t_token *token);
+void	handle_operator_token(t_token *token, char *str);
+void	handle_io_number_token(t_token *token, char io_number);
 
 /* =============== Definition ================ */
 
-char	*get_word(char *str)
+void	handle_new_line_token(t_token *token)
 {
-	size_t	i;
-
-	i = -1;
-	while (str[++i])
-		if (ft_ischarset(str[i], OPERATORS) || ft_isspace(str[i]))
-			break ;
-	return (ft_strndup(str, i));
+	token->type = TOKEN_NEW_LINE;
+	token->value = ft_strdup("\n");
 }
 
-char	*get_value_between(char *str, char quote_delimiter)
+void	handle_io_number_token(t_token *token, char io_number)
 {
-	size_t	i;
-
-	i = 0;
-	while (str[++i])
-	{
-		if (str[i] != quote_delimiter)
-			continue ;
-		if (str[i - 1] != '\\')
-			break ;
-	}
-	return (ft_strndup(str, i + 1));
+	token->type = TOKEN_IO_NUMBER;
+	token->value = ft_strndup(&io_number, 1);
 }
 
-char	*get_operator(char *str)
+void	handle_eof_token(t_token *token)
 {
-	if (str[0] != str[1])
-		return (ft_strndup(str, 1));
-	return (ft_strndup(str, 2));
+	token->type = TOKEN_EOF;
+	token->value = ft_strdup("");
 }

@@ -4,30 +4,32 @@ char	*token_to_str(t_token_type type)
 {
 	switch (type)
 	{
-	case WORD:
+	case TOKEN_WORD:
 		return ("WORD");
-	case OR:
+	case TOKEN_OR:
 		return ("OR");
-	case AND:
+	case TOKEN_AND:
 		return ("AND");
-	case PIPE:
+	case TOKEN_PIPE:
 		return ("PIPE");
-	case REDIR_IN:
+	case TOKEN_REDIR_IN:
 		return ("REDIR_IN");
-	case REDIR_OUT:
+	case TOKEN_REDIR_OUT:
 		return ("REDIR_OUT");
-	case REDIR_APPEND:
+	case TOKEN_REDIR_APPEND:
 		return ("REDIR_APPEND");
-	case REDIR_HEREDOC:
+	case TOKEN_REDIR_HEREDOC:
 		return ("REDIR_APPEND");
-	case OPEN_PARENTHESE:
+	case TOKEN_OPEN_PARENTHESE:
 		return ("OPEN_PARENTHESE");
-	case CLOSE_PARENTHESE:
+	case TOKEN_CLOSE_PARENTHESE:
 		return ("CLOSE_PARENTHESE");
-	case IO_NUMBER:
+	case TOKEN_IO_NUMBER:
 		return ("IO_NUMBER");
-	case NEW_LINE:
+	case TOKEN_NEW_LINE:
 		return ("NEW_LINE");
+	case TOKEN_EOF:
+		return ("EOF");
 	default:
 		return ("UNKNOWN TOKEN");
 	}

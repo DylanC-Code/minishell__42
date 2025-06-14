@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 10:40:47 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/14 12:12:17 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,19 @@
 
 typedef enum e_token_type
 {
-	WORD,
-	OR,
-	AND,
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	REDIR_APPEND,
-	REDIR_HEREDOC,
-	OPEN_PARENTHESE,
-	CLOSE_PARENTHESE,
-	IO_NUMBER,
-	NEW_LINE,
+	TOKEN_WORD,
+	TOKEN_OR,
+	TOKEN_AND,
+	TOKEN_PIPE,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
+	TOKEN_REDIR_APPEND,
+	TOKEN_REDIR_HEREDOC,
+	TOKEN_OPEN_PARENTHESE,
+	TOKEN_CLOSE_PARENTHESE,
+	TOKEN_IO_NUMBER,
+	TOKEN_NEW_LINE,
+	TOKEN_EOF,
 }					t_token_type;
 
 typedef struct s_token
@@ -43,11 +44,17 @@ typedef struct s_token
 /* ************************* */
 
 t_token				*get_token(char *str, t_garbage **gb_list);
-t_token_type		get_token_type(char *token_value);
+t_token_type		get_operator_token_type(char *token_value);
 
-char				*get_word(char *str);
-char				*get_value_between(char *str, char quote_delimiter);
-char				*get_operator(char *str);
+/* ~~~ Factory ~~~ */
+
+void				handle_word_token(t_token *token, char *str);
+void				handle_single_quote_token(t_token *token, char *str);
+void				handle_double_quote_token(t_token *token, char *str);
+void				handle_operator_token(t_token *token, char *str);
+void				handle_new_line_token(t_token *token);
+void				handle_io_number_token(t_token *token, char io_number);
+void				handle_eof_token(t_token *token);
 
 void				add_token_back(t_token **token_list, t_token *new_token);
 
