@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:54:21 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 09:28:41 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/15 09:37:58 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	main(int argc, char const *argv[], char *envp[])
 		line = readline(USER_PROMPT);
 		token_head = tokenizer(line, &gc_current_cmd_line);
 		display_tokens(token_head, line);
-		// if (check_syntax(token_head))
-		// 	printf("VALID SYNTAX ✅\n");
-		// else
-		// 	printf("INVALID SYNTAX ❌\n");
+		if (check_syntax(token_head))
+			printf("VALID SYNTAX ✅\n");
+		else
+			printf("INVALID SYNTAX ❌\n");
 	}
 	return (0);
 }
