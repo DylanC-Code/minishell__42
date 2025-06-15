@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 15:26:59 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/15 15:44:41 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ t_status			syntax_handle_redirection(t_token **token_list);
 void				consume_redirection_sequence(t_token **token_list);
 bool				is_redirection_op(t_token *token);
 bool				is_redirection_sequence(t_token *token);
+
+/* ~ Simple Command ~ */
+t_status			syntax_handle_simple_command(t_token **token_list);
 
 /* ~ Subshell ~ */
 t_status			syntax_handle_subshell(t_token **token_list);

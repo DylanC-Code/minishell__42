@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/15 15:27:48 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/15 15:45:13 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,8 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		input/syntax/syntax_command.c \
 		input/syntax/syntax_pipeline.c \
 		input/syntax/syntax_redirection.c \
+		input/syntax/syntax_simple_command.c \
+		input/syntax/syntax_subshell.c \
 		input/syntax/syntax.c \
 		\
 		memory/garbage.c \

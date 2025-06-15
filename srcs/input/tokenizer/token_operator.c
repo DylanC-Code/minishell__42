@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 11:48:42 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 15:06:13 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/15 15:49:22 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ static void	handle_double_char_operator(t_token *token);
 
 void	handle_operator_token(t_token *token, char *str)
 {
-	if (str[0] != str[1])
-		token->value = ft_strndup(str, 1);
-	else
+	if (str[0] == str[1] && ft_ischarset(*str, "<>|&"))
 		token->value = ft_strndup(str, 2);
+	else
+		token->value = ft_strndup(str, 1);
 	handle_operator_token_type(token);
 }
 

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/14 15:16:36 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 14:56:07 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/15 15:41:41 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/15 15:45:39 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,12 @@
 
 t_status	syntax_handle_command(t_token **token_list)
 {
-	t_token	*token;
+	t_status	simple_command_handled;
 
-	token = *token_list;
-	while (is_redirection_sequence(token))
-		if (!syntax_handle_redirection(&token))
-			return (ERROR);
-	if (token->type != TOKEN_WORD)
-		return (NOOP);
-	token = token->next;
-	while (token->type == TOKEN_WORD)
-		token = token->next;
-	while (is_redirection_sequence(token))
-		if (!syntax_handle_redirection(&token))
-			return (ERROR);
-	*token_list = token;
-	return (SUCCESS);
+	simple_command_handled = syntax_handle_simple_command(token_list);
+	if (simple_command_handled == ERROR)
+		return (ERROR);
+	if (simple_command_handled == SUCCESS)
+		return (SUCCESS);
+	return (syntax_handle_subshell(token_list));
 }

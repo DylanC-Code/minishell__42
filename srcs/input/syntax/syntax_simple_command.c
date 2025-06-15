@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_pipeline.c                                  :+:      :+:    :+:   */
+/*   syntax_simple_command.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/14 16:06:39 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 15:45:28 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/14 15:16:36 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/15 15:32:30 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_status	syntax_handle_pipeline(t_token **token_list)
+t_status	syntax_handle_simple_command(t_token **token_list)
 {
-	t_status	command_handled;
+	t_token	*token;
 
-	command_handled = syntax_handle_command(token_list);
-	if (command_handled == ERROR)
-		return (ERROR);
-	if (command_handled == NOOP)
-		return (NOOP);
-	while ((*token_list)->type == TOKEN_PIPE)
-	{
-		*token_list = (*token_list)->next;
-		command_handled = syntax_handle_command(token_list);
-		if (command_handled != SUCCESS)
+	token = *token_list;
+	while (is_redirection_sequence(token))
+		if (!syntax_handle_redirection(&token))
 			return (ERROR);
-	}
+	if (token->type != TOKEN_WORD)
+		return (NOOP);
+	token = token->next;
+	while (token->type == TOKEN_WORD)
+		token = token->next;
+	while (is_redirection_sequence(token))
+		if (!syntax_handle_redirection(&token))
+			return (ERROR);
+	*token_list = token;
 	return (SUCCESS);
 }

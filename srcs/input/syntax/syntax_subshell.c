@@ -15,10 +15,19 @@
 
 t_status	syntax_handle_subshell(t_token **token_list)
 {
-	t_token	*token;
+	t_token		*token;
+	t_status	and_or_command_handled;
+	bool		has_closing_parenthese;
 
 	token = *token_list;
 	if (token->type != TOKEN_OPEN_PARENTHESE)
 		return (NOOP);
-    
+	token = token->next;
+	and_or_command_handled = syntax_handle_and_or_command(&token);
+	if (and_or_command_handled == ERROR)
+		return (ERROR);
+	has_closing_parenthese = token->type == TOKEN_CLOSE_PARENTHESE;
+	if (has_closing_parenthese)
+		*token_list = token->next;
+	return (has_closing_parenthese);
 }
