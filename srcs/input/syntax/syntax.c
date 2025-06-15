@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 13:45:57 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 15:16:21 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/15 15:27:21 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 bool	check_syntax(t_token *head_token)
 {
+	if (syntax_handle_and_or_command(&head_token) == ERROR)
+		return (false);
 	if (syntax_handle_pipeline(&head_token) == ERROR)
 		return (false);
 	if (syntax_handle_command(&head_token) == ERROR)

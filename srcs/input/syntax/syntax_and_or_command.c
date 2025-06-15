@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_pipeline.c                                  :+:      :+:    :+:   */
+/*   syntax_and_or_command.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/14 16:06:39 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 15:23:10 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/15 15:18:44 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/15 15:26:24 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_status	syntax_handle_pipeline(t_token **token_list)
-{
-	t_status	command_handled;
+static bool	is_and_or_token(t_token *token);
 
-	command_handled = syntax_handle_command(token_list);
-	if (command_handled == ERROR)
+t_status	syntax_handle_and_or_command(t_token **token_list)
+{
+	t_status	pipeline_handled;
+
+	pipeline_handled = syntax_handle_pipeline(token_list);
+	if (pipeline_handled == ERROR)
 		return (ERROR);
-	if (command_handled == NOOP)
+	if (pipeline_handled == NOOP)
 		return (NOOP);
-	while ((*token_list)->type == TOKEN_PIPE)
+	while (is_and_or_token(*token_list))
 	{
 		*token_list = (*token_list)->next;
-		command_handled = syntax_handle_command(token_list);
-		if (command_handled != SUCCESS)
+		pipeline_handled = syntax_handle_pipeline(token_list);
+		if (pipeline_handled != SUCCESS)
 			return (ERROR);
 	}
 	return (SUCCESS);
+}
+
+static bool	is_and_or_token(t_token *token)
+{
+	return (token->type == TOKEN_AND || token->type == TOKEN_OR);
 }
