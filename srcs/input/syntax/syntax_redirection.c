@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:30:55 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 14:53:17 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/15 15:01:27 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_status	syntax_handle_redirection(t_token **token_list)
 
 	head_token = *token_list;
 	has_io_number = head_token->type == TOKEN_IO_NUMBER;
+		// TODO: check max value authorized for io_number
 	if (has_io_number)
 		head_token = head_token->next;
 	if (has_io_number && !is_redirection_op(head_token))
