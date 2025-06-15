@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 16:17:45 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/15 09:24:22 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ void				handle_single_quote_token(t_token *token, char *str);
 void				handle_double_quote_token(t_token *token, char *str);
 void				handle_operator_token(t_token *token, char *str);
 void				handle_new_line_token(t_token *token);
-void				handle_io_number_token(t_token *token, char io_number);
+void				handle_io_number_token(t_token *token, char *str);
 void				handle_eof_token(t_token *token);
 
+bool				ft_is_ionumber(char *str);
 void				add_token_back(t_token **token_list, t_token *new_token);
 
 #endif

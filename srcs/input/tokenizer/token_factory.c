@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:23:42 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 12:13:09 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/15 09:25:42 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_token	*get_token(char *str, t_garbage **gb_list)
 		handle_operator_token(new_token, str);
 	else if (*str == '\n')
 		handle_new_line_token(new_token);
-	else if (ft_isdigit(*str) && ft_ischarset(str[1], "<>"))
-		handle_io_number_token(new_token, *str);
+	else if (ft_is_ionumber(str))
+		handle_io_number_token(new_token, str);
 	else if (*str)
 		handle_word_token(new_token, str);
 	else

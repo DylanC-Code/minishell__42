@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:06:39 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 17:05:50 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/15 09:26:02 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 t_status	syntax_handle_pipeline(t_token **token_list)
 {
+	(void)token_list;
+	return (SUCCESS);
 	// if (hand
 }
