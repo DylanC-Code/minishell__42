@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 15:44:41 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:16:41 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ typedef enum e_token_type
 	TOKEN_REDIR_OUT,
 	TOKEN_REDIR_APPEND,
 	TOKEN_REDIR_HEREDOC,
-	TOKEN_OPEN_PARENTHESE,
-	TOKEN_CLOSE_PARENTHESE,
+	TOKEN_OPEN_PARENTHESIS,
+	TOKEN_CLOSE_PARENTHESIS,
 	TOKEN_IO_NUMBER,
 	TOKEN_NEW_LINE,
 	TOKEN_EOF,

@@ -20,9 +20,9 @@ char	*token_to_str(t_token_type type)
 		return ("REDIR_APPEND");
 	case TOKEN_REDIR_HEREDOC:
 		return ("REDIR_APPEND");
-	case TOKEN_OPEN_PARENTHESE:
+	case TOKEN_OPEN_PARENTHESIS:
 		return ("OPEN_PARENTHESE");
-	case TOKEN_CLOSE_PARENTHESE:
+	case TOKEN_CLOSE_PARENTHESIS:
 		return ("CLOSE_PARENTHESE");
 	case TOKEN_IO_NUMBER:
 		return ("IO_NUMBER");

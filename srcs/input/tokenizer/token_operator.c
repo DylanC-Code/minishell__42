@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 11:48:42 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 15:49:22 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:16:41 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ static void	handle_single_char_operator(t_token *token)
 	else if (*token->value == '>')
 		token->type = TOKEN_REDIR_OUT;
 	else if (*token->value == '(')
-		token->type = TOKEN_OPEN_PARENTHESE;
+		token->type = TOKEN_OPEN_PARENTHESIS;
 	else if (*token->value == ')')
-		token->type = TOKEN_CLOSE_PARENTHESE;
+		token->type = TOKEN_CLOSE_PARENTHESIS;
 }
 
 static void	handle_double_char_operator(t_token *token)
