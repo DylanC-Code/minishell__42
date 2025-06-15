@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:23:42 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 09:25:42 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/15 18:07:28 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ t_token	*get_token(char *str, t_garbage **gb_list)
 		handle_io_number_token(new_token, str);
 	else if (*str)
 		handle_word_token(new_token, str);
-	else
-		handle_eof_token(new_token);
+	// else
+	// 	handle_eof_token(new_token);
 	if (new_token->value)
 		return (add_to_gc(gb_list, new_token->value), new_token);
 	return (NULL);

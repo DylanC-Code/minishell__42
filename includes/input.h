@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 16:16:41 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/15 22:27:36 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_token
 	struct s_token	*next;
 }					t_token;
 
+t_token				*read_complete_command(t_garbage **gc_current_cmd_line);
+
 /* ********************** */
 /* ******* Syntax ******* */
 /* ********************** */
@@ -67,6 +69,9 @@ t_status			syntax_handle_simple_command(t_token **token_list);
 
 /* ~ Subshell ~ */
 t_status			syntax_handle_subshell(t_token **token_list);
+
+/* ~ Error ~ */
+void				syntax_error(t_token *token);
 
 /* ************************* */
 /* ******* Tokenizer ******* */

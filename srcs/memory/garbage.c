@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 10:13:03 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/12 16:02:31 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:20:34 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	gc_cleanup(t_garbage **garbage_list)
 		free(curr);
 		curr = next;
 	}
+	*garbage_list = NULL;
 }
 
 void	add_to_gc(t_garbage **garbage_list, void *alloc)
