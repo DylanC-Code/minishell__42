@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:30:55 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 15:01:27 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/16 18:12:44 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,21 @@
 
 t_status	syntax_handle_redirection(t_token **token_list)
 {
-	t_token	*head_token;
+	t_token	*token;
 	bool	has_io_number;
 
-	head_token = *token_list;
-	has_io_number = head_token->type == TOKEN_IO_NUMBER;
-		// TODO: check max value authorized for io_number
+	token = *token_list;
+	has_io_number = token->type == TOKEN_IO_NUMBER;
 	if (has_io_number)
-		head_token = head_token->next;
-	if (has_io_number && !is_redirection_op(head_token))
-		return (ERROR);
-	else if (is_redirection_op(head_token))
-		head_token = head_token->next;
-	else
+		token = token->next;
+	if (!is_redirection_op(token))
 		return (NOOP);
-	if (head_token->type != TOKEN_WORD)
-		return (ERROR);
-	*token_list = head_token->next;
+	token = token->next;
+	if (token->type == TOKEN_EOF)
+		return (print_syntax_error("newline'"), ERROR);
+	if (token->type != TOKEN_WORD)
+		return (print_syntax_error(token->value), ERROR);
+	*token_list = token->next;
 	return (SUCCESS);
 }
 

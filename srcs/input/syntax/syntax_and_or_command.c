@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:18:44 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/16 17:00:46 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/16 18:02:25 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ t_status	syntax_handle_and_or_command(t_token **token_list)
 	pipeline_handled = syntax_handle_pipeline(token_list);
 	if (pipeline_handled != SUCCESS)
 		return (pipeline_handled);
-	while (*token_list && is_and_or_token(*token_list))
+	while (is_and_or_token(*token_list))
 	{
 		op_token = *token_list;
 		*token_list = (*token_list)->next;
-		if (!*token_list || is_and_or_token(*token_list))
+		if (is_and_or_token(*token_list))
 			return (print_syntax_error(op_token->value), ERROR);
 		pipeline_handled = syntax_handle_pipeline(token_list);
 		if (pipeline_handled != SUCCESS)

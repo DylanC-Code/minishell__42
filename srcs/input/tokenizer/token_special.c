@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:25:19 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 09:35:43 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/16 17:50:14 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,13 @@ void	handle_eof_token(t_token *token)
 
 bool	ft_is_ionumber(char *str)
 {
-	if (!ft_isdigit(*str++))
+	size_t	i;
+
+	i = 0;
+	if (!ft_isdigit(str[i++]))
 		return (false);
-	while (ft_isdigit(*str++))
-		continue ;
-	return (*--str == '<' || *str == '>');
+	while (ft_isdigit(str[i++]))
+		if (i > 12)
+			return (false);
+	return (str[i - 1] == '<' || str[i - 1] == '>');
 }
