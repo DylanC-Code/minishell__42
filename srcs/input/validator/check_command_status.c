@@ -5,102 +5,150 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 11:22:18 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/16 16:04:23 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/16 19:33:52 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/16 22:25:49 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool				is_operator_end(const char *line);
-static bool				is_operator_start(const char *line);
-static void				handle_quote_none(char c, t_quote *quote,
-							int *paren_depth);
-static void				handle_quote_active(char c, char prev_char,
-							t_quote *quote);
-static t_parse_status	get_final_status(t_quote quote, int paren_depth,
-							char *line);
+typedef struct s_cmd_check_state
+{
+	size_t			paren_deps;
+	t_parse_status	parse_status;
+	char			*line;
+}					t_cmd_check_state;
+
+static bool			is_operator_start(const char *line);
+void				handle_open_parenthesis(t_cmd_check_state *check_state,
+						size_t *i);
+void				handle_close_parenthesis(t_cmd_check_state *check_state,
+						size_t *i);
+void				handle_single_quote(t_cmd_check_state *check_state,
+						size_t *i);
+void				handle_double_quote(t_cmd_check_state *check_state,
+						size_t *i);
 
 t_parse_status	check_command_status(char *line)
 {
-	t_quote	quote;
-	int		paren_depth;
-	int		i;
+	t_cmd_check_state	cmd_check_state;
+	size_t				i;
 
-	if (!line)
-		return (CMD_INVALID);
+	i = 0;
+	ft_bzero(&cmd_check_state, sizeof(t_cmd_check_state));
+	cmd_check_state.line = line;
 	if (is_operator_start(line))
 		return (print_op_start_syntax_error(line));
-	quote = QUOTE_NONE;
-	paren_depth = 0;
-	i = 0;
 	while (line[i])
 	{
-		if (quote == QUOTE_NONE)
-			handle_quote_none(line[i], &quote, &paren_depth);
-		else if (i > 0)
-			handle_quote_active(line[i], line[i - 1], &quote);
-		else
-			handle_quote_active(line[i], '\0', &quote);
-		if (line[i] == ')' && paren_depth < 0)
-			return (print_syntax_error(")"));
-		i++;
+		while (ft_isspace(line[i]) || !ft_ischarset(line[i], "()'\""))
+			i++;
+		handle_open_parenthesis(&cmd_check_state, &i);
+		handle_close_parenthesis(&cmd_check_state, &i);
+		handle_single_quote(&cmd_check_state, &i);
+		handle_double_quote(&cmd_check_state, &i);
+		if (cmd_check_state.parse_status != CMD_COMPLETE)
+			return (cmd_check_state.parse_status);
 	}
-	return (get_final_status(quote, paren_depth, line));
-}
-
-static void	handle_quote_none(char c, t_quote *quote, int *paren_depth)
-{
-	if (c == '\'')
-		*quote = QUOTE_SINGLE;
-	if (c == '"')
-		*quote = QUOTE_DOUBLE;
-	if (c == '(')
-		(*paren_depth)++;
-	if (c == ')')
-		(*paren_depth)--;
-}
-
-static void	handle_quote_active(char c, char prev_char, t_quote *quote)
-{
-	if (*quote == QUOTE_SINGLE && c == '\'')
-		*quote = QUOTE_NONE;
-	if (*quote == QUOTE_DOUBLE && c == '"' && prev_char != '\\')
-		*quote = QUOTE_NONE;
-}
-
-static t_parse_status	get_final_status(t_quote quote, int paren_depth,
-		char *line)
-{
-	if (quote != QUOTE_NONE)
+	if (cmd_check_state.paren_deps > 0)
 		return (CMD_INCOMPLETE);
-	if (paren_depth > 0)
-		return (CMD_INCOMPLETE);
-	if (is_operator_end(line))
-		return (CMD_INCOMPLETE);
-	return (CMD_COMPLETE);
+	return (cmd_check_state.parse_status);
 }
 
-static bool	is_operator_end(const char *line)
+void	handle_open_parenthesis(t_cmd_check_state *check_state, size_t *i)
 {
-	int	i;
+	char	*line;
 
-	if (!line)
-		return (false);
-	i = ft_strlen(line) - 1;
-	while (i >= 0 && ft_isspace(line[i]))
-		i--;
-	if (i < 0)
-		return (false);
-	if (line[i] == '|')
-		return (true);
-	if (line[i] == '&')
-		return (true);
-	if (i >= 1 && line[i - 1] == '|' && line[i] == '|')
-		return (true);
-	if (i >= 1 && line[i - 1] == '&' && line[i] == '&')
-		return (true);
-	return (false);
+	if (check_state->parse_status > CMD_COMPLETE)
+		return ;
+	line = check_state->line;
+	if (!line[*i] || line[*i] != '(')
+		return ;
+	check_state->paren_deps++;
+	(*i)++;
+	while (ft_isspace(line[*i]))
+		(*i)++;
+	if (!line[*i])
+	{
+		check_state->parse_status = CMD_INCOMPLETE;
+		return ;
+	}
+	if (line[*i] && line[*i] != ')')
+		return ;
+	check_state->parse_status = CMD_INVALID;
+	print_syntax_error(")");
+}
+
+void	handle_close_parenthesis(t_cmd_check_state *check_state, size_t *i)
+{
+	char	*line;
+
+	if (check_state->parse_status > CMD_COMPLETE)
+		return ;
+	line = check_state->line;
+	if (!line[*i] || line[*i] != ')')
+		return ;
+	(*i)++;
+	if (check_state->paren_deps-- != 0)
+		return ;
+	check_state->parse_status = CMD_INVALID;
+	print_syntax_error(")");
+}
+
+void	handle_single_quote(t_cmd_check_state *check_state, size_t *i)
+{
+	char	*line;
+
+	if (check_state->parse_status > CMD_COMPLETE)
+		return ;
+	line = check_state->line;
+	if (!line[*i] || line[*i] != '\'')
+		return ;
+	(*i)++;
+	if (line[*i] == '\'')
+	{
+		(*i)++;
+		return ;
+	}
+	while (line[*i])
+	{
+		if (line[*i] != '\'')
+			(*i)++;
+		else
+		{
+			(*i)++;
+			return ;
+		}
+	}
+	check_state->parse_status = CMD_INCOMPLETE;
+}
+
+void	handle_double_quote(t_cmd_check_state *check_state, size_t *i)
+{
+	char	*line;
+
+	if (check_state->parse_status > CMD_COMPLETE)
+		return ;
+	line = check_state->line;
+	if (!line[*i] || line[*i] != '"')
+		return ;
+	(*i)++;
+	if (line[*i] == '"')
+	{
+		(*i)++;
+		return ;
+	}
+	while (line[*i])
+	{
+		if (line[*i] != '"' && line[(*i) - 1] != '\\')
+			(*i)++;
+		else
+		{
+			(*i)++;
+			return ;
+		}
+	}
+	check_state->parse_status = CMD_INCOMPLETE;
 }
 
 static bool	is_operator_start(const char *line)

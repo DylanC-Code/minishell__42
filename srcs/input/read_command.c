@@ -6,42 +6,45 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:26:29 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 22:42:21 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/16 18:02:35 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-typedef enum e_parse_status
-{
-	INCOMPLETE,
-	COMPLETE,
-	INVALID,
-}		t_parse_status;
-
 t_token	*append_eof_token(t_token **token_list, t_garbage **gc_list);
 t_token	*get_user_input_and_tokenize(char *prompt, t_garbage **gb_list);
 
-t_token	*read_complete_command(t_garbage **gc_current_cmd_line)
+t_token	*read_complete_command(t_garbage **gc)
 {
-	t_parse_status	parsing_state;
-	t_token			*token_head;
-	t_token			*token_sequence;
+	char			*accum;
+	char			*line;
+	char			*tmp;
+	t_parse_status	status;
+	t_token			*tokens;
 
-	token_head = get_user_input_and_tokenize(USER_PROMPT, gc_current_cmd_line);
+	accum = NULL;
 	while (true)
 	{
-		parsing_state = check_command_state(token_head);
-		if (parsing_state == INVALID)
+		line = readline(accum ? "> " : USER_PROMPT);
+		if (!line)
 			return (NULL);
-		else if (parsing_state == COMPLETE)
+		add_history(line);
+		tmp = ft_strjoin(accum, accum ? "\n" : "");
+		free(accum);
+		accum = ft_strjoin(tmp, line);
+		free(tmp);
+		free(line);
+		status = check_command_status(accum);
+		if (status == CMD_INVALID)
+			return (free(accum), NULL);
+		if (status == CMD_COMPLETE)
 			break ;
-		token_sequence = get_user_input_and_tokenize(">", gc_current_cmd_line);
-		if (!token_sequence)
-			return (NULL);
-		add_token_back(&token_head, token_sequence);
 	}
-	return (append_eof_token(&token_head, gc_current_cmd_line));
+	tokens = tokenizer(accum, gc);
+	free(accum);
+	append_eof_token(&tokens, gc);
+	return (tokens);
 }
 
 t_token	*append_eof_token(t_token **token_list, t_garbage **gc_list)
