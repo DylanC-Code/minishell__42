@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 22:27:36 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/16 11:26:26 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,20 @@ typedef enum e_token_type
 	TOKEN_NEW_LINE,
 	TOKEN_EOF,
 }					t_token_type;
+
+typedef enum e_parse_status
+{
+	CMD_COMPLETE,
+	CMD_INCOMPLETE,
+	CMD_INVALID
+}					t_parse_status;
+
+typedef enum e_quote
+{
+	QUOTE_NONE,
+	QUOTE_SINGLE,
+	QUOTE_DOUBLE
+}					t_quote;
 
 typedef struct s_token
 {
@@ -91,5 +105,13 @@ void				handle_eof_token(t_token *token);
 
 bool				ft_is_ionumber(char *str);
 void				add_token_back(t_token **token_list, t_token *new_token);
+
+/* ************************* */
+/* ******* Validator ******* */
+/* ************************* */
+
+t_parse_status		check_command_status(char *line);
+
+bool				quote_unclosed(t_token *token_head);
 
 #endif
