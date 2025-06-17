@@ -26,31 +26,32 @@ int is_redirection_operator(t_token_type type)
 
 size_t count_words(t_token *start_token)
 {
-	size_t arg_count;
-	t_token *current;
-	
+	size_t	arg_count;
+	t_token	*current;
+
 	current = start_token;
 	arg_count = 0;
-	if(current->type == OPEN_PARENTHESE)
+	if (current && current->type == OPEN_PARENTHESE)
 		current = current->next;
 	while (current)
 	{
 		if (is_command_delimiter(current->type))
 			break;
 		if (current->type == WORD)
+		{
 			arg_count++;
+			current = current->next;
+		}
 		else if (is_redirection_operator(current->type))
 		{
 			current = current->next;
 			if (current && current->type == WORD)
-			{
 				current = current->next;
-				continue;
-			}
 		}
-		current = current->next;
+		else
+			current = current->next;
 	}
-	return arg_count;
+	return (arg_count);
 }
 
 t_cmd *cmd_builder(t_token *token)

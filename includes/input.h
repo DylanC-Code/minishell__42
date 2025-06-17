@@ -13,6 +13,7 @@
 #ifndef INPUT_H
 # define INPUT_H
 
+#include <stdlib.h>
 
 typedef enum e_token_type
 {
@@ -69,5 +70,7 @@ t_cmd *cmd_builder(t_token *token);
 t_cmd_sequence *sequence_builder(void);
 t_cmd_sequence *parse_tokens(t_token *head);
 void display_seq(t_cmd_sequence *seq_head);
-
+int	handle_redirection(t_cmd **cmd, t_token **token);
+int	handle_logical_op(t_cmd_sequence **curr_seq, t_cmd **cmd_head,t_token *token, size_t arg_count);
+int	handle_pipe(t_cmd **cmd_head, t_token **token, size_t *arg_count);
 #endif
