@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:25:19 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/14 12:09:04 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/17 12:23:54 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	handle_single_quote_token(t_token *token, char *str)
 	{
 		if (str[i] != '\'')
 			continue ;
-		if (str[i - 1] != '\\')
-			break ;
+		// if (str[i - 1] != '\\')
+		// 	break ;
 	}
 	token->value = ft_strndup(str, i + 1);
 }

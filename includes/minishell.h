@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/16 16:04:56 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/17 14:29:22 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <sys/types.h>
 # include <unistd.h>
 
-# define USER_PROMPT "minishell>"
+# define USER_PROMPT "minishell> "
 
 # define OPERATORS "<>|&()"
 

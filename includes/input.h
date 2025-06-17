@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/16 19:49:25 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/17 14:22:15 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_token
 	struct s_token	*next;
 }					t_token;
 
-t_token				*read_complete_command(t_garbage **gc_current_cmd_line);
+char				*read_complete_command(t_garbage **gc_current_cmd_line);
 
 /* ********************** */
 /* ******* Syntax ******* */
@@ -105,6 +105,8 @@ void				handle_eof_token(t_token *token);
 
 bool				ft_is_ionumber(char *str);
 void				add_token_back(t_token **token_list, t_token *new_token);
+t_token				*append_eof_token(t_token **token_list,
+						t_garbage **gc_list);
 
 /* ************************* */
 /* ******* Validator ******* */

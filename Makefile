@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/16 16:08:28 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/17 12:34:12 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,7 @@ $(NAME): $(BUILD_DIR) $(LIB_FILE) $(OBJS)
 # 🔨 Compilation des .c vers .o
 $(BUILD_DIR)%.o: %.c
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -g -MMD $(INCLUDE_DIRS) -c $< -o $@ -lreadline
+	$(CC) $(CFLAGS) -g -MMD $(INCLUDE_DIRS) -c $< -o $@
 
 
 # ============================================================================== #

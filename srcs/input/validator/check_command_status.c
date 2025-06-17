@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 19:33:52 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/16 22:25:49 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/17 14:36:30 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,14 @@ t_parse_status	check_command_status(char *line)
 		return (print_op_start_syntax_error(line));
 	while (line[i])
 	{
-		while (ft_isspace(line[i]) || !ft_ischarset(line[i], "()'\""))
+		while (line[i] && (ft_isspace(line[i]) || !ft_ischarset(line[i],
+					"()'\"")))
 			i++;
 		handle_open_parenthesis(&cmd_check_state, &i);
 		handle_close_parenthesis(&cmd_check_state, &i);
 		handle_single_quote(&cmd_check_state, &i);
 		handle_double_quote(&cmd_check_state, &i);
+		// TODO: manage waiting pipe in this case: ls |
 		if (cmd_check_state.parse_status != CMD_COMPLETE)
 			return (cmd_check_state.parse_status);
 	}

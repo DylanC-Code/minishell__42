@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:35:47 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/16 10:03:23 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/17 14:21:58 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ t_token	*tokenizer(char *line, t_garbage **gb_list)
 		add_token_back(&head_token, new_token);
 		i += ft_strlen(new_token->value) - 1;
 	}
+	append_eof_token(&head_token, gb_list);
 	return (head_token);
 }
+
