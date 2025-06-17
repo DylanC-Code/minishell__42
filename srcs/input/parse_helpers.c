@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 17:12:19 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/17 15:14:49 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/17 15:17:56 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,25 @@ size_t	count_words(t_token *start_token)
 
 	current = start_token;
 	arg_count = 0;
-	if(current->type == OPEN_PARENTHESE)
+	if (current && current->type == TOKEN_OPEN_PARENTHESIS)
 		current = current->next;
 	while (current)
 	{
 		if (is_command_delimiter(current->type))
-			break ;
+			break;
 		if (current->type == TOKEN_WORD)
+		{
 			arg_count++;
+			current = current->next;
+		}
 		else if (is_redirection_operator(current->type))
 		{
 			current = current->next;
 			if (current && current->type == TOKEN_WORD)
-			{
 				current = current->next;
-				continue ;
-			}
 		}
-		current = current->next;
+		else
+			current = current->next;
 	}
 	return (arg_count);
 }

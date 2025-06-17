@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/17 15:13:20 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/17 15:16:20 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "memory.h"
 # include "minishell.h"
 # include <stdbool.h>
+# include <stdlib.h>
 
 # define APPEND_END_FILE 1
 # define APPEND_BEGIN_FILE 0
@@ -151,4 +152,10 @@ void				display_seq(t_cmd_sequence *seq_head);
 t_cmd				*cmd_builder(t_token *token);
 t_cmd_sequence		*sequence_builder(void);
 
+int					handle_redirection(t_cmd **cmd, t_token **token);
+int					handle_logical_op(t_cmd_sequence **curr_seq,
+						t_cmd **cmd_head, t_token *token, size_t arg_count);
+int					handle_pipe(t_cmd **cmd_head, t_token **token,
+						size_t *arg_count);
+                        
 #endif
