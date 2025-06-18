@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:30:55 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 10:47:59 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 13:31:45 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_status	syntax_handle_redirection(t_token **token_list)
 	if (!is_redirection_op(token))
 		return (NOOP);
 	token = token->next;
-	if (token->type == TOKEN_EOF)
-		return (print_syntax_error("newline'"), ERROR);
+	// if (token->type == TOKEN_EOF)
+	// 	return (print_syntax_error("newline'"), ERROR);
 	if (token->type != TOKEN_WORD)
 		return (print_syntax_error(token->value), ERROR);
 	if (!check_word(token->value))

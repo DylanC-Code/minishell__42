@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 10:56:15 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 13:12:57 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,6 @@ typedef enum e_token_type
 	TOKEN_NEW_LINE,
 	TOKEN_EOF,
 }					t_token_type;
-
-typedef enum e_parse_status
-{
-	CMD_COMPLETE,
-	CMD_INCOMPLETE,
-	CMD_INVALID
-}					t_parse_status;
 
 typedef enum e_quote
 {
@@ -145,8 +138,6 @@ t_token				*append_newline_token(t_token **token_list,
 /* ************************* */
 /* ******* Validator ******* */
 /* ************************* */
-
-t_parse_status		check_command_status(char *line);
 
 t_cmd_sequence		*parse_tokens(t_token *head);
 void				display_seq(t_cmd_sequence *seq_head);

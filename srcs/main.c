@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:54:21 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 11:29:40 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 12:58:48 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char const *argv[], char *envp[])
 		if (token_head && check_syntax(token_head))
 		{
 			seq_head = parse_tokens(token_head);
-			display_seq(seq_head);
+			// display_seq(seq_head);
 		}
 		gc_cleanup(&gc_current_cmd_line);
 	}

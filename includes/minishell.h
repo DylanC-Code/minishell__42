@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/17 14:29:22 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 13:14:31 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void				init_signals(void);
 
 /* Utils */
 void				exit_with_error(char *msg, t_garbage **garbage_list);
-t_parse_status		print_syntax_error(const char *token);
-t_parse_status		print_op_start_syntax_error(const char *line);
 void				display_tokens(t_token *head, char *input);
+t_status			print_syntax_error(const char *token);
+t_status			print_unexpected_eof(char quote_type);
 
 #endif

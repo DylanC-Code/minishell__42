@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:06:39 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 11:26:17 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 13:32:34 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static bool	is_invalid_following_pipe_token(t_token *token)
 
 	type = token->type;
 	return (type == TOKEN_OPEN_PARENTHESIS || type == TOKEN_CLOSE_PARENTHESIS
-		|| type == TOKEN_AND || type == TOKEN_OR || type == TOKEN_NEW_LINE);
+		|| type == TOKEN_AND || type == TOKEN_OR || type == TOKEN_NEW_LINE
+		|| type == TOKEN_PIPE);
 }
 
 static bool	is_invalid_following_word_token(t_token *token)
