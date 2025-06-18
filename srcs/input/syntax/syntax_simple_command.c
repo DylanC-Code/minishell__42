@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:16:36 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/16 18:00:29 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 10:29:21 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ t_status	syntax_handle_simple_command(t_token **token_list)
 		return (NOOP);
 	token = token->next;
 	while (token->type == TOKEN_WORD)
-		token = token->next;
+		if (!check_word(token->value))
+			return (ERROR);
+		else
+			token = token->next;
 	while (is_redirection_sequence(token))
 		if (!syntax_handle_redirection(&token))
 			return (ERROR);
