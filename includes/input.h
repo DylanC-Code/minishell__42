@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/13 14:10:59 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/14 10:40:47 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define INPUT_H
 
 #include <stdlib.h>
+# include "memory.h"
 
 typedef enum e_token_type
 {
@@ -52,11 +53,18 @@ typedef struct s_cmd
 	char			*heredoc_delim;	// << (heredoc)
 	struct s_cmd	*next;			// prochaine commande (si pipe il y a); NULL par défaut
 }					t_cmd;
-
 /*
 	t_cmd represente une ou plusieurs commandes delimitées par un ou plusieurs pipes
 	t_cmd_sequence represente tous les commandes séparés par un operateur logique
 */
+
+typedef struct s_redir_list
+{
+	char				*name;
+	t_token_type		type;
+	struct s_redir_list	*next;
+}						t_redir_list;
+
 
 typedef struct s_cmd_sequence
 {
@@ -66,11 +74,42 @@ typedef struct s_cmd_sequence
 
 } 					t_cmd_sequence;
 
+typedef struct s_parser
+{
+	t_cmd_sequence	*seq_head;
+	t_cmd_sequence	*curr_seq;
+	t_cmd			*cmd_head;
+	size_t			arg_count;
+	t_token			*token;
+	t_redir_list	*redir_head;
+}					t_parser;
+
 t_cmd *cmd_builder(t_token *token);
 t_cmd_sequence *sequence_builder(void);
 t_cmd_sequence *parse_tokens(t_token *head);
 void display_seq(t_cmd_sequence *seq_head);
-int	handle_redirection(t_cmd **cmd, t_token **token);
-int	handle_logical_op(t_cmd_sequence **curr_seq, t_cmd **cmd_head,t_token *token, size_t arg_count);
-int	handle_pipe(t_cmd **cmd_head, t_token **token, size_t *arg_count);
+int	handle_redirection(t_parser *parser);
+int	handle_logical_op(t_parser *parser);
+int	handle_pipe(t_parser *parser);
+t_redir_list	*redir_node_builder(char *name, t_token_type type);
+void	redir_node_addback(t_redir_list **redir_list, char *name, t_token_type type);
+int is_redirection_operator(t_token_type type);
+void	display_redir_list(t_redir_list *head);
+char	*token_to_str(t_token_type type);
+
+/* ************************* */
+/* ******* Tokenizer ******* */
+/* ************************* */
+
+t_token				*get_token(char *str, t_garbage **gb_list);
+t_token_type		get_token_type(char *token_value);
+
+char				*get_word(char *str);
+char				*get_value_between(char *str, char quote_delimiter);
+char				*get_operator(char *str);
+
+void				add_token_back(t_token **token_list, t_token *new_token);
+
+t_token				*tokenizer(char *line, t_garbage **gb_list);
+
 #endif

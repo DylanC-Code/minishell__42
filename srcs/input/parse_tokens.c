@@ -12,89 +12,86 @@
 
 #include "minishell.h"
 
-t_cmd_sequence	*parse_tokens(t_token *head)
+int	handle_pipe(t_parser *parser)
 {
-	t_cmd_sequence	*seq_head;
-	t_cmd_sequence	*curr_seq;
-	t_cmd			*cmd_head;
-	size_t			arg_count;
-	t_token			*token;
-
-	seq_head = sequence_builder();
-	cmd_head = cmd_builder(head);
-	curr_seq = seq_head;
-	curr_seq->cmds = cmd_head;
-	token = head;
-	arg_count = 0;
-	while (token)
-	{
-		if (token->type == WORD)
-			cmd_head->args[arg_count++] = ft_strdup(token->value);
-		else if (handle_pipe(&cmd_head, &token, &arg_count))
-			return (NULL);
-		else if (handle_redirection(&cmd_head, &token) == -1)
-			return (NULL);
-		else if (handle_logical_op(&curr_seq, &cmd_head, token, arg_count))
-			arg_count = 0;
-		token = token->next;
-	}
-	return (cmd_head->args[arg_count] = NULL, seq_head);
-}
-
-int	handle_pipe(t_cmd **cmd_head, t_token **token, size_t *arg_count)
-{
-	if ((*token)->type != PIPE)
+	if (parser->token->type != PIPE)
 		return (0);
-	if (!(*token)->next) // à changer pour aller lire la stdin
+	if (!parser->token->next)
 		return (1);
-	(*cmd_head)->args[*arg_count] = NULL;
-	(*cmd_head)->next = cmd_builder((*token)->next);
-	*cmd_head = (*cmd_head)->next;
-	*arg_count = 0;
+	parser->cmd_head->args[parser->arg_count] = NULL;
+	parser->cmd_head->next = cmd_builder(parser->token->next);
+	parser->cmd_head = parser->cmd_head->next;
+	parser->arg_count = 0;
 	return (0);
 }
 
-int	handle_logical_op(t_cmd_sequence **curr_seq, t_cmd **cmd_head,
-		t_token *token, size_t arg_count)
+int	handle_logical_operator(t_parser *parser)
 {
-	if (token->type != AND && token->type != OR)
+	if (parser->token->type != AND && parser->token->type != OR)
 		return (0);
-	(*cmd_head)->args[arg_count] = NULL;
-	if (token->type == AND)
-		(*curr_seq)->logical_op = LOGICAL_AND;
-	else if (token->type == OR)
-		(*curr_seq)->logical_op = LOGICAL_OR;
-	(*curr_seq)->next = sequence_builder();
-	*curr_seq = (*curr_seq)->next;
-	*cmd_head = cmd_builder(token->next);
-	(*curr_seq)->cmds = *cmd_head;
+	parser->cmd_head->args[parser->arg_count] = NULL;
+	if (parser->token->type == AND)
+		parser->curr_seq->logical_op = LOGICAL_AND;
+	else if (parser->token->type == OR)
+		parser->curr_seq->logical_op = LOGICAL_OR;
+	parser->curr_seq->next = sequence_builder();
+	parser->curr_seq = parser->curr_seq->next;
+	parser->cmd_head = cmd_builder(parser->token->next);
+	parser->curr_seq->cmds = parser->cmd_head;
 	return (1);
 }
 
-int	handle_redirection(t_cmd **cmd, t_token **token)
+int	handle_redirection(t_parser *parser)
 {
 	t_token_type	redir_type;
 
-	redir_type = (*token)->type;
-	if (redir_type != REDIR_IN && redir_type != REDIR_OUT
-		&& redir_type != REDIR_APPEND && redir_type != REDIR_HEREDOC)
+	redir_type = parser->token->type;
+	if (!is_redirection_operator(redir_type))
 		return (0);
-	if (!(*token)->next || (*token)->next->type != WORD) // à changer pour aller lire la stdin
+	if (!parser->token->next || parser->token->next->type != WORD)
 		return (-1);
+	redir_node_addback(&parser->redir_head, parser->token->next->value, parser->token->type);
 	if (redir_type == REDIR_IN)
-		(*cmd)->input_file = ft_strdup((*token)->next->value);
+		parser->cmd_head->input_file = ft_strdup(parser->token->next->value);
 	else if (redir_type == REDIR_OUT)
 	{
-		(*cmd)->output_file = ft_strdup((*token)->next->value);
-		(*cmd)->append_output = 0;
+		parser->cmd_head->output_file = ft_strdup(parser->token->next->value);
+		parser->cmd_head->append_output = 0;
 	}
 	else if (redir_type == REDIR_APPEND)
 	{
-		(*cmd)->output_file = ft_strdup((*token)->next->value);
-		(*cmd)->append_output = 1;
+		parser->cmd_head->output_file = ft_strdup(parser->token->next->value);
+		parser->cmd_head->append_output = 1;
 	}
-	else if (redir_type == REDIR_HEREDOC) // à changer pour aller lire la stdin
-		(*cmd)->heredoc_delim = ft_strdup((*token)->next->value);
-	*token = (*token)->next;
+	else if (redir_type == REDIR_HEREDOC)
+		parser->cmd_head->heredoc_delim = ft_strdup(parser->token->next->value);
+	parser->token = parser->token->next;
 	return (1);
+}
+
+t_cmd_sequence	*parse_tokens(t_token *head)
+{
+	t_parser	parser;
+
+	parser.seq_head = sequence_builder();
+	parser.cmd_head = cmd_builder(head);
+	parser.curr_seq = parser.seq_head;
+	parser.curr_seq->cmds = parser.cmd_head;
+	parser.token = head;
+	parser.arg_count = 0;
+	parser.redir_head = NULL;
+	while (parser.token)
+	{
+		if (parser.token->type == WORD)
+			parser.cmd_head->args[parser.arg_count++] = ft_strdup(parser.token->value);
+		else if (handle_pipe(&parser))
+			return (NULL);
+		else if (handle_redirection(&parser) == -1)
+			return (NULL);
+		else if (handle_logical_operator(&parser))
+			parser.arg_count = 0;
+		parser.token = parser.token->next;
+	}
+	display_redir_list(parser.redir_head);
+	return (parser.cmd_head->args[parser.arg_count] = NULL, parser.seq_head);
 }

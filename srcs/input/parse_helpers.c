@@ -87,3 +87,51 @@ t_cmd_sequence *sequence_builder(void)
 	return seq;
 }
 
+
+t_redir_list	*redir_node_builder(char *name, t_token_type type)
+{
+	t_redir_list	*node;
+
+	node = malloc(sizeof(t_redir_list));
+	if (!node)
+		return (NULL);
+	node->name = ft_strdup(name);
+	if (!node->name)
+		return (NULL);
+	node->type = type;
+	node->next = NULL;
+	return (node);
+}
+
+void	redir_node_addback(t_redir_list **redir_list, char *name, t_token_type type)
+{
+	t_redir_list	*new_node;
+	t_redir_list	*current;
+
+	new_node = redir_node_builder(name, type);
+	if (!new_node)
+		return ;
+	if (!*redir_list)
+	{
+		*redir_list = new_node;
+		return ;
+	}
+	current = *redir_list;
+	while (current->next)
+		current = current->next;
+	current->next = new_node;
+}
+
+void	display_redir_list(t_redir_list *head)
+{
+	t_redir_list	*lst;
+
+	lst = head;
+	int i = 0;
+	while (lst)
+	{
+		printf("[Node %d] lst->name = %s lst->type %s\n", i, lst->name, token_to_str(lst->type));
+		i++;
+		lst = lst->next;
+	}
+}
