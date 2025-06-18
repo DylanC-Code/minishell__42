@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/17 15:16:20 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 10:56:15 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_cmd_sequence
 
 }					t_cmd_sequence;
 
-char				*read_complete_command(t_garbage **gc_current_cmd_line);
+t_token				*read_complete_command(t_garbage **gc);
 
 t_cmd_sequence		*sequence_builder(void);
 
@@ -95,6 +95,7 @@ t_cmd_sequence		*sequence_builder(void);
 /* ********************** */
 
 bool				check_syntax(t_token *head_token);
+bool				check_word(char *value);
 
 /* ~ Command ~ */
 t_status			syntax_handle_command(t_token **token_list);
@@ -138,7 +139,7 @@ void				handle_eof_token(t_token *token);
 
 bool				ft_is_ionumber(char *str);
 void				add_token_back(t_token **token_list, t_token *new_token);
-t_token				*append_eof_token(t_token **token_list,
+t_token				*append_newline_token(t_token **token_list,
 						t_garbage **gc_list);
 
 /* ************************* */
@@ -157,5 +158,5 @@ int					handle_logical_op(t_cmd_sequence **curr_seq,
 						t_cmd **cmd_head, t_token *token, size_t arg_count);
 int					handle_pipe(t_cmd **cmd_head, t_token **token,
 						size_t *arg_count);
-                        
+
 #endif

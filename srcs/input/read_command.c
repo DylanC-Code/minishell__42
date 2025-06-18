@@ -6,42 +6,25 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:26:29 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/17 14:21:50 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 11:39:23 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*append_eof_token(t_token **token_list, t_garbage **gc_list);
+t_token	*append_newline_token(t_token **token_list, t_garbage **gc_list);
 char	*get_user_input(char *prompt, t_garbage **gb_list);
 
-char	*read_complete_command(t_garbage **gc)
+t_token	*read_complete_command(t_garbage **gc)
 {
-	char			*accum;
-	char			*line;
-	char			*tmp;
-	t_parse_status	status;
+	char	*line;
+	t_token	*token_head;
 
-	accum = NULL;
 	line = get_user_input(USER_PROMPT, gc);
-	while (true)
-	{
-		if (accum)
-			tmp = ft_strjoin(accum, "\n");
-		else
-			tmp = ft_strjoin(accum, "");
-		accum = ft_strjoin(tmp, line);
-		(add_to_gc(gc, tmp), add_to_gc(gc, accum));
-		status = check_command_status(accum);
-		if (status == CMD_INVALID)
-			return (NULL);
-		if (status == CMD_COMPLETE)
-			break ;
-		line = get_user_input("> ", gc);
-	}
-	return (accum);
+	token_head = tokenizer(line, gc);
+	// display_tokens(token_head, line);
+	return (token_head);
 }
-
 
 char	*get_user_input(char *prompt, t_garbage **gb_list)
 {

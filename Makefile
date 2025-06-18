@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/17 15:08:06 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/18 10:48:35 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,9 +53,8 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		input/syntax/syntax_redirection.c \
 		input/syntax/syntax_simple_command.c \
 		input/syntax/syntax_subshell.c \
+		input/syntax/syntax_utils.c \
 		input/syntax/syntax.c \
-		\
-		input/validator/check_command_status.c \
 		\
 		input/read_command.c \
 		input/parse_tokens.c \

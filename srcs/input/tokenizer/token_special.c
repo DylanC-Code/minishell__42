@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:25:19 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/16 17:50:14 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 10:56:43 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	ft_is_ionumber(char *str);
 void	handle_new_line_token(t_token *token)
 {
 	token->type = TOKEN_NEW_LINE;
-	token->value = ft_strdup("\n");
+	token->value = ft_strdup("newline");
 }
 
 void	handle_io_number_token(t_token *token, char *str)
