@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 14:23:11 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 15:04:55 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <unistd.h>
 
 # define USER_PROMPT "\e[1;32mminishell\e[0m:\e[1;34m\w\e[0m$"
+
+# define OPERATORS "<>|&()"
 
 # define OPERATORS "<>|&()"
 

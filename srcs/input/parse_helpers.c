@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 17:12:19 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/17 15:17:56 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 15:20:10 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ size_t	count_words(t_token *start_token)
 	while (current)
 	{
 		if (is_command_delimiter(current->type))
-			break;
+			break ;
 		if (current->type == TOKEN_WORD)
 		{
 			arg_count++;
@@ -85,4 +85,55 @@ t_cmd_sequence	*sequence_builder(void)
 	seq->logical_op = -1;
 	seq->next = NULL;
 	return (seq);
+}
+
+t_redir_list	*redir_node_builder(char *name, t_token_type type)
+{
+	t_redir_list	*node;
+
+	node = malloc(sizeof(t_redir_list));
+	if (!node)
+		return (NULL);
+	node->name = ft_strdup(name);
+	if (!node->name)
+		return (NULL);
+	node->type = type;
+	node->next = NULL;
+	return (node);
+}
+
+void	redir_node_addback(t_redir_list **redir_list, char *name,
+		t_token_type type)
+{
+	t_redir_list	*new_node;
+	t_redir_list	*current;
+
+	new_node = redir_node_builder(name, type);
+	if (!new_node)
+		return ;
+	if (!*redir_list)
+	{
+		*redir_list = new_node;
+		return ;
+	}
+	current = *redir_list;
+	while (current->next)
+		current = current->next;
+	current->next = new_node;
+}
+
+void	display_redir_list(t_redir_list *head)
+{
+	t_redir_list	*lst;
+	int				i;
+
+	lst = head;
+	i = 0;
+	while (lst)
+	{
+		printf("[Node %d] lst->name = %s lst->type %s\n", i, lst->name,
+			token_to_str(lst->type));
+		i++;
+		lst = lst->next;
+	}
 }

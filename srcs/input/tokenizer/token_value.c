@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   token_value.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 16:35:47 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 15:09:26 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/14 10:25:19 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/14 10:29:38 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,41 @@
 
 /* =============== Declaration =============== */
 
-t_token	*tokenizer(char *line, t_garbage **gb_list);
+char	*get_word(char *str);
+char	*get_value_between(char *str, char quote_delimiter);
+char	*get_operator(char *str);
 
 /* =============== Definition ================ */
 
-t_token	*tokenizer(char *line, t_garbage **gb_list)
+char	*get_word(char *str)
 {
-	t_token	*head_token;
-	t_token	*new_token;
 	size_t	i;
 
 	i = -1;
-	head_token = NULL;
-	while (line && line[++i])
+	while (str[++i])
+		if (ft_ischarset(str[i], OPERATORS) || ft_isspace(str[i]))
+			break ;
+	return (ft_strndup(str, i));
+}
+
+char	*get_value_between(char *str, char quote_delimiter)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[++i])
 	{
-		if (ft_isspace(line[i]))
+		if (str[i] != quote_delimiter)
 			continue ;
-		new_token = get_token(&line[i], gb_list);
-		if (!new_token)
-			return (NULL);
-		add_token_back(&head_token, new_token);
-		i += ft_strlen(new_token->value) - 1;
+		if (str[i - 1] != '\\')
+			break ;
 	}
-	append_newline_token(&head_token, gb_list);
-	return (head_token);
+	return (ft_strndup(str, i + 1));
+}
+
+char	*get_operator(char *str)
+{
+	if (str[0] != str[1])
+		return (ft_strndup(str, 1));
+	return (ft_strndup(str, 2));
 }
