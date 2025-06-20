@@ -69,6 +69,7 @@ t_cmd *cmd_builder(t_token *token)
 	cmd->output_file = NULL;
 	cmd->append_output = -1;
 	cmd->heredoc_delim = NULL;
+	cmd->redir_list = NULL;
 	cmd->next = NULL;
 	return cmd;
 }
@@ -130,7 +131,7 @@ void	display_redir_list(t_redir_list *head)
 	int i = 0;
 	while (lst)
 	{
-		printf("[Node %d] lst->name = %s lst->type %s\n", i, lst->name, token_to_str(lst->type));
+		//printf("[Node %d] lst->name = %s lst->type %s\n", i, lst->name, token_to_str(lst->type));
 		i++;
 		lst = lst->next;
 	}

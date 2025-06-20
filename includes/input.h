@@ -44,6 +44,12 @@ typedef struct s_token
 #define LOGICAL_OR 1
 #define LOGICAL_AND 2
 
+typedef struct s_redir_list
+{
+	char				*name;
+	t_token_type		type;
+	struct s_redir_list	*next;
+}						t_redir_list;
 typedef struct s_cmd
 {
 	char			**args;			// arguments
@@ -51,6 +57,7 @@ typedef struct s_cmd
 	char			*output_file;	// > 
 	int				append_output;	// 1 = >>, 0 = >
 	char			*heredoc_delim;	// << (heredoc)
+	t_redir_list	*redir_list;
 	struct s_cmd	*next;			// prochaine commande (si pipe il y a); NULL par défaut
 }					t_cmd;
 /*
@@ -58,12 +65,6 @@ typedef struct s_cmd
 	t_cmd_sequence represente tous les commandes séparés par un operateur logique
 */
 
-typedef struct s_redir_list
-{
-	char				*name;
-	t_token_type		type;
-	struct s_redir_list	*next;
-}						t_redir_list;
 
 
 typedef struct s_cmd_sequence

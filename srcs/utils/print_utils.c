@@ -55,7 +55,8 @@ void	display_tokens(t_token *head, char *input)
 void	display_seq(t_cmd_sequence *seq_head)
 {
 	t_cmd_sequence	*current_seq;
-	t_cmd		*current_cmd;
+	t_cmd			*current_cmd;
+	t_redir_list *curr_list;
 	int		seq_num;
 	int		cmd_num;
 	int		i;
@@ -69,10 +70,13 @@ void	display_seq(t_cmd_sequence *seq_head)
 		cmd_num = 1;
 		while (current_cmd)
 		{
-			printf("  Command %d: ", cmd_num);
+			curr_list = current_cmd->redir_list;
+			printf("  Command %d: \n", cmd_num);
 			if (current_cmd->args)
 			{
 				i = 0;
+				for(int i = 0; curr_list; curr_list = curr_list->next, i++)
+					printf("[Node %d] name->%s type->%s\n", i, curr_list->name, token_to_str(curr_list->type));
 				while (current_cmd->args[i])
 				{
 					printf("[%d]%s ", i, current_cmd->args[i]);
