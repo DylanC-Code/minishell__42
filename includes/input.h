@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 16:51:22 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/20 11:13:30 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,27 @@ typedef struct s_token
 	struct s_token		*next;
 }						t_token;
 
-typedef struct s_cmd
-{
-	char **args; // arguments
-					char *input_file;    // <
-					char *output_file;   // >
-					int append_output;   // 1 = >>, 0 = >
-					char *heredoc_delim; // << (heredoc)
-	int					fd[2];
-	// t_redir_list		*redir_head;
-	struct s_cmd *next; // prochaine commande (si pipe il y a); NULL par défaut
-}						t_cmd;
-
-/*
-	t_cmd represente une ou plusieurs commandes delimitées par un ou plusieurs pipes
-	t_cmd_sequence represente tous les commandes séparés par un operateur logique
-*/
-
 typedef struct s_redir_list
 {
 	char				*name;
 	t_token_type		type;
 	struct s_redir_list	*next;
 }						t_redir_list;
+typedef struct s_cmd
+{
+	char			**args;			// arguments
+	char			*input_file;	// <
+	char			*output_file;	// >
+	int				append_output;	// 1 = >>, 0 = >
+	char			*heredoc_delim;	// << (heredoc)
+	t_redir_list	*redir_list;
+	struct s_cmd	*next;			// prochaine commande (si pipe il y a); NULL par défaut
+}					t_cmd;
+/*
+	t_cmd represente une ou plusieurs commandes delimitées par un ou plusieurs pipes
+	t_cmd_sequence represente tous les commandes séparés par un operateur logique
+*/
+
 
 typedef struct s_cmd_sequence
 {
