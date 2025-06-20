@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/20 12:04:01 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/20 14:01:10 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_redir_list
 {
 	char				*name;
 	t_token_type		type;
+	int					fds[2];
 	struct s_redir_list	*next;
 }						t_redir_list;
 typedef struct s_cmd

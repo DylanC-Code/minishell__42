@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:24:44 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/20 12:10:01 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/20 14:05:58 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,18 @@
 //     }
 // }
 
-void	handle_heredoc(char *delimiter, int fds[2])
+t_status	handle_heredoc(t_redir_list *heredoc_redir)
 {
 	char	*buffer;
 	char	*tmp;
+	int		*fds;
 
-	if (fds[0] > 0)
-		(close(fds[1]));
-	if (pipe(fds))
-		return ; // todo: handle error
+	fds = heredoc_redir->fds;
+	if (pipe(heredoc_redir->fds))
+		return (ERROR); // todo: handle error
+	buffer = NULL;
 	tmp = readline(PS2_PROMPT);
-	while (ft_strcmp(tmp, delimiter))
+	while (ft_strcmp(tmp, heredoc_redir->name))
 	{
 		if (!buffer)
 			buffer = tmp;
@@ -63,7 +64,9 @@ void	handle_heredoc(char *delimiter, int fds[2])
 			ft_strjoin(buffer, tmp);
 		tmp = readline(PS2_PROMPT);
 	}
+	write(fds[1], buffer, ft_strlen(buffer));
 	close(fds[1]);
+	return (SUCCESS);
 }
 
 void	handle_heredocs_cmd(t_cmd *cmd)
@@ -74,18 +77,32 @@ void	handle_heredocs_cmd(t_cmd *cmd)
 	while (redir_head)
 	{
 		if (redir_head->type == TOKEN_REDIR_HEREDOC)
-			handle_heredoc(redir_head->name, cmd->fds_in);
+		{
+			handle_heredoc(redir_head);
+		}
 		redir_head = redir_head->next;
 	}
-	dup2(cmd->fds_in[0], STDOUT_FILENO);
-	close(cmd->fds_in[0]);
 }
 
-void	init_cmd(t_cmd *cmd)
+// t_status	handle_redir_in_cmd(t_cmd *cmd, t_redir_list *redir)
+// {
+// }
+
+t_status	init_cmd(t_cmd *cmd)
 {
+	t_redir_list	*redir_head;
+
+	redir_head = NULL;
 	// if (!pipe(cmd->input_file))
 	// 	return ; // todo: handle error
 	handle_heredocs_cmd(cmd);
+	while (redir_head)
+	{
+		// if (redir_head->type == TOKEN_REDIR_IN)
+		// if (!handle_redir_in_cmd(cmd, redir_head))
+		// 	return (ERROR);
+	}
+	return (SUCCESS);
 }
 
 void	init_sequence(t_cmd_sequence *seq)
