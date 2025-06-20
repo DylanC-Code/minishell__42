@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:20 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/20 11:14:13 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/20 11:16:10 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ int	handle_redirection(t_parser *parser)
 		return (0);
 	if (!parser->token->next || parser->token->next->type != TOKEN_WORD)
 		return (-1);
-	redir_node_addback(&parser->redir_head, parser->token->next->value, parser->token->type);
-	redir_node_addback(&parser->cmd_head->redir_list, parser->token->next->value, parser->token->type);
+	redir_node_addback(&parser->redir_head, parser->token->next->value,
+		parser->token->type);
+	redir_node_addback(&parser->cmd_head->redir_list,
+		parser->token->next->value, parser->token->type);
 	if (redir_type == TOKEN_REDIR_IN)
 		parser->cmd_head->input_file = ft_strdup(parser->token->next->value);
 	else if (redir_type == TOKEN_REDIR_OUT)
@@ -70,7 +72,7 @@ int	handle_redirection(t_parser *parser)
 	return (1);
 }
 
-t_cmd_sequence	*parse_tokens(t_token *head, t_redir_list **redir_head)
+t_cmd_sequence	*parse_tokens(t_token *head)
 {
 	t_parser	parser;
 
@@ -93,6 +95,6 @@ t_cmd_sequence	*parse_tokens(t_token *head, t_redir_list **redir_head)
 			parser.arg_count = 0;
 		parser.token = parser.token->next;
 	}
-	//display_redir_list(parser.cmd_head->redir_list);
+	// display_redir_list(parser.cmd_head->redir_list);
 	return (parser.cmd_head->args[parser.arg_count] = NULL, parser.seq_head);
 }

@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/20 11:13:30 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/20 11:16:57 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,18 @@ typedef struct s_redir_list
 }						t_redir_list;
 typedef struct s_cmd
 {
-	char			**args;			// arguments
-	char			*input_file;	// <
-	char			*output_file;	// >
-	int				append_output;	// 1 = >>, 0 = >
-	char			*heredoc_delim;	// << (heredoc)
-	t_redir_list	*redir_list;
-	struct s_cmd	*next;			// prochaine commande (si pipe il y a); NULL par défaut
-}					t_cmd;
+	char **args;         // arguments
+	char *input_file;    // <
+	char *output_file;   // >
+	int append_output;   // 1 = >>, 0 = >
+	char *heredoc_delim; // << (heredoc)
+	t_redir_list		*redir_list;
+	struct s_cmd *next; // prochaine commande (si pipe il y a); NULL par défaut
+}						t_cmd;
 /*
 	t_cmd represente une ou plusieurs commandes delimitées par un ou plusieurs pipes
 	t_cmd_sequence represente tous les commandes séparés par un operateur logique
 */
-
 
 typedef struct s_cmd_sequence
 {
@@ -165,7 +164,7 @@ t_token					*append_newline_token(t_token **token_list,
 /* ******* Validator ******* */
 /* ************************* */
 
-t_cmd_sequence			*parse_tokens(t_token *head, t_redir_list **redir_head);
+t_cmd_sequence			*parse_tokens(t_token *head);
 void					display_seq(t_cmd_sequence *seq_head);
 t_cmd					*cmd_builder(t_token *token);
 t_cmd_sequence			*sequence_builder(void);
