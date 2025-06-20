@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/20 11:16:57 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/20 12:04:01 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,11 @@ typedef struct s_redir_list
 }						t_redir_list;
 typedef struct s_cmd
 {
-	char **args;         // arguments
-	char *input_file;    // <
-	char *output_file;   // >
+	char **args;       // arguments
+	char *input_file;  // <
+	char *output_file; // >
+	int					fds_in[2];
+	int					fds_out[2];
 	int append_output;   // 1 = >>, 0 = >
 	char *heredoc_delim; // << (heredoc)
 	t_redir_list		*redir_list;

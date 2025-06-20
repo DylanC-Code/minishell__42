@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 16:56:02 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/20 11:58:06 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@
 
 // # define USER_PROMPT "\e[1;32mminishell\e[0m:\e[1;34m\w\e[0m$"
 
-# define OPERATORS "<>|&()"
-
+# define PS2_PROMPT "> "
 # define OPERATORS "<>|&()"
 
 typedef struct s_env
@@ -60,6 +59,6 @@ void				exit_with_error(char *msg, t_garbage **garbage_list);
 void				display_tokens(t_token *head, char *input);
 t_status			print_syntax_error(const char *token);
 t_status			print_unexpected_eof(char quote_type);
-void	print_banner(void);
+void				print_banner(void);
 
 #endif
