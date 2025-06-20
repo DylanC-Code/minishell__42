@@ -19,6 +19,8 @@
         "types.h": "c",
         "input.h": "c",
         "stdbool.h": "c",
-        "memory.h": "c"
+        "memory.h": "c",
+        "stat.h": "c",
+        "fcntl.h": "c"
     }
 }

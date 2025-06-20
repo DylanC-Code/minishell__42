@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/20 14:01:10 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/20 15:43:50 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_cmd
 	int					fds_out[2];
 	int append_output;   // 1 = >>, 0 = >
 	char *heredoc_delim; // << (heredoc)
+	pid_t				pid;
 	t_redir_list		*redir_list;
 	struct s_cmd *next; // prochaine commande (si pipe il y a); NULL par défaut
 }						t_cmd;
