@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/18 15:17:06 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/18 15:26:02 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ RM := rm -rf
 SRCS := $(addprefix $(SRCS_DIR), \
 		builtins/env.c \
 		builtins/exit.c \
+		\
+		executor/executor.c \
 		\
 		init/init_env.c \
 		init/init.c \

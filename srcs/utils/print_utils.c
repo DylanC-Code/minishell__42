@@ -19,7 +19,7 @@ char	*token_to_str(t_token_type type)
 	case TOKEN_REDIR_APPEND:
 		return ("REDIR_APPEND");
 	case TOKEN_REDIR_HEREDOC:
-		return ("REDIR_APPEND");
+		return ("REDIR_HEREDOC");
 	case TOKEN_OPEN_PARENTHESIS:
 		return ("OPEN_PARENTHESE");
 	case TOKEN_CLOSE_PARENTHESIS:
@@ -106,4 +106,41 @@ void	display_seq(t_cmd_sequence *seq_head)
 		current_seq = current_seq->next;
 		seq_num++;
 	}
+}
+
+#include <stdio.h>
+#include "colors.h"
+#include <stdio.h>
+#include <unistd.h> // pour usleep
+#include "colors.h"
+
+static void	print_line_slow(const char *line, useconds_t delay)
+{
+	while (*line)
+	{
+		write(STDOUT_FILENO, line, 1);
+		usleep(delay); // e.g. 5000 = 5ms
+		line++;
+	}
+}
+
+void	print_banner(void)
+{
+	const char *banner[] = {
+		SHELL_EMOJI " Welcome to\n\n",
+		BBLUE " ███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     \n",
+		" ████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     \n",
+		" ██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     \n",
+		" ██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     \n",
+		" ██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗\n",
+		" ╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n" RESET,
+		"\n",
+		BGREEN "     🧠 Ctrl-C: interrupt | Ctrl-D: exit | Ctrl-\\: ignored\n" RESET,
+		BYELLOW "     📁 PWD: shown in prompt | 💡 Builtins: cd, echo, pwd...\n" RESET,
+		BMAGENTA "     🔧 Redirections | 🔗 Pipes | 🌱 Environment | ❓ $?, $VAR\n\n" RESET,
+		NULL
+	};
+
+	for (int i = 0; banner[i]; i++)
+		print_line_slow(banner[i], 500); // 500µs par caractère (modifiable)
 }

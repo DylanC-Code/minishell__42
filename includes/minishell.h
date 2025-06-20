@@ -6,13 +6,14 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 15:04:55 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:56:02 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "colors.h"
 # include "input.h"
 # include "libft.h"
 # include "memory.h"
@@ -26,7 +27,7 @@
 # include <sys/types.h>
 # include <unistd.h>
 
-# define USER_PROMPT "\e[1;32mminishell\e[0m:\e[1;34m\w\e[0m$"
+// # define USER_PROMPT "\e[1;32mminishell\e[0m:\e[1;34m\w\e[0m$"
 
 # define OPERATORS "<>|&()"
 
@@ -59,5 +60,6 @@ void				exit_with_error(char *msg, t_garbage **garbage_list);
 void				display_tokens(t_token *head, char *input);
 t_status			print_syntax_error(const char *token);
 t_status			print_unexpected_eof(char quote_type);
+void	print_banner(void);
 
 #endif

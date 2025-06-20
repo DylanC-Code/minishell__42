@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 15:16:53 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:51:22 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft.h"
 # include "memory.h"
-# include "minishell.h"
 # include <stdbool.h>
 # include <stdlib.h>
 
@@ -57,12 +56,14 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
-	char **args;         // arguments
-	char *input_file;    // <
-	char *output_file;   // >
-	int append_output;   // 1 = >>, 0 = >
-	char *heredoc_delim; // << (heredoc)
-	struct s_cmd *next;  // prochaine commande (si pipe il y a); NULL par défaut
+	char **args; // arguments
+					char *input_file;    // <
+					char *output_file;   // >
+					int append_output;   // 1 = >>, 0 = >
+					char *heredoc_delim; // << (heredoc)
+	int					fd[2];
+	// t_redir_list		*redir_head;
+	struct s_cmd *next; // prochaine commande (si pipe il y a); NULL par défaut
 }						t_cmd;
 
 /*
@@ -166,7 +167,7 @@ t_token					*append_newline_token(t_token **token_list,
 /* ******* Validator ******* */
 /* ************************* */
 
-t_cmd_sequence			*parse_tokens(t_token *head);
+t_cmd_sequence			*parse_tokens(t_token *head, t_redir_list **redir_head);
 void					display_seq(t_cmd_sequence *seq_head);
 t_cmd					*cmd_builder(t_token *token);
 t_cmd_sequence			*sequence_builder(void);

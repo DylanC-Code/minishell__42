@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 11:48:42 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 16:16:41 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/20 10:03:58 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ static void	handle_double_char_operator(t_token *token)
 	if (*token->value == '|')
 		token->type = TOKEN_OR;
 	else if (*token->value == '<')
-		token->type = TOKEN_REDIR_APPEND;
-	else if (*token->value == '>')
 		token->type = TOKEN_REDIR_HEREDOC;
+	else if (*token->value == '>')
+		token->type = TOKEN_REDIR_APPEND;
 	else if (*token->value == '&')
 		token->type = TOKEN_AND;
 }

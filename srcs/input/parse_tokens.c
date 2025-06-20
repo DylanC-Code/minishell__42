@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:20 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/18 15:14:52 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:07:00 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	handle_redirection(t_parser *parser)
 	return (1);
 }
 
-t_cmd_sequence	*parse_tokens(t_token *head)
+t_cmd_sequence	*parse_tokens(t_token *head, t_redir_list **redir_head)
 {
 	t_parser	parser;
 
@@ -93,6 +93,7 @@ t_cmd_sequence	*parse_tokens(t_token *head)
 			parser.arg_count = 0;
 		parser.token = parser.token->next;
 	}
+	*redir_head = parser.redir_head;
 	display_redir_list(parser.redir_head);
 	return (parser.cmd_head->args[parser.arg_count] = NULL, parser.seq_head);
 }
