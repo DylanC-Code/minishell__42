@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/18 15:26:02 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/21 14:39:32 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,14 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		builtins/env.c \
 		builtins/exit.c \
 		\
+		executor/child.c \
+		executor/exec_prepare.c \
 		executor/executor.c \
+		executor/heredoc.c \
+		executor/pipe_setup.c \
+		executor/redirection.c \
+		executor/sequence_exec.c \
+		executor/simple_exec.c \
 		\
 		init/init_env.c \
 		init/init.c \
@@ -66,7 +73,9 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		\
 		signals/signals.c \
 		\
+		utils/env_utils.c \
 		utils/error.c \
+		utils/fd_utils.c \
 		utils/print_utils.c \
 		\
 		main.c \
