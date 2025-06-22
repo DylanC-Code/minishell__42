@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:18:44 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 11:10:24 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/21 08:40:46 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ static bool	is_invalid_token(t_token *token);
 t_status	syntax_handle_and_or_command(t_token **token_list)
 {
 	t_status	pipeline_handled;
-	t_token		*op_token;
 
-	op_token = *token_list;
 	if (is_and_or_token(*token_list))
 		return (print_syntax_error((*token_list)->value), ERROR);
 	pipeline_handled = syntax_handle_pipeline(token_list);
@@ -28,7 +26,6 @@ t_status	syntax_handle_and_or_command(t_token **token_list)
 		return (pipeline_handled);
 	while (is_and_or_token(*token_list))
 	{
-		op_token = *token_list;
 		*token_list = (*token_list)->next;
 		if (is_invalid_token(*token_list))
 			return (print_syntax_error((*token_list)->value), ERROR);
