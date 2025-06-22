@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 17:12:19 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/20 11:13:44 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/21 18:40:47 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,12 @@ t_cmd	*cmd_builder(t_token *token)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	printf("\nWORD COUNT IN CMD BUILDER %ld\n", count_words(token));
+	ft_bzero(cmd, sizeof(t_cmd));
 	cmd->args = malloc(sizeof(char *) * count_words(token) + 1);
 	if (!cmd->args)
 		return (NULL);
+	cmd->fd_in = -1;
+	cmd->fd_out = -1;
 	cmd->input_file = NULL;
 	cmd->output_file = NULL;
 	cmd->append_output = -1;
@@ -82,6 +84,7 @@ t_cmd_sequence	*sequence_builder(void)
 	seq = malloc(sizeof(t_cmd_sequence));
 	if (!seq)
 		return (NULL);
+	ft_bzero(seq, sizeof(t_cmd_sequence));
 	seq->cmds = NULL;
 	seq->logical_op = -1;
 	seq->next = NULL;
