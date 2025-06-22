@@ -21,6 +21,9 @@
         "stdbool.h": "c",
         "memory.h": "c",
         "stat.h": "c",
-        "fcntl.h": "c"
+        "fcntl.h": "c",
+        "wait.h": "c",
+        "executor.h": "c",
+        "init.h": "c"
     }
 }
