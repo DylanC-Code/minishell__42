@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:48:22 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 14:01:36 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:28:23 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	set_env_value(t_app *app, const char *key, const char *value)
 	{
 		if (ft_strcmp(tmp->key, key) == 0)
 		{
-			tmp->value = ft_strdup(value);
+			tmp->value = ft_strdup(value, &app->app_gc);
 			return ;
 		}
 		tmp = tmp->next;
@@ -92,10 +92,10 @@ void	add_env_node(t_app *app, const char *key, const char *value)
 	new_env = gc_malloc(sizeof(t_env), &app->app_gc);
 	if (!new_env)
 		return ;
-	new_env->key = ft_strdup(key);
+	new_env->key = ft_strdup(key, &app->app_gc);
 	if (!new_env->key)
 		return ;
-	new_env->value = ft_strdup(value);
+	new_env->value = ft_strdup(value, &app->app_gc);
 	if (!new_env->value)
 		return ;
 	new_env->next = NULL;

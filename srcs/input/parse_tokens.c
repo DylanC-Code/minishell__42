@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:20 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/23 13:27:41 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:26:48 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	handle_logical_operator(t_parser *parser)
 	return (1);
 }
 
-int	handle_redirection(t_parser *parser)
+int	handle_redirection(t_parser *parser, t_garbage **gc)
 {
 	t_token_type	redir_type;
 
@@ -51,14 +51,14 @@ int	handle_redirection(t_parser *parser)
 	if (!parser->token->next || parser->token->next->type != TOKEN_WORD)
 		return (-1);
 	redir_node_addback(&parser->redir_head, parser->token->next->value,
-		parser->token->type);
+		parser->token->type, gc);
 	redir_node_addback(&parser->cmd_head->redir_list,
-		parser->token->next->value, parser->token->type);
+		parser->token->next->value, parser->token->type, gc);
 	parser->token = parser->token->next;
 	return (1);
 }
 
-t_cmd_sequence	*parse_tokens(t_token *head)
+t_cmd_sequence	*parse_tokens(t_token *head, t_garbage **gc)
 {
 	t_parser	parser;
 
@@ -72,10 +72,11 @@ t_cmd_sequence	*parse_tokens(t_token *head)
 	while (parser.token)
 	{
 		if (parser.token->type == TOKEN_WORD)
-			parser.cmd_head->args[parser.arg_count++] = ft_strdup(parser.token->value);
+			parser.cmd_head->args[parser.arg_count++] = ft_strdup(parser.token->value,
+					gc);
 		else if (handle_pipe(&parser))
 			return (NULL);
-		else if (handle_redirection(&parser) == -1)
+		else if (handle_redirection(&parser, gc) == -1)
 			return (NULL);
 		else if (handle_logical_operator(&parser))
 			parser.arg_count = 0;

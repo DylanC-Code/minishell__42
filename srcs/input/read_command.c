@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:26:29 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 14:42:25 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:22:15 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ t_token	*read_complete_command(t_garbage **gc)
 	return (token_head);
 }
 
-char	*get_prompt(void)
+char	*get_prompt(t_garbage **gc)
 {
 	char	*cwd;
 	char	*prompt;
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		return (ft_strdup(SHELL_EMOJI " " BBLUE "minishell" RESET "$"));
+		return (ft_strdup(SHELL_EMOJI " " BBLUE "minishell" RESET "$", gc));
 	prompt = malloc(strlen(cwd) + 100);
 	if (!prompt)
 		return (NULL);
@@ -42,14 +42,14 @@ char	*get_prompt(void)
 	return (prompt);
 }
 
-char	*get_user_input(t_garbage **gb_list)
+char	*get_user_input(t_garbage **gc)
 {
 	char	*line;
 
-	line = readline(get_prompt());
+	line = readline(get_prompt(gc));
 	if (!line)
 		return (NULL);
 	add_history(line);
-	add_to_gc(gb_list, line);
+	add_to_gc(gc, line);
 	return (line);
 }

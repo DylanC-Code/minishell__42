@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:25:19 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/21 08:40:57 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:20:54 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@
 
 /* =============== Declaration =============== */
 
-void	handle_new_line_token(t_token *token);
+void	handle_new_line_token(t_token *token, t_garbage **gc);
 void	handle_operator_token(t_token *token, char *str);
 void	handle_io_number_token(t_token *token, char *str);
 bool	ft_is_ionumber(char *str);
 
 /* =============== Definition ================ */
 
-void	handle_new_line_token(t_token *token)
+void	handle_new_line_token(t_token *token, t_garbage **gc)
 {
 	token->type = TOKEN_NEW_LINE;
-	token->value = ft_strdup("newline");
+	token->value = ft_strdup("newline", gc);
 }
 
 void	handle_io_number_token(t_token *token, char *str)
@@ -38,10 +38,10 @@ void	handle_io_number_token(t_token *token, char *str)
 	token->value = ft_strndup(str, p_redirection - str);
 }
 
-void	handle_eof_token(t_token *token)
+void	handle_eof_token(t_token *token, t_garbage **gc)
 {
 	token->type = TOKEN_EOF;
-	token->value = ft_strdup("");
+	token->value = ft_strdup("", gc);
 }
 
 bool	ft_is_ionumber(char *str)

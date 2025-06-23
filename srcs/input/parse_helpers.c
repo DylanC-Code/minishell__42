@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 17:12:19 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/23 13:27:54 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:24:39 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,15 @@ t_cmd_sequence	*sequence_builder(void)
 	return (seq);
 }
 
-t_redir_list	*redir_node_builder(char *name, t_token_type type)
+t_redir_list	*redir_node_builder(char *name, t_token_type type,
+		t_garbage **gc)
 {
 	t_redir_list	*node;
 
 	node = malloc(sizeof(t_redir_list));
 	if (!node)
 		return (NULL);
-	node->name = ft_strdup(name);
+	node->name = ft_strdup(name, gc);
 	if (!node->name)
 		return (NULL);
 	node->type = type;
@@ -101,12 +102,12 @@ t_redir_list	*redir_node_builder(char *name, t_token_type type)
 }
 
 void	redir_node_addback(t_redir_list **redir_list, char *name,
-		t_token_type type)
+		t_token_type type, t_garbage **gc)
 {
 	t_redir_list	*new_node;
 	t_redir_list	*current;
 
-	new_node = redir_node_builder(name, type);
+	new_node = redir_node_builder(name, type, gc);
 	if (!new_node)
 		return ;
 	if (!*redir_list)

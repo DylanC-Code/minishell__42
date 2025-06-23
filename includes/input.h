@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 13:26:37 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:27:32 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define INPUT_H
 
 # include "libft.h"
-# include "memory.h"
 # include <stdbool.h>
 # include <stdlib.h>
 
@@ -128,12 +127,14 @@ void						syntax_error(t_token *token);
 
 t_cmd						*cmd_builder(t_token *token);
 void						display_seq(t_cmd_sequence *seq_head);
-int							handle_redirection(t_parser *parser);
+int							handle_redirection(t_parser *parser,
+								t_garbage **gc);
 int							handle_logical_op(t_parser *parser);
 int							handle_pipe(t_parser *parser);
-t_redir_list				*redir_node_builder(char *name, t_token_type type);
+t_redir_list				*redir_node_builder(char *name, t_token_type type,
+								t_garbage **gc);
 void						redir_node_addback(t_redir_list **redir_list,
-								char *name, t_token_type type);
+								char *name, t_token_type type, t_garbage **gc);
 int							is_redirection_operator(t_token_type type);
 void						display_redir_list(t_redir_list *head);
 char						*token_to_str(t_token_type type);
@@ -152,9 +153,10 @@ void						handle_single_quote_token(t_token *token,
 void						handle_double_quote_token(t_token *token,
 								char *str);
 void						handle_operator_token(t_token *token, char *str);
-void						handle_new_line_token(t_token *token);
+void						handle_new_line_token(t_token *token,
+								t_garbage **gc);
 void						handle_io_number_token(t_token *token, char *str);
-void						handle_eof_token(t_token *token);
+void						handle_eof_token(t_token *token, t_garbage **gc);
 
 bool						ft_is_ionumber(char *str);
 void						add_token_back(t_token **token_list,
@@ -166,7 +168,7 @@ t_token						*append_newline_token(t_token **token_list,
 /* ******* Validator ******* */
 /* ************************* */
 
-t_cmd_sequence				*parse_tokens(t_token *head);
+t_cmd_sequence				*parse_tokens(t_token *head, t_garbage **gc);
 void						display_seq(t_cmd_sequence *seq_head);
 t_cmd						*cmd_builder(t_token *token);
 t_cmd_sequence				*sequence_builder(void);

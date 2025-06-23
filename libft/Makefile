@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 16:35:34 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/13 11:47:53 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/23 20:39:15 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -MMD
 
 NAME = libft.a
-OPTIONS = -c -I ./includes
+OPTIONS = -c -I ./includes -I ../includes/
 
 SRCS_DIR = srcs/
 BUILD_DIR = build/
