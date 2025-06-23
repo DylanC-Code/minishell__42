@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 10:05:29 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 13:26:37 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,15 @@ typedef struct s_redir_list
 }							t_redir_list;
 typedef struct s_cmd
 {
+	pid_t					pid;
 	char					**args;
-	char *input_file;  // TODO: remove
-	char *output_file; // TODO: remove
+	int						**pipes;
 	int						fd_in;
 	int						fd_out;
-	int pipe;            // TODO: unused
-	int fd_out_is_pipe;  // TODO: unused
-	int append_output;   // TODO: unused
-	char *heredoc_delim; // TODO: unused
-	int						**pipes;
-	pid_t					pid;
-	t_redir_list			*redir_list;
-	struct s_cmd			*next;
 	bool					failed;
 	t_garbage				*gc;
+	t_redir_list			*redir_list;
+	struct s_cmd			*next;
 }							t_cmd;
 
 typedef struct s_cmd_sequence

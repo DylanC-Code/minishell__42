@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/21 14:39:32 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/23 14:45:53 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -122,8 +122,11 @@ $(LIB_FILE): $(LIB_DIR)
 #                                   CLEAN RULES                                  #
 # ============================================================================== #
 
-clean:
+clean: clean_lib
 	$(RM) $(BUILD_DIR)
+
+clean_lib:
+	$(MAKE) -sC $(LIB_DIR) clean
 
 fclean: clean
 	$(RM) $(NAME)

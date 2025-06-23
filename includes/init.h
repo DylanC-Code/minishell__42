@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:26:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/21 11:26:58 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 13:59:05 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef struct s_env
 typedef struct s_app
 {
 	t_env			*env_head;
-	t_garbage		*garb_head;
+	t_garbage		*app_gc;
+	t_garbage		*curr_gc;
 }					t_app;
 
 #endif

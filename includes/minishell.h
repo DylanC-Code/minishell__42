@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 09:41:08 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 13:43:27 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ void		print_banner(void);
 char		**env_list_to_envp(t_env *env_list, t_garbage **gc);
 void		safe_close(int *fd);
 char		*get_env_value(t_env *env_list, const char *key);
+void		add_env_back(t_env **env_list, t_env *new_env);
+void		set_env_value(t_app *app, const char *key, const char *value);
 
 #endif
