@@ -36,6 +36,7 @@ RM := rm -rf
 SRCS := $(addprefix $(SRCS_DIR), \
 		builtins/env.c \
 		builtins/exit.c \
+		builtins/export.c\
 		\
 		executor/child.c \
 		executor/exec_prepare.c \
