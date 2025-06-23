@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 17:12:19 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/23 21:24:39 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:31:28 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ size_t	count_words(t_token *start_token)
 	return (arg_count);
 }
 
-t_cmd	*cmd_builder(t_token *token)
+t_cmd	*cmd_builder(t_token *token, t_garbage **gc)
 {
 	t_cmd	*cmd;
 
-	cmd = malloc(sizeof(t_cmd));
+	cmd = gc_malloc(sizeof(t_cmd), gc);
 	if (!cmd)
 		return (NULL);
 	ft_bzero(cmd, sizeof(t_cmd));
-	cmd->args = malloc(sizeof(char *) * count_words(token) + 1);
+	cmd->args = gc_malloc(sizeof(char *) * count_words(token) + 1, gc);
 	if (!cmd->args)
 		return (NULL);
 	cmd->fd_in = -1;
@@ -71,11 +71,11 @@ t_cmd	*cmd_builder(t_token *token)
 	return (cmd);
 }
 
-t_cmd_sequence	*sequence_builder(void)
+t_cmd_sequence	*sequence_builder(t_garbage **gc)
 {
 	t_cmd_sequence	*seq;
 
-	seq = malloc(sizeof(t_cmd_sequence));
+	seq = gc_malloc(sizeof(t_cmd_sequence), gc);
 	if (!seq)
 		return (NULL);
 	ft_bzero(seq, sizeof(t_cmd_sequence));
@@ -90,7 +90,7 @@ t_redir_list	*redir_node_builder(char *name, t_token_type type,
 {
 	t_redir_list	*node;
 
-	node = malloc(sizeof(t_redir_list));
+	node = gc_malloc(sizeof(t_redir_list), gc);
 	if (!node)
 		return (NULL);
 	node->name = ft_strdup(name, gc);

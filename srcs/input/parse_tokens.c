@@ -6,26 +6,26 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:20 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/23 21:26:48 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:34:41 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_pipe(t_parser *parser)
+int	handle_pipe(t_parser *parser, t_garbage **gc)
 {
 	if (parser->token->type != TOKEN_PIPE)
 		return (0);
 	if (!parser->token->next)
 		return (1);
 	parser->cmd_head->args[parser->arg_count] = NULL;
-	parser->cmd_head->next = cmd_builder(parser->token->next);
+	parser->cmd_head->next = cmd_builder(parser->token->next, gc);
 	parser->cmd_head = parser->cmd_head->next;
 	parser->arg_count = 0;
 	return (0);
 }
 
-int	handle_logical_operator(t_parser *parser)
+int	handle_logical_operator(t_parser *parser, t_garbage **gc)
 {
 	if (parser->token->type != TOKEN_AND && parser->token->type != TOKEN_OR)
 		return (0);
@@ -34,9 +34,9 @@ int	handle_logical_operator(t_parser *parser)
 		parser->curr_seq->logical_op = LOGICAL_AND;
 	else if (parser->token->type == TOKEN_OR)
 		parser->curr_seq->logical_op = LOGICAL_OR;
-	parser->curr_seq->next = sequence_builder();
+	parser->curr_seq->next = sequence_builder(gc);
 	parser->curr_seq = parser->curr_seq->next;
-	parser->cmd_head = cmd_builder(parser->token->next);
+	parser->cmd_head = cmd_builder(parser->token->next, gc);
 	parser->curr_seq->cmds = parser->cmd_head;
 	return (1);
 }
@@ -62,8 +62,8 @@ t_cmd_sequence	*parse_tokens(t_token *head, t_garbage **gc)
 {
 	t_parser	parser;
 
-	parser.seq_head = sequence_builder();
-	parser.cmd_head = cmd_builder(head);
+	parser.seq_head = sequence_builder(gc);
+	parser.cmd_head = cmd_builder(head, gc);
 	parser.curr_seq = parser.seq_head;
 	parser.curr_seq->cmds = parser.cmd_head;
 	parser.token = head;
@@ -74,11 +74,11 @@ t_cmd_sequence	*parse_tokens(t_token *head, t_garbage **gc)
 		if (parser.token->type == TOKEN_WORD)
 			parser.cmd_head->args[parser.arg_count++] = ft_strdup(parser.token->value,
 					gc);
-		else if (handle_pipe(&parser))
+		else if (handle_pipe(&parser, gc))
 			return (NULL);
 		else if (handle_redirection(&parser, gc) == -1)
 			return (NULL);
-		else if (handle_logical_operator(&parser))
+		else if (handle_logical_operator(&parser, gc))
 			parser.arg_count = 0;
 		parser.token = parser.token->next;
 	}

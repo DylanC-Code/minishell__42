@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 21:27:32 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:34:14 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,12 +125,12 @@ t_status					syntax_handle_subshell(t_token **token_list);
 /* ~ Error ~ */
 void						syntax_error(t_token *token);
 
-t_cmd						*cmd_builder(t_token *token);
 void						display_seq(t_cmd_sequence *seq_head);
 int							handle_redirection(t_parser *parser,
 								t_garbage **gc);
-int							handle_logical_op(t_parser *parser);
-int							handle_pipe(t_parser *parser);
+int							handle_logical_operator(t_parser *parser,
+								t_garbage **gc);
+int							handle_pipe(t_parser *parser, t_garbage **gc);
 t_redir_list				*redir_node_builder(char *name, t_token_type type,
 								t_garbage **gc);
 void						redir_node_addback(t_redir_list **redir_list,
@@ -170,8 +170,8 @@ t_token						*append_newline_token(t_token **token_list,
 
 t_cmd_sequence				*parse_tokens(t_token *head, t_garbage **gc);
 void						display_seq(t_cmd_sequence *seq_head);
-t_cmd						*cmd_builder(t_token *token);
-t_cmd_sequence				*sequence_builder(void);
+t_cmd						*cmd_builder(t_token *token, t_garbage **gc);
+t_cmd_sequence				*sequence_builder(t_garbage **gc);
 t_token						*get_token(char *str, t_garbage **gb_list);
 t_token_type				get_token_type(char *token_value);
 
