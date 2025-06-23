@@ -6,16 +6,16 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/22 09:25:41 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 09:41:08 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "init.h"
 # include "colors.h"
 # include "executor.h"
+# include "init.h"
 # include "input.h"
 # include "libft.h"
 # include "memory.h"
@@ -53,5 +53,6 @@ t_status	print_unexpected_eof(char quote_type);
 void		print_banner(void);
 char		**env_list_to_envp(t_env *env_list, t_garbage **gc);
 void		safe_close(int *fd);
+char		*get_env_value(t_env *env_list, const char *key);
 
 #endif

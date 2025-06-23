@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 09:48:22 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/21 09:54:09 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 09:40:54 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,18 @@ char	**env_list_to_envp(t_env *env_list, t_garbage **gc)
 	}
 	envp[i] = NULL;
 	return (envp);
+}
+
+char	*get_env_value(t_env *env_list, const char *key)
+{
+	t_env	*tmp;
+
+	tmp = env_list;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, key) == 0)
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return (NULL);
 }

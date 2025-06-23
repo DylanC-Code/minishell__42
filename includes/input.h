@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/22 09:22:54 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 10:05:29 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_cmd_sequence
 {
 	t_cmd					*cmds;
 	int						logical_op;
+	int						last_exit_status;
 	struct s_cmd_sequence	*next;
 
 }							t_cmd_sequence;
