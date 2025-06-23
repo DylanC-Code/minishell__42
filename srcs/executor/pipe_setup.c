@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:10:34 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/22 09:23:04 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 13:23:00 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,5 @@ t_status	setup_pipes(t_cmd_sequence *seq, t_garbage **gc)
 		}
 	}
 	assign_pipe_fds(cmd, pipes, cmd_count);
-	// Facultatif : stocker pipes dans seq si tu veux les fermer plus tard
-	// seq->internal_pipe_table = pipes;
 	return (SUCCESS);
 }
