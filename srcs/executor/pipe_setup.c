@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:10:34 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 13:23:00 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:42:37 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_status	setup_pipes(t_cmd_sequence *seq, t_garbage **gc)
 	t_cmd	*cmd;
 	int		cmd_count;
 	int		**pipes;
+	int		i;
 
 	cmd = seq->cmds;
 	cmd_count = count_cmds(cmd);
@@ -51,7 +52,8 @@ t_status	setup_pipes(t_cmd_sequence *seq, t_garbage **gc)
 	pipes = gc_malloc(sizeof(int *) * (cmd_count - 1), gc);
 	if (!pipes)
 		return (ERROR);
-	for (int i = 0; i < cmd_count - 1; ++i)
+	i = -1;
+	while (++i < cmd_count - 1)
 	{
 		pipes[i] = gc_malloc(sizeof(int) * 2, gc);
 		if (!pipes[i] || pipe(pipes[i]) < 0)

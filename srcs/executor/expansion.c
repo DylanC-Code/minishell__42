@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:45:36 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/23 11:39:41 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:50:19 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	valid_var_char(char c)
 			&& c <= '9') || c == '_');
 }
 
-char	*is_env_var(char *s)
+char	*is_env_var(char *s, t_garbage **gc)
 {
 	int	i;
 	int	start;
@@ -38,7 +38,7 @@ char	*is_env_var(char *s)
 			start = i;
 			while (s[i] && valid_var_char(s[i]))
 				i++;
-			return (ft_strndup(s + start, i - start));
+			return (ft_strndup(s + start, i - start, gc));
 		}
 		i++;
 	}
@@ -59,7 +59,8 @@ char	*look_up_env(char *var_name, t_env *env)
 	return ("");
 }
 
-char	*resolved_env(char *cmd, char *var_name, char *env_value)
+char	*resolved_env(char *cmd, char *var_name, char *env_value,
+		t_garbage **gc)
 {
 	char	*res;
 	int		i;
@@ -71,9 +72,9 @@ char	*resolved_env(char *cmd, char *var_name, char *env_value)
 	while (cmd[i] && cmd[i] != '$')
 		i++;
 	if (i > 0)
-		res = ft_strndup(cmd, i);
+		res = ft_strndup(cmd, i, gc);
 	else
-		res = ft_strdup("");
+		res = ft_strdup("", gc);
 	res = ft_strjoin(res, env_value);
 	res = ft_strjoin(res, cmd + i + 1 + var_len);
 	return (res);
@@ -92,14 +93,15 @@ void	traverse_cmd(t_cmd *cmd_head, t_app *app)
 		i = 0;
 		while (curr->args[i])
 		{
-			var_name = is_env_var(curr->args[i]);
+			var_name = is_env_var(curr->args[i], &app->app_gc);
 			if (var_name)
 			{
 				value = look_up_env(var_name, app->env_head);
 				printf("VAR_NAME->%s VALUE->%s\n", var_name, value);
 				printf("RESOLVED_ENV->%s\n", resolved_env(curr->args[i],
-						var_name, value));
-				curr->args[i] = resolved_env(curr->args[i], var_name, value);
+						var_name, value, &app->curr_gc));
+				curr->args[i] = resolved_env(curr->args[i], var_name, value,
+						&app->curr_gc);
 			}
 			i++;
 		}
@@ -109,7 +111,7 @@ void	traverse_cmd(t_cmd *cmd_head, t_app *app)
 
 int	handle_expansion(t_app *app, t_cmd_sequence *head_seq)
 {
-	t_cmd_sequence *curr_seq;
+	t_cmd_sequence	*curr_seq;
 
 	curr_seq = head_seq;
 	if (!app || !head_seq)
@@ -119,6 +121,5 @@ int	handle_expansion(t_app *app, t_cmd_sequence *head_seq)
 		traverse_cmd(curr_seq->cmds, app);
 		curr_seq = curr_seq->next;
 	}
-
 	return (1);
 }

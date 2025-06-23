@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 21:34:14 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:54:32 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,15 +147,18 @@ t_token						*tokenizer(char *line, t_garbage **gb_list);
 
 t_token						*get_token(char *str, t_garbage **gb_list);
 
-void						handle_word_token(t_token *token, char *str);
-void						handle_single_quote_token(t_token *token,
-								char *str);
-void						handle_double_quote_token(t_token *token,
-								char *str);
-void						handle_operator_token(t_token *token, char *str);
+void						handle_word_token(t_token *token, char *str,
+								t_garbage **gc);
+void						handle_single_quote_token(t_token *token, char *str,
+								t_garbage **gc);
+void						handle_double_quote_token(t_token *token, char *str,
+								t_garbage **gc);
+void						handle_operator_token(t_token *token, char *str,
+								t_garbage **gc);
 void						handle_new_line_token(t_token *token,
 								t_garbage **gc);
-void						handle_io_number_token(t_token *token, char *str);
+void						handle_io_number_token(t_token *token, char *str,
+								t_garbage **gc);
 void						handle_eof_token(t_token *token, t_garbage **gc);
 
 bool						ft_is_ionumber(char *str);

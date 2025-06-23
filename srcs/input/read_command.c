@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:26:29 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 21:22:15 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:37:50 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,10 @@ char	*get_prompt(t_garbage **gc)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (ft_strdup(SHELL_EMOJI " " BBLUE "minishell" RESET "$", gc));
-	prompt = malloc(strlen(cwd) + 100);
+	prompt = gc_malloc(strlen(cwd) + 100, gc);
 	if (!prompt)
 		return (NULL);
-	sprintf(prompt, PROMPT, cwd);
-	free(cwd);
+	sprintf(prompt, PROMPT, cwd); // TODO: remove
 	return (prompt);
 }
 

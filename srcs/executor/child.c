@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 14:32:47 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 15:00:21 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:48:40 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*find_in_path(t_app *app, const char *cmd)
 	env_path = get_env_value(app->env_head, "PATH");
 	if (!env_path)
 		return (NULL);
-	paths = ft_split(env_path, ':');
+	paths = ft_split(env_path, ':', &app->curr_gc);
 	if (!paths)
 		return (NULL);
 	i = 0;

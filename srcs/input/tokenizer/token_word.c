@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:25:19 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 11:35:34 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:53:10 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 
 /* =============== Declaration =============== */
 
-void	handle_word_token(t_token *token, char *str);
-void	handle_single_quote_token(t_token *token, char *str);
-void	handle_double_quote_token(t_token *token, char *str);
+void	handle_word_token(t_token *token, char *str, t_garbage **gc);
+void	handle_single_quote_token(t_token *token, char *str, t_garbage **gc);
+void	handle_double_quote_token(t_token *token, char *str, t_garbage **gc);
 
 /* =============== Definition ================ */
 
-void	handle_word_token(t_token *token, char *str)
+void	handle_word_token(t_token *token, char *str, t_garbage **gc)
 {
 	char	symbols[] = "<>|&()'\"";
 	size_t	i;
@@ -32,10 +32,10 @@ void	handle_word_token(t_token *token, char *str)
 	while (str[++i])
 		if (ft_ischarset(str[i], symbols) || ft_isspace(str[i]))
 			break ;
-	token->value = ft_strndup(str, i);
+	token->value = ft_strndup(str, i, gc);
 }
 
-void	handle_single_quote_token(t_token *token, char *str)
+void	handle_single_quote_token(t_token *token, char *str, t_garbage **gc)
 {
 	size_t	i;
 
@@ -48,10 +48,10 @@ void	handle_single_quote_token(t_token *token, char *str)
 		i++;
 		break ;
 	}
-	token->value = ft_strndup(str, i);
+	token->value = ft_strndup(str, i, gc);
 }
 
-void	handle_double_quote_token(t_token *token, char *str)
+void	handle_double_quote_token(t_token *token, char *str, t_garbage **gc)
 {
 	size_t	i;
 
@@ -64,5 +64,5 @@ void	handle_double_quote_token(t_token *token, char *str)
 		if (str[i - 1] != '\\')
 			break ;
 	}
-	token->value = ft_strndup(str, i + 1);
+	token->value = ft_strndup(str, i + 1, gc);
 }

@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:20 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/23 21:34:41 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:38:05 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,5 @@ t_cmd_sequence	*parse_tokens(t_token *head, t_garbage **gc)
 			parser.arg_count = 0;
 		parser.token = parser.token->next;
 	}
-	// display_redir_list(parser.cmd_head->redir_list);
 	return (parser.cmd_head->args[parser.arg_count] = NULL, parser.seq_head);
 }

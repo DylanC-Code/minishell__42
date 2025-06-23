@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 14:38:35 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/22 09:23:53 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:37:09 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	safe_close(int *fd)
 {
+	if (!fd)
+		return ;
 	if (*fd > 2)
 		close(*fd);
 	*fd = -1;

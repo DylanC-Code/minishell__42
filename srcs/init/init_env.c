@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 09:42:38 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 20:46:03 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 21:50:44 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_env(t_app *app, char *envp[])
 		new_env = gc_malloc(sizeof(t_env), &app->app_gc);
 		ft_bzero(new_env, sizeof(t_env));
 		p_delimiter = ft_strchr(*envp, '=');
-		new_env->key = ft_strndup(*envp, p_delimiter - *envp);
+		new_env->key = ft_strndup(*envp, p_delimiter - *envp, &app->app_gc);
 		if (!new_env->key)
 			exit_with_error("malloc", &app->app_gc);
 		add_to_gc(&app->app_gc, new_env->key);
