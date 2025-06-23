@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 17:12:19 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/21 18:40:47 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 13:27:54 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,6 @@ t_cmd	*cmd_builder(t_token *token)
 		return (NULL);
 	cmd->fd_in = -1;
 	cmd->fd_out = -1;
-	cmd->input_file = NULL;
-	cmd->output_file = NULL;
-	cmd->append_output = -1;
-	cmd->heredoc_delim = NULL;
-	cmd->redir_list = NULL;
-	cmd->next = NULL;
 	return (cmd);
 }
 

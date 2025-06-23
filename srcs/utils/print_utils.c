@@ -86,17 +86,6 @@ void	display_seq(t_cmd_sequence *seq_head)
 				}
 			}
 			printf("\n");
-			if (current_cmd->input_file)
-				printf("    Input: %s\n", current_cmd->input_file);
-			if (current_cmd->output_file)
-			{
-				if (current_cmd->append_output == 1)
-					printf("    Output (append): %s\n", current_cmd->output_file);
-				else
-					printf("    Output: %s\n", current_cmd->output_file);
-			}
-			if (current_cmd->heredoc_delim)
-				printf("    Heredoc: %s\n", current_cmd->heredoc_delim);
 			if (current_cmd->next)
 				printf("    |\n");
 			current_cmd = current_cmd->next;

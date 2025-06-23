@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:20 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/20 11:16:10 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 13:27:41 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,6 @@ int	handle_redirection(t_parser *parser)
 		parser->token->type);
 	redir_node_addback(&parser->cmd_head->redir_list,
 		parser->token->next->value, parser->token->type);
-	if (redir_type == TOKEN_REDIR_IN)
-		parser->cmd_head->input_file = ft_strdup(parser->token->next->value);
-	else if (redir_type == TOKEN_REDIR_OUT)
-	{
-		parser->cmd_head->output_file = ft_strdup(parser->token->next->value);
-		parser->cmd_head->append_output = 0;
-	}
-	else if (redir_type == TOKEN_REDIR_APPEND)
-	{
-		parser->cmd_head->output_file = ft_strdup(parser->token->next->value);
-		parser->cmd_head->append_output = 1;
-	}
-	else if (redir_type == TOKEN_REDIR_HEREDOC)
-		parser->cmd_head->heredoc_delim = ft_strdup(parser->token->next->value);
 	parser->token = parser->token->next;
 	return (1);
 }
