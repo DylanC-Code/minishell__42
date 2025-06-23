@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:34:10 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/21 18:44:33 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/23 10:05:47 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ t_status	exec_sequence(t_app *app, t_cmd_sequence *seq)
 			waitpid(cmd->pid, &status, 0);
 		cmd = cmd->next;
 	}
+	seq->last_exit_status = WEXITSTATUS(status);
 	return (SUCCESS);
 }
