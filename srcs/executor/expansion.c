@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:45:36 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/23 21:50:19 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 09:29:23 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ char	*resolved_env(char *cmd, char *var_name, char *env_value,
 		res = ft_strndup(cmd, i, gc);
 	else
 		res = ft_strdup("", gc);
-	res = ft_strjoin(res, env_value);
-	res = ft_strjoin(res, cmd + i + 1 + var_len);
+	res = ft_strjoin(res, env_value, gc);
+	res = ft_strjoin(res, cmd + i + 1 + var_len, gc);
 	return (res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 11:55:49 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 13:13:48 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 09:39:08 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,4 @@ t_status	print_unexpected_eof(char quote_type)
 		quote_type);
 	return (ERROR);
 }
+

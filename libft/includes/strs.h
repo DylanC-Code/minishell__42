@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:05:53 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 21:46:46 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 09:28:32 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strdup(const char *s, t_garbage **gc);
 char	*ft_strndup(const char *s, size_t n, t_garbage **gc);
 char	*ft_substr(char const *s, size_t start, size_t len);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char const *s1, char const *s2, t_garbage **gc);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_strmapi(char const *s, char (*f)(size_t, char));
 void	ft_striteri(char *s, void (*f)(size_t, char *));

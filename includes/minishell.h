@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 13:43:27 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 10:30:04 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,7 @@ void		safe_close(int *fd);
 char		*get_env_value(t_env *env_list, const char *key);
 void		add_env_back(t_env **env_list, t_env *new_env);
 void		set_env_value(t_app *app, const char *key, const char *value);
+void		cleanup(t_app *app);
+char		*gc_readline(t_garbage **gc, const char *prompt);
 
 #endif

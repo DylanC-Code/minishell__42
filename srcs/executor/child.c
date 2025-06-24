@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 14:32:47 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 21:48:40 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 10:04:06 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ char	*find_in_path(t_app *app, const char *cmd)
 	i = 0;
 	while (paths[i])
 	{
-		path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(paths[i], "/", &app->curr_gc);
 		if (!path)
 			return (NULL);
-		path = ft_strjoin(path, cmd);
+		path = ft_strjoin(path, cmd, &app->curr_gc);
 		if (!path)
 			return (NULL);
 		if (!access(path, X_OK))
@@ -63,11 +63,13 @@ void	exec_or_died(t_app *app, t_cmd *cmd)
 		execve(cmd->args[0], cmd->args, env_list_to_envp(app->env_head,
 				&app->app_gc));
 		printf("minishell: %s: command not found\n", cmd->args[0]);
+		cleanup(app);
 		exit(127);
 		return ;
 	}
 	path = find_in_path(app, cmd->args[0]);
 	execve(path, cmd->args, env_list_to_envp(app->env_head, &app->app_gc));
 	printf("minishell: %s: command not found\n", cmd->args[0]);
+	cleanup(app);
 	exit(127);
 }

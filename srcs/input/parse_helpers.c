@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 17:12:19 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/23 21:31:28 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 09:31:27 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_cmd	*cmd_builder(t_token *token, t_garbage **gc)
 	if (!cmd)
 		return (NULL);
 	ft_bzero(cmd, sizeof(t_cmd));
-	cmd->args = gc_malloc(sizeof(char *) * count_words(token) + 1, gc);
+	cmd->args = gc_malloc(sizeof(char *) * (count_words(token) + 1), gc);
 	if (!cmd->args)
 		return (NULL);
 	cmd->fd_in = -1;

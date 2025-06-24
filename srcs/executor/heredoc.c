@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 10:58:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/22 09:45:56 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 10:31:41 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ static t_status	handle_heredoc(t_redir_list *heredoc_redir, t_garbage **gc)
 	char	*tmp;
 	int		fds[2];
 
-	(void)gc;
 	buffer = NULL;
-	tmp = readline(PS2_PROMPT);
+	tmp = gc_readline(gc, PS2_PROMPT);
 	if (!tmp)
 		return (ERROR);
 	if (pipe(fds) == -1)
@@ -52,9 +51,9 @@ static t_status	handle_heredoc(t_redir_list *heredoc_redir, t_garbage **gc)
 		if (!buffer)
 			buffer = tmp;
 		else
-			buffer = ft_strjoin(buffer, tmp);
-		buffer = ft_strjoin(buffer, "\n");
-		tmp = readline(PS2_PROMPT);
+			buffer = ft_strjoin(buffer, tmp, gc);
+		buffer = ft_strjoin(buffer, "\n", gc);
+		tmp = gc_readline(gc, PS2_PROMPT);
 	}
 	write(fds[1], buffer, ft_strlen(buffer));
 	close(fds[1]);
