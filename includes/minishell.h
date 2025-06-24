@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 15:10:30 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 16:25:06 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,34 @@
 # define OPERATORS "<>|&()"
 
 /* Builtins */
-void		builtin_env(t_app *app);
-void		builtin_exit(t_app *app, int status);
+void							builtin_env(t_app *app);
+void							builtin_exit(t_app *app, int status);
 
 /* Init */
-void		init(t_app *app, char *envp[]);
-void		init_env(t_app *app, char *envp[]);
-void		init_signals(void);
+void							init(t_app *app, char *envp[]);
+void							init_env(t_app *app, char *envp[]);
+void							init_signals(void);
 
 /* Utils */
-void		exit_with_error(char *msg, t_garbage **garbage_list);
-void		display_tokens(t_token *head, char *input);
-t_status	print_syntax_error(const char *token);
-t_status	print_unexpected_eof(char quote_type);
-void		print_banner(void);
-char		**env_list_to_envp(t_env *env_list, t_garbage **gc);
-void		safe_close(int *fd);
-char		*get_env_value(t_env *env_list, const char *key);
-void		add_env_back(t_env **env_list, t_env *new_env);
-void		set_env_value(t_app *app, const char *key, const char *value);
-void		cleanup(t_app *app);
-char		*gc_readline(t_garbage **gc, const char *prompt);
+void							exit_with_error(char *msg,
+									t_garbage **garbage_list);
+void							display_tokens(t_token *head, char *input);
+t_status						print_syntax_error(const char *token);
+t_status						print_unexpected_eof(char quote_type);
+void							print_banner(void);
+char							**env_list_to_envp(t_env *env_list,
+									t_garbage **gc);
+void							safe_close(int *fd);
+char							*get_env_value(t_env *env_list,
+									const char *key);
+void							add_env_back(t_env **env_list, t_env *new_env);
+void							set_env_value(t_app *app, const char *key,
+									const char *value);
+void							cleanup(t_app *app);
+void							cleanup_and_exit(t_app *app);
+char							*gc_readline(t_garbage **gc,
+									const char *prompt);
+
+extern volatile sig_atomic_t	in_heredoc;
 
 #endif

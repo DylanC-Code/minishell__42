@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 14:23:52 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 15:23:53 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char						*get_prompt(t_app *app);
 /* ******* Syntax ******* */
 /* ********************** */
 
-bool						check_syntax(t_token *head_token);
+bool						check_syntax(t_app *app, t_token *head_token);
 bool						check_word(char *value);
 
 /* ~ Command ~ */

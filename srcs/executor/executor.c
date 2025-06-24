@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:24:44 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 14:49:30 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 16:21:29 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static bool	check_logical_op(t_cmd_sequence *seq);
 
 void	handle_exec(t_app *app, t_cmd_sequence *head_seq)
 {
-	if (!collect_heredocs(head_seq, &app->app_gc))
+	if (!collect_heredocs(app, head_seq))
 		return ;
 	resolve_all_redirection(app, head_seq);
 	while (head_seq)
