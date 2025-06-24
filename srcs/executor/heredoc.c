@@ -6,16 +6,16 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 10:58:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 10:31:41 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 10:57:40 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static t_status	handle_heredoc(t_redir_list *heredoc_redir, t_garbage **gc);
-static void		handle_heredocs_cmd(t_cmd *cmd);
+static void		handle_heredocs_cmd(t_cmd *cmd, t_garbage **gc);
 
-t_status	collect_heredocs(t_cmd_sequence *head_seq)
+t_status	collect_heredocs(t_cmd_sequence *head_seq, t_garbage **gc)
 {
 	t_cmd	*cmd;
 
@@ -24,7 +24,7 @@ t_status	collect_heredocs(t_cmd_sequence *head_seq)
 		cmd = head_seq->cmds;
 		while (cmd)
 		{
-			handle_heredocs_cmd(cmd);
+			handle_heredocs_cmd(cmd, gc);
 			cmd = cmd->next;
 		}
 		head_seq = head_seq->next;
@@ -61,7 +61,7 @@ static t_status	handle_heredoc(t_redir_list *heredoc_redir, t_garbage **gc)
 	return (SUCCESS);
 }
 
-static void	handle_heredocs_cmd(t_cmd *cmd)
+static void	handle_heredocs_cmd(t_cmd *cmd, t_garbage **gc)
 {
 	t_redir_list	*redir_head;
 
@@ -69,7 +69,7 @@ static void	handle_heredocs_cmd(t_cmd *cmd)
 	while (redir_head)
 	{
 		if (redir_head->type == TOKEN_REDIR_HEREDOC)
-			handle_heredoc(redir_head, &cmd->gc);
+			handle_heredoc(redir_head, gc);
 		redir_head = redir_head->next;
 	}
 }

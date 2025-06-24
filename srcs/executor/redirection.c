@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:27:39 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/22 09:27:05 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 11:08:19 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,6 @@ static void	handle_redir_append(t_cmd *cmd, t_redir_list *redir)
 		cmd->failed = true;
 		return (perror(redir->name));
 	}
-	safe_close(&cmd->fd_in);
+	safe_close(&cmd->fd_out);
 	cmd->fd_out = redir->fd;
 }
