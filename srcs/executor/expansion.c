@@ -6,21 +6,46 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:45:36 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/24 09:29:23 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/25 14:58:16 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	is_quoted(char *s, char quote_char)
+{
+	int	len;
+
+	len = ft_strlen(s);
+	if (len < 2)
+		return (0);
+	return (s[0] == quote_char && s[len - 1] == quote_char);
+}
+
+char	*remove_quotes(char *s, t_garbage **gc)
+{
+	int	len;
+
+	len = ft_strlen(s);
+	if (len < 2)
+		return (ft_strdup(s, gc));
+	return (ft_strndup(s + 1, len - 2, gc));
+}
+
+
 int	valid_env_start(char c)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_');
+	return ((c >= 'a' && c <= 'z') ||
+			(c >= 'A' && c <= 'Z') ||
+			c == '_');
 }
 
 int	valid_var_char(char c)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0'
-			&& c <= '9') || c == '_');
+	return ((c >= 'a' && c <= 'z') ||
+			(c >= 'A' && c <= 'Z') ||
+			(c >= '0' && c <= '9') ||
+			c == '_');
 }
 
 char	*is_env_var(char *s, t_garbage **gc)
