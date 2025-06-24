@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:24:44 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 10:58:16 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 14:49:30 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_exec(t_app *app, t_cmd_sequence *head_seq)
 {
 	if (!collect_heredocs(head_seq, &app->app_gc))
 		return ;
-	resolve_all_redirection(head_seq);
+	resolve_all_redirection(app, head_seq);
 	while (head_seq)
 	{
 		if (!setup_pipes(head_seq, &app->curr_gc))

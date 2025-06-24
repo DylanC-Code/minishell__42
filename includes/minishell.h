@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 11:12:21 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 15:10:30 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "libft.h"
 # include "memory.h"
 # include <dirent.h>
+# include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -31,9 +32,9 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-// # define USER_PROMPT "\e[1;32mminishell\e[0m:\e[1;34m\w\e[0m$"
 
-# define PS2_PROMPT "> "
+# define PS2_PROMPT MAGENTA "> " RESET
+# define PS3_PROMPT CYAN ">> " RESET
 # define OPERATORS "<>|&()"
 
 /* Builtins */

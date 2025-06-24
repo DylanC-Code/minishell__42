@@ -25,6 +25,7 @@
         "wait.h": "c",
         "executor.h": "c",
         "init.h": "c",
-        "strs.h": "c"
+        "strs.h": "c",
+        "colors.h": "c"
     }
 }
