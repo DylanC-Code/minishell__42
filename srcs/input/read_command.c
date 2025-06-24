@@ -6,50 +6,38 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:26:29 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 09:59:13 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 14:37:57 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_token	*append_newline_token(t_token **token_list, t_garbage **gc_list);
-char	*get_user_input(t_garbage **gb_list);
+char	*get_user_input(t_app *app);
 
-t_token	*read_complete_command(t_garbage **gc)
+t_token	*read_complete_command(t_app *app)
 {
 	char	*line;
 	t_token	*token_head;
 
-	line = get_user_input(gc);
-	token_head = tokenizer(line, gc);
-	// display_tokens(token_head, line);
+	line = get_user_input(app);
+	token_head = tokenizer(line, &app->curr_gc);
+	set_env_value(app, "?", "0");
 	return (token_head);
 }
 
-char	*get_prompt(t_garbage **gc)
-{
-	char	*cwd;
-	char	*prompt;
-
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		return (ft_strdup(SHELL_EMOJI " " BBLUE "minishell" RESET "$", gc));
-	add_to_gc(gc, cwd);
-	prompt = gc_malloc(strlen(cwd) + 100, gc);
-	if (!prompt)
-		return (NULL);
-	sprintf(prompt, PROMPT, cwd); // TODO: remove
-	return (prompt);
-}
-
-char	*get_user_input(t_garbage **gc)
+char	*get_user_input(t_app *app)
 {
 	char	*line;
+	char	*prompt;
 
-	line = readline(get_prompt(gc));
+	prompt = get_prompt(app);
+	if (!prompt)
+		return (NULL);
+	line = readline(prompt);
 	if (!line)
 		return (NULL);
 	add_history(line);
-	add_to_gc(gc, line);
+	add_to_gc(&app->curr_gc, line);
 	return (line);
 }
