@@ -6,31 +6,28 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:22:18 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/10 17:24:56 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/24 16:28:00 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+volatile sig_atomic_t	in_heredoc = 0;
+
 void	sigs_handler(int signal)
 {
-	if (signal == SIGQUIT)
-		return ;
+	if (signal == SIGINT && !in_heredoc)
+		write(STDOUT_FILENO, "\n" PS2_PROMPT, ft_strlen(PS2_PROMPT) + 1);
 }
 
-void	handle_SIGQUIT(void)
+void	init_signals(void)
 {
 	struct sigaction	act;
-	struct sigaction	old_act;
 
 	ft_bzero(&act, sizeof(struct sigaction));
 	act.sa_handler = &sigs_handler;
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = 0;
-	sigaction(SIGQUIT, NULL, &old_act); // Todo: check returns
-}
-
-void	init_signals(void)
-{
-	handle_SIGQUIT();
+	sigaction(SIGQUIT, &act, NULL);
+	sigaction(SIGINT, &act, NULL);
 }
