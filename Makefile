@@ -46,6 +46,7 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		executor/redirection.c \
 		executor/sequence_exec.c \
 		executor/simple_exec.c \
+		executor/expansion.c \
 		\
 		init/init_env.c \
 		init/init.c \

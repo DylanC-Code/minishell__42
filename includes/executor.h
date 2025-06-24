@@ -25,5 +25,6 @@ t_status	exec_simple_cmd(t_app *app, t_cmd *cmd);
 t_status	exec_sequence(t_app *app, t_cmd_sequence *seq);
 void		child_exec(t_app *app, t_cmd *cmd);
 void		close_fds_in_parents(t_cmd *cmd);
+int	handle_expansion(t_app *app, t_cmd_sequence *head_seq);
 
 #endif

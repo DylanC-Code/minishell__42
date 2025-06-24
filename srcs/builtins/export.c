@@ -53,14 +53,14 @@ char *get_varname_value(char *arg)
 	return arg + (i + 1);
 }
 
-char *get_varname_key(char *arg)
+char *get_varname_key(char *arg, t_app *app)
 {
 	int i;
 
 	i = 0;
 	while(arg[i] && arg[i] != '=')
 		i++;
-	return ft_strndup(arg, i);
+	return ft_strndup(arg, i, &app->app_gc);
 }
 
 t_env *create_env_node(char *key, char *value, t_app *app)
@@ -69,11 +69,11 @@ t_env *create_env_node(char *key, char *value, t_app *app)
 
 	if (!key)
 		return NULL;
-	new_node = gc_malloc(sizeof(t_env), &app->garb_head);
+	new_node = gc_malloc(sizeof(t_env), &app->app_gc);
 	if (!new_node)
 		return NULL;
-	new_node->key = ft_strdup(key);
-	new_node->value = strdup(value);
+	new_node->key = ft_strdup(key, &app->app_gc);
+	new_node->value = ft_strdup(value, &app->app_gc);
 	if (!new_node->value)
 		return NULL;
 	new_node->next = NULL;
@@ -91,7 +91,7 @@ int add_env_var(t_env **env_head, char *key, char *value, t_app *app)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			current->value = ft_strdup(value);
+			current->value = ft_strdup(value, &app->app_gc);
 			if (!current->value)
 				return 0;
 			return 1;
@@ -118,7 +118,7 @@ int export(t_app *app, char **args)
 		if(!check_varname_syntax(args[i]))
 			ret_val = 1;
 		else
-			ret_val = add_env_var(&app->env_head, get_varname_key(args[i]), get_varname_value(args[i]), app);
+			ret_val = add_env_var(&app->env_head, get_varname_key(args[i], app), get_varname_value(args[i]), app);
 		i++;
 	}
 	return ret_val;
