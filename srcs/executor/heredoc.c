@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 10:58:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 16:29:04 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/25 08:59:47 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ static t_status	handle_heredoc(t_app *app, t_redir_list *heredoc_redir)
 		return (perror("pipe"), ERROR);
 	while (ft_strcmp(tmp, heredoc_redir->name))
 	{
-		if (!tmp)
-			cleanup_and_exit(app);
 		if (!buffer)
 			buffer = tmp;
 		else
 			buffer = ft_strjoin(buffer, tmp, &app->curr_gc);
 		buffer = ft_strjoin(buffer, "\n", &app->curr_gc);
 		tmp = gc_readline(&app->curr_gc, PS3_PROMPT);
+		if (!tmp)
+			cleanup_and_exit(app);
 	}
 	write(fds[1], buffer, ft_strlen(buffer));
 	close(fds[1]);
