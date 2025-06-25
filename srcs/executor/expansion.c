@@ -6,15 +6,38 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:45:36 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/24 09:29:23 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/25 10:11:23 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	is_quoted(char *s, char quote_char)
+{
+	int	len;
+
+	len = ft_strlen(s);
+	if (len < 2)
+		return (0);
+	return (s[0] == quote_char && s[len - 1] == quote_char);
+}
+
+char	*remove_quotes(char *s, t_garbage **gc)
+{
+	int	len;
+
+	len = ft_strlen(s);
+	if (len < 2)
+		return (ft_strdup(s, gc));
+	return (ft_strndup(s + 1, len - 2, gc));
+}
+
+
 int	valid_env_start(char c)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_');
+	return ((c >= 'a' && c <= 'z') ||
+			(c >= 'A' && c <= 'Z') ||
+			c == '_');
 }
 
 int	valid_var_char(char c)
@@ -80,11 +103,37 @@ char	*resolved_env(char *cmd, char *var_name, char *env_value,
 	return (res);
 }
 
+
+char	*process_argument(char *arg, t_app *app)
+{
+	char	*var_name;
+	char	*value;
+	char	*unquoted;
+
+	if (is_quoted(arg, '\''))
+	return (remove_quotes(arg, &app->curr_gc));
+	if (is_quoted(arg, '"'))
+	{
+		unquoted = remove_quotes(arg, &app->curr_gc);
+		var_name = is_env_var(unquoted, &app->app_gc);
+		if (var_name)
+		{
+			value = look_up_env(var_name, app->env_head);
+			return (resolved_env(unquoted, var_name, value, &app->curr_gc));
+		}
+		return (unquoted);
+	}
+	var_name = is_env_var(arg, &app->app_gc);
+	if (var_name)
+	{
+		value = look_up_env(var_name, app->env_head);
+		return (resolved_env(arg, var_name, value, &app->curr_gc));
+	}
+	return (ft_strdup(arg, &app->curr_gc));
+}
 void	traverse_cmd(t_cmd *cmd_head, t_app *app)
 {
 	t_cmd	*curr;
-	char	*value;
-	char	*var_name;
 	int		i;
 
 	curr = cmd_head;
@@ -93,16 +142,7 @@ void	traverse_cmd(t_cmd *cmd_head, t_app *app)
 		i = 0;
 		while (curr->args[i])
 		{
-			var_name = is_env_var(curr->args[i], &app->app_gc);
-			if (var_name)
-			{
-				value = look_up_env(var_name, app->env_head);
-				printf("VAR_NAME->%s VALUE->%s\n", var_name, value);
-				printf("RESOLVED_ENV->%s\n", resolved_env(curr->args[i],
-						var_name, value, &app->curr_gc));
-				curr->args[i] = resolved_env(curr->args[i], var_name, value,
-						&app->curr_gc);
-			}
+			curr->args[i] = process_argument(curr->args[i], app);
 			i++;
 		}
 		curr = curr->next;
