@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:16:36 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 11:23:51 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/25 11:36:06 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_status	syntax_handle_simple_command(t_token **token_list)
 	*token_list = token;
 	if (token->type != TOKEN_WORD)
 		return (SUCCESS);
-	token = token->next;
 	while (token->type == TOKEN_WORD)
 	{
 		if (!check_word(token->value))
