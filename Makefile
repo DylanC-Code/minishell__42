@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/24 14:23:38 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/25 09:13:35 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		builtins/exit.c \
 		builtins/export.c\
 		\
+		executor/builtin.c \
 		executor/child.c \
 		executor/exec_prepare.c \
 		executor/executor.c \
