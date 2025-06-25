@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:25:19 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 21:53:10 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/25 11:10:45 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,53 +16,49 @@
 
 /* =============== Declaration =============== */
 
-void	handle_word_token(t_token *token, char *str, t_garbage **gc);
-void	handle_single_quote_token(t_token *token, char *str, t_garbage **gc);
-void	handle_double_quote_token(t_token *token, char *str, t_garbage **gc);
+void		handle_word_token(t_token *token, char *str, t_garbage **gc);
+static void	handle_single_quote(char *str, size_t *i);
+static void	handle_double_quote(char *str, size_t *i);
 
 /* =============== Definition ================ */
 
 void	handle_word_token(t_token *token, char *str, t_garbage **gc)
 {
-	char	symbols[] = "<>|&()'\"";
+	char	symbols[] = "<>|&()";
 	size_t	i;
 
 	i = -1;
 	token->type = TOKEN_WORD;
 	while (str[++i])
+	{
+		if (str[i] == '\'')
+			handle_single_quote(str, &i);
+		else if (str[i] == '\"')
+			handle_double_quote(str, &i);
 		if (ft_ischarset(str[i], symbols) || ft_isspace(str[i]))
 			break ;
-	token->value = ft_strndup(str, i, gc);
-}
-
-void	handle_single_quote_token(t_token *token, char *str, t_garbage **gc)
-{
-	size_t	i;
-
-	i = 0;
-	token->type = TOKEN_WORD;
-	while (str[++i])
-	{
-		if (str[i] != '\'')
-			continue ;
-		i++;
-		break ;
 	}
 	token->value = ft_strndup(str, i, gc);
 }
 
-void	handle_double_quote_token(t_token *token, char *str, t_garbage **gc)
+static void	handle_single_quote(char *str, size_t *i)
 {
-	size_t	i;
+	(*i)++;
+	while (str[*i] && str[*i] != '\'')
+		(*i)++;
+	if (str[*i] == '\'')
+		(*i)++;
+}
 
-	i = 0;
-	token->type = TOKEN_WORD;
-	while (str[++i])
+static void	handle_double_quote(char *str, size_t *i)
+{
+	(*i)++;
+	while (str[*i] && str[*i] != '\"')
 	{
-		if (str[i] != '\"')
-			continue ;
-		if (str[i - 1] != '\\')
-			break ;
+		if (str[*i] == '\\' && str[*i + 1] == '\"')
+			(*i)++;
+		(*i)++;
 	}
-	token->value = ft_strndup(str, i + 1, gc);
+	if (str[*i] == '\"')
+		(*i)++;
 }
