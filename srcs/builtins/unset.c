@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saal-kur <saal-kur@student.42.fr>          #+#  +:+       +#+        */
+/*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-25 10:08:38 by saal-kur          #+#    #+#             */
-/*   Updated: 2025-06-25 10:08:38 by saal-kur         ###   ########.fr       */
+/*   Created: 2025/06/25 10:08:38 by saal-kur          #+#    #+#             */
+/*   Updated: 2025/06/25 15:47:28 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	unset(char *env_key, t_app *app)
+int	unset_builtin(char *env_key, t_app *app)
 {
 	t_env	*curr;
 

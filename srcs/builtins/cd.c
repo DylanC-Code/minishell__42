@@ -6,13 +6,13 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:26:36 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/23 11:40:29 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:45:11 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	cd(t_app *app, char *s)
+int	cd_builtin(t_app *app, char *s)
 {
 	if (!chdir((const char *)s))
 		return (-1);

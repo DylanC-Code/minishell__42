@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 09:05:19 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/25 15:21:33 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:56:55 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,18 @@ int	add_env_var(t_env **env_head, char *key, char *value, t_app *app)
 	return (1);
 }
 
-int	export(t_app *app, char **args)
+int	export_builtin(t_app *app, char **args)
 {
 	int	i;
 	int	ret_val;
 
 	ret_val = 0;
 	i = 0;
+	if (!args || !args[0])
+	{
+		env_builtin(app, args);
+		return (0);
+	}
 	while (args[i])
 	{
 		if (!check_varname_syntax(args[i]))
