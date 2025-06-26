@@ -6,15 +6,18 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:18:35 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/25 15:47:19 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:16:15 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*pwd_builtin(t_app *app, char *buf, size_t size)
+void	pwd_builtin(t_app *app, char **args)
 {
-	if (!getcwd(buf, size))
-		return (NULL);
-	return (buf);
+	(void)app;
+	(void)args;
+	printf("PWD BUILTIN NOT DONE!\n");
+	// if (!getcwd(buf, size))
+	// 	return (NULL);
+	// return (buf);
 }

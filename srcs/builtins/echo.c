@@ -6,15 +6,41 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:09:37 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/25 15:45:34 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:52:16 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	echo_builtin(t_app *app, char *str, int new_line)
+static bool	is_option(char *arg);
+
+void	echo_builtin(t_app *app, char **args)
 {
-	write(1, str, ft_strlen(str));
-	if (new_line == 1)
-		write(1, "\n", 1);
+	bool	is_n;
+
+	(void)app;
+	is_n = false;
+	while (*args)
+	{
+		if (!is_option(*args))
+			break ;
+		is_n = true;
+		args++;
+	}
+	if (*args)
+		printf("%s", *args++);
+	while (*args)
+		printf(" %s", *args++);
+	if (is_n)
+		printf("\n");
+}
+
+static bool	is_option(char *arg)
+{
+	if (*arg++ != '-')
+		return (false);
+	while (*arg)
+		if (*arg++ != 'n')
+			return (false);
+	return (true);
 }

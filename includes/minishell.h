@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 16:20:39 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:19:45 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,12 @@
 
 /* Builtins */
 void							env_builtin(t_app *app, char **args);
-void							exit_builtin(t_app *app, int status);
-int								cd_builtin(t_app *app, char *s);
-void							echo_builtin(t_app *app, char *str,
-									int new_line);
+void							exit_builtin(t_app *app, char **args);
+void							cd_builtin(t_app *app, char **args);
+void							echo_builtin(t_app *app, char **args);
 void							export_builtin(t_app *app, char **args);
-char							*pwd_builtin(t_app *app, char *buf,
-									size_t size);
-int								unset_builtin(char *env_key, t_app *app);
+void							pwd_builtin(t_app *app, char **args);
+void							unset_builtin(t_app *app, char **args);
 
 /* Init */
 void							init(t_app *app, char *envp[]);
@@ -56,8 +54,6 @@ void							init_signals(void);
 /* Utils */
 void							exit_with_error(t_app *app, char *msg);
 void							display_tokens(t_token *head, char *input);
-t_status						print_syntax_error(const char *token);
-t_status						print_unexpected_eof(char quote_type);
 void							print_banner(void);
 char							**env_list_to_envp(t_env *env_list,
 									t_garbage **gc);

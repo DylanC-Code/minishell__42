@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 16:04:39 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:20:18 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,10 +157,6 @@ t_token						*get_token(char *str, t_garbage **gb_list);
 
 void						handle_word_token(t_token *token, char *str,
 								t_garbage **gc);
-void						handle_single_quote_token(t_token *token, char *str,
-								t_garbage **gc);
-void						handle_double_quote_token(t_token *token, char *str,
-								t_garbage **gc);
 void						handle_operator_token(t_token *token, char *str,
 								t_garbage **gc);
 void						handle_new_line_token(t_token *token,
@@ -184,13 +180,5 @@ void						display_seq(t_cmd_sequence *seq_head);
 t_cmd						*cmd_builder(t_token *token, t_garbage **gc);
 t_cmd_sequence				*sequence_builder(t_garbage **gc);
 t_token						*get_token(char *str, t_garbage **gb_list);
-t_token_type				get_token_type(char *token_value);
-
-char						*get_word(char *str);
-char						*get_value_between(char *str, char quote_delimiter);
-char						*get_operator(char *str);
-
-void						add_token_back(t_token **token_list,
-								t_token *new_token);
 
 #endif
