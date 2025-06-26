@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/25 15:56:43 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 14:10:04 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void							exit_builtin(t_app *app, int status);
 int								cd_builtin(t_app *app, char *s);
 void							echo_builtin(t_app *app, char *str,
 									int new_line);
-int								export_builtin(t_app *app, char **args);
+void							export_builtin(t_app *app, char **args);
 char							*pwd_builtin(t_app *app, char *buf,
 									size_t size);
 int								unset_builtin(char *env_key, t_app *app);
