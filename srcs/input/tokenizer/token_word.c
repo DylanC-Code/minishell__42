@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:25:19 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/25 11:10:45 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 12:19:27 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,18 @@ void	handle_word_token(t_token *token, char *str, t_garbage **gc)
 	char	symbols[] = "<>|&()";
 	size_t	i;
 
-	i = -1;
+	i = 0;
 	token->type = TOKEN_WORD;
-	while (str[++i])
+	while (str[i])
 	{
 		if (str[i] == '\'')
 			handle_single_quote(str, &i);
 		else if (str[i] == '\"')
 			handle_double_quote(str, &i);
-		if (ft_ischarset(str[i], symbols) || ft_isspace(str[i]))
+		else if (ft_ischarset(str[i], symbols) || ft_isspace(str[i]))
 			break ;
+		else
+			i++;
 	}
 	token->value = ft_strndup(str, i, gc);
 }

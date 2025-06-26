@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 10:58:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/25 08:59:47 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 12:26:07 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ static t_status	handle_heredoc(t_app *app, t_redir_list *heredoc_redir)
 		buffer = ft_strjoin(buffer, "\n", &app->curr_gc);
 		tmp = gc_readline(&app->curr_gc, PS3_PROMPT);
 		if (!tmp)
+		{
+			close(fds[0]);
+			close(fds[1]);
 			cleanup_and_exit(app);
+		}
 	}
 	write(fds[1], buffer, ft_strlen(buffer));
 	close(fds[1]);
