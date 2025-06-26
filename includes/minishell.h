@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 14:10:04 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 16:20:39 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ void							init_env(t_app *app, char *envp[]);
 void							init_signals(void);
 
 /* Utils */
-void							exit_with_error(char *msg,
-									t_garbage **garbage_list);
+void							exit_with_error(t_app *app, char *msg);
 void							display_tokens(t_token *head, char *input);
 t_status						print_syntax_error(const char *token);
 t_status						print_unexpected_eof(char quote_type);
@@ -69,10 +68,10 @@ void							add_env_back(t_env **env_list, t_env *new_env);
 void							set_env_value(t_app *app, const char *key,
 									const char *value);
 void							cleanup(t_app *app);
-void							cleanup_and_exit(t_app *app);
-char							*gc_readline(t_garbage **gc,
-									const char *prompt);
-void	print_error(t_app *app, char *msg, char *error_code);
+void							cleanup_and_exit(t_app *app, int status);
+char							*gc_readline(t_app *app, const char *prompt);
+void							print_error(t_app *app, char *msg,
+									char *error_code);
 
 extern volatile sig_atomic_t	in_heredoc;
 

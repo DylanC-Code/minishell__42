@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 15:46:01 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 16:04:39 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,7 @@ char						*token_to_str(t_token_type type);
 /* ******* Tokenizer ******* */
 /* ************************* */
 
-t_token						*tokenizer(char *line, t_garbage **gb_list);
-
+t_token						*tokenizer(t_app *app, char *line);
 t_token						*get_token(char *str, t_garbage **gb_list);
 
 void						handle_word_token(t_token *token, char *str,
@@ -193,7 +192,5 @@ char						*get_operator(char *str);
 
 void						add_token_back(t_token **token_list,
 								t_token *new_token);
-
-t_token						*tokenizer(char *line, t_garbage **gb_list);
 
 #endif

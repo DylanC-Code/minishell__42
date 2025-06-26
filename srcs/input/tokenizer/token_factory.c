@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:23:42 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/25 11:05:15 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 15:55:39 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,8 @@ t_token	*get_token(char *str, t_garbage **gc)
 	t_token	*new_token;
 
 	new_token = gc_malloc(sizeof(t_token), gc);
-	ft_bzero(new_token, sizeof(t_token));
-	// if (*str == '\'')
-	// 	handle_single_quote_token(new_token, str, gc);
-	// else if (*str == '"')
-	// 	handle_double_quote_token(new_token, str, gc);
+	if (!new_token)
+		return (NULL);
 	if (ft_ischarset(*str, OPERATORS))
 		handle_operator_token(new_token, str, gc);
 	else if (*str == '\n')
