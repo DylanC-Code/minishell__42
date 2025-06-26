@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:10:41 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/25 16:24:58 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 10:54:33 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exec_builtin(t_app *app, t_cmd *cmd)
 {
 	int	saved_stdout;
 
-	if (cmd->fd_out != STDOUT_FILENO)
+	if (cmd->fd_out != STDOUT_FILENO && cmd->fd_out != -1)
 	{
 		saved_stdout = dup(STDOUT_FILENO);
 		if (dup2(cmd->fd_out, STDOUT_FILENO) < 0)
@@ -42,11 +42,12 @@ void	exec_builtin(t_app *app, t_cmd *cmd)
 	// 	pwd_builtin(app, cmd->args + 1);
 	// else if (ft_strcmp(cmd->args[0], "unset") == 0)
 	// 	unset_builtin(app, cmd->args + 1);
-	if (cmd->fd_out != STDOUT_FILENO)
+	if (cmd->fd_out != STDOUT_FILENO && cmd->fd_out != -1)
 	{
 		safe_close(&cmd->fd_out);
 		safe_close(&cmd->fd_in);
 		if (dup2(saved_stdout, STDOUT_FILENO) < 0)
 			perror("dup2");
+		safe_close(&saved_stdout);
 	}
 }

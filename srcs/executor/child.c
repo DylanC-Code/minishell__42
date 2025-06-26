@@ -6,13 +6,14 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 14:32:47 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 10:04:06 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 11:25:18 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	exec_or_died(t_app *app, t_cmd *cmd);
+void	close_fds_and_pipes(t_cmd *cmd);
 
 void	child_exec(t_app *app, t_cmd *cmd)
 {
@@ -20,9 +21,19 @@ void	child_exec(t_app *app, t_cmd *cmd)
 		dup2(cmd->fd_in, STDIN_FILENO);
 	if (cmd->fd_out != STDOUT_FILENO && cmd->fd_out >= 0)
 		dup2(cmd->fd_out, STDOUT_FILENO);
-	safe_close(&cmd->fd_in);
-	safe_close(&cmd->fd_out);
+	close_fds_and_pipes(cmd);
 	exec_or_died(app, cmd);
+}
+
+void	close_fds_and_pipes(t_cmd *cmd)
+{
+	close_pipes(cmd);
+	while (cmd)
+	{
+		safe_close(&cmd->fd_in);
+		safe_close(&cmd->fd_out);
+		cmd = cmd->next;
+	}
 }
 
 char	*find_in_path(t_app *app, const char *cmd)
