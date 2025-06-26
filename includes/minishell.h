@@ -72,6 +72,7 @@ void							cleanup(t_app *app);
 void							cleanup_and_exit(t_app *app);
 char							*gc_readline(t_garbage **gc,
 									const char *prompt);
+void	print_error(t_app *app, char *msg, char *error_code);
 
 extern volatile sig_atomic_t	in_heredoc;
 

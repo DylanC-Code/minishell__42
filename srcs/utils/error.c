@@ -12,6 +12,18 @@
 
 #include "minishell.h"
 
+void	print_error(t_app *app, char *msg, char *error_code)
+{
+	char	*res;
+	
+	set_env_value(app, "?", error_code);
+	res = ft_strjoin("minishell: ", msg, &app->curr_gc);
+	if (!res)
+		cleanup_and_exit(app);
+	ft_putstr_fd(res, STDERR_FILENO);
+
+}
+
 void	exit_with_error(char *msg, t_garbage **garbage_list)
 {
 	perror(msg);

@@ -14,13 +14,16 @@
 
 int	valid_first_char(char c)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_');
+	return ((c >= 'a' && c <= 'z')
+			|| (c >= 'A' && c <= 'Z')
+			|| c == '_');
 }
 
 int	valid_char(char c)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0'
-			&& c <= '9') || c == '_');
+	return ((c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z') || (c >= '0'&& c <= '9')
+		|| c == '_');
 }
 
 int	check_varname_syntax(char *arg)
@@ -103,6 +106,17 @@ int	add_env_var(t_env **env_head, char *key, char *value, t_app *app)
 	return (1);
 }
 
+void export_error(t_app *app, char *key)
+{
+	char *res;
+
+	res = ft_strjoin("export: `", key, &app->curr_gc);
+	// TODO: handle error
+	res = ft_strjoin(res, "': not a valid identifier\n", &app->curr_gc);
+	print_error(app, res, "1");
+}
+
+
 void	export_builtin(t_app *app, char **args)
 {
 	int	i;
@@ -114,7 +128,7 @@ void	export_builtin(t_app *app, char **args)
 	while (args[i])
 	{
 		if (!check_varname_syntax(args[i]))
-			set_env_value(app, "?", "1");
+			export_error(app, get_varname_key(args[i], app));
 		else
 		{
 			add_env_var(&app->env_head, get_varname_key(args[i], app),
