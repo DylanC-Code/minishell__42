@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 15:23:53 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 15:46:01 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,31 +100,39 @@ char						*get_prompt(t_app *app);
 /* ********************** */
 
 bool						check_syntax(t_app *app, t_token *head_token);
-bool						check_word(char *value);
+bool						check_word(t_app *app, char *word);
 
 /* ~ Command ~ */
-t_status					syntax_handle_command(t_token **token_list);
+t_status					syntax_handle_command(t_app *app,
+								t_token **token_list);
 
 /* ~ And Or Command ~ */
-t_status					syntax_handle_and_or_command(t_token **token_list);
+t_status					syntax_handle_and_or_command(t_app *app,
+								t_token **token_list);
 
 /* ~ Pipeline ~ */
-t_status					syntax_handle_pipeline(t_token **token_list);
+t_status					syntax_handle_pipeline(t_app *app,
+								t_token **token_list);
 
 /* ~ Redirection ~ */
-t_status					syntax_handle_redirection(t_token **token_list);
+t_status					syntax_handle_redirection(t_app *app,
+								t_token **token_list);
 void						consume_redirection_sequence(t_token **token_list);
 bool						is_redirection_op(t_token *token);
 bool						is_redirection_sequence(t_token *token);
 
 /* ~ Simple Command ~ */
-t_status					syntax_handle_simple_command(t_token **token_list);
+t_status					syntax_handle_simple_command(t_app *app,
+								t_token **token_list);
 
 /* ~ Subshell ~ */
-t_status					syntax_handle_subshell(t_token **token_list);
+t_status					syntax_handle_subshell(t_app *app,
+								t_token **token_list);
 
 /* ~ Error ~ */
-void						syntax_error(t_token *token);
+void						unexpected_token_error(t_app *app,
+								char *token_value);
+void						unexpected_eof_error(t_app *app, char *quote_type);
 
 void						display_seq(t_cmd_sequence *seq_head);
 int							handle_redirection(t_parser *parser,

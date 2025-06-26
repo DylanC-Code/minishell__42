@@ -13,7 +13,7 @@
 
 #include "minishell.h"
 
-t_status	syntax_handle_subshell(t_token **token_list)
+t_status	syntax_handle_subshell(t_app *app, t_token **token_list)
 {
 	t_token		*token;
 	t_status	and_or_command_handled;
@@ -23,8 +23,8 @@ t_status	syntax_handle_subshell(t_token **token_list)
 		return (NOOP);
 	token = token->next;
 	if (token->type == TOKEN_CLOSE_PARENTHESIS)
-		return (print_syntax_error(")"), ERROR);
-	and_or_command_handled = syntax_handle_and_or_command(&token);
+		return (unexpected_token_error(app, token->value), ERROR);
+	and_or_command_handled = syntax_handle_and_or_command(app, &token);
 	if (and_or_command_handled == ERROR)
 		return (ERROR);
 	*token_list = token->next;
