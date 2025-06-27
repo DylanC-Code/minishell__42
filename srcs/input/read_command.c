@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:26:29 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 16:37:20 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/27 10:06:55 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_token	*read_complete_command(t_app *app)
 	t_token	*token_head;
 
 	line = get_user_input(app);
-	set_env_value(app, "?", "0");
 	token_head = tokenizer(app, line);
 	if (!token_head)
 		cleanup_and_exit(app, EXIT_FAILURE);
