@@ -82,6 +82,8 @@ static t_status	parent_heredoc(t_app *app, t_redir_list *heredoc_redir,
 	waitpid(pid, &status, 0);
 	printf("Parent process: PID %d, child exited with status %d\n", pid,
 		WEXITSTATUS(status));
+	close(fds[1]); 
+	heredoc_redir->fd = fds[0];
 	return (SUCCESS);
 }
 
@@ -89,12 +91,25 @@ static void	child_heredoc(t_app *app, t_redir_list *heredoc_redir, int fds[2],
 		pid_t pid)
 {
 	char	*line;
+	//char	*prompt;
 
 	(void)app;
 	(void)pid;
 	(void)heredoc_redir;
 	(void)fds;
 	signal(SIGINT, SIG_DFL);
+	//prompt = get_prompt(app);
+	line = readline("> ");
+	while (line != NULL)
+	{
+		if (ft_strcmp(line, heredoc_redir->name) == 0)
+			break;
+		write(fds[1], line, ft_strlen(line));
+		write(fds[1], "\n", 1);
+		line = readline("> ");
+	}
+	close(fds[1]);
+	exit(0);
 
 	// close(fds[1]);
 	// exit(22);
