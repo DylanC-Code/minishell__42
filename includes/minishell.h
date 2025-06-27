@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 17:19:45 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/27 11:07:47 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define PS2_PROMPT MAGENTA "> " RESET
 # define PS3_PROMPT CYAN ">> " RESET
 # define OPERATORS "<>|&()"
+# define PWD_BUFFER_SIZE 50000
 
 /* Builtins */
 void							env_builtin(t_app *app, char **args);
@@ -69,6 +70,6 @@ char							*gc_readline(t_app *app, const char *prompt);
 void							print_error(t_app *app, char *msg,
 									char *error_code);
 
-extern volatile sig_atomic_t	in_heredoc;
+extern volatile sig_atomic_t	g_sig_code;
 
 #endif
