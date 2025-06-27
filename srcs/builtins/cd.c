@@ -27,25 +27,26 @@ char *get_cd_dir(t_app *app, char **args)
 	char *home_env;
 	char *old_pwd;
 
-	if(!*args)
+	if (!*args)
 	{
-		home_env = get_env_value(app->env_head, "$HOME");
-		if(!home_env || !*home_env)
+		home_env = get_env_value(app->env_head, "HOME");
+		if (!home_env || !*home_env)
 		{
 			print_error(app, "cd: HOME not set\n", "1");
 			return NULL;
 		}
 		return home_env;
 	}
-	else if(*args[0] == '-' && !*(args + 1))
+	else if (ft_strcmp(args[0], "-") == 0)
 	{
 		old_pwd = get_env_value(app->env_head, "OLDPWD");
-		if(change_dir(app, old_pwd))
+		if (!old_pwd || !*old_pwd)
 		{
-			ft_putstr_fd(old_pwd, 1);
-			ft_putchar_fd('\n', 1);
+			print_error(app, "cd: OLDPWD not set\n", "1");
 			return NULL;
 		}
+		ft_putstr_fd(old_pwd, 1);
+		ft_putchar_fd('\n', 1);
 		return old_pwd;
 	}
 	return *args;
@@ -103,10 +104,15 @@ void cd_builtin(t_app *app, char **args)
 	if (!check_args(app, args))
 		return ;
 	dir = get_cd_dir(app, args);
-	if(!dir || !check_dir(app, dir) || !update_oldpwd(app) || !change_dir(app, dir))
+	if(!dir || !check_dir(app, dir))
 	{
 		set_env_value(app, "?", "1");
-		return ;
+		return;
+	}
+	if (!update_oldpwd(app) || !change_dir(app, dir))
+	{
+		set_env_value(app, "?", "1");
+		return;
 	}
 	set_env_value(app, "?", "0");
 }
