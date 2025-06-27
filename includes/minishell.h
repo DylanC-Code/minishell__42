@@ -36,11 +36,12 @@
 # define PS2_PROMPT MAGENTA "> " RESET
 # define PS3_PROMPT CYAN ">> " RESET
 # define OPERATORS "<>|&()"
+# define PWD_BUFFER_SIZE 50000
 
 /* Builtins */
 void							env_builtin(t_app *app, char **args);
 void							exit_builtin(t_app *app, int status);
-int								cd_builtin(t_app *app, char *s);
+void	cd_builtin(t_app *app, char **args);
 void							echo_builtin(t_app *app, char *str,
 									int new_line);
 void							export_builtin(t_app *app, char **args);
@@ -75,5 +76,5 @@ char							*gc_readline(t_garbage **gc,
 void	print_error(t_app *app, char *msg, char *error_code);
 
 extern volatile sig_atomic_t	in_heredoc;
-
+int change_dir(t_app *app, char *path);
 #endif

@@ -37,6 +37,7 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		builtins/env.c \
 		builtins/exit.c \
 		builtins/export.c\
+		builtins/cd.c \
 		\
 		executor/builtin.c \
 		executor/child.c \

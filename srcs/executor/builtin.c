@@ -29,8 +29,8 @@ void	exec_builtin(t_app *app, t_cmd *cmd)
 		if (dup2(cmd->fd_out, STDOUT_FILENO) < 0)
 			perror("dup2");
 	}
-	// if (ft_strcmp(cmd->args[0], "cd") == 0)
-	// 	cd_builtin(app, cmd->args + 1);
+	if (ft_strcmp(cmd->args[0], "cd") == 0)
+		cd_builtin(app, cmd->args + 1);
 	// else if (ft_strcmp(cmd->args[0], "echo") == 0)
 	// 	echo_builtin(app, cmd->args + 1);
 	// else if (ft_strcmp(cmd->args[0], "exit") == 0)
