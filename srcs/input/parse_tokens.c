@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:20 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/28 22:18:14 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/28 22:55:04 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ t_cmd_sequence	*parse_tokens(t_token *head, t_garbage **gc)
 	while (parser.token)
 	{
 		if (parser.token->type == TOKEN_WORD)
-			parser.cmd_head->args[parser.arg_count++] =
-				ft_strdup(parser.token->value, gc);
+			parser.cmd_head->args[parser.arg_count++] = ft_strdup(parser.token->value,
+					gc);
 		else if (handle_pipe(&parser, gc))
 			return (NULL);
 		else if (handle_redirection(&parser, gc) == -1)
