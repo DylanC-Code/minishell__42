@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 10:58:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 16:16:49 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/28 22:18:42 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static t_status	handle_heredoc(t_app *app, t_redir_list *heredoc_redir)
 	int		fds[2];
 
 	buffer = NULL;
-	in_heredoc = true;
+	g_in_heredoc = true;
 	tmp = gc_readline(app, PS3_PROMPT);
 	if (!tmp)
 		cleanup_and_exit(app, EXIT_SUCCESS);
@@ -62,7 +62,7 @@ static t_status	handle_heredoc(t_app *app, t_redir_list *heredoc_redir)
 	}
 	write(fds[1], buffer, ft_strlen(buffer));
 	close(fds[1]);
-	in_heredoc = false;
+	g_in_heredoc = false;
 	heredoc_redir->fd = fds[0];
 	return (SUCCESS);
 }

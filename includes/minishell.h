@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/28 22:10:43 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/28 22:26:10 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "colors.h"
 # include "executor.h"
+# include "expansion.h"
 # include "init.h"
 # include "input.h"
 # include "libft.h"
@@ -70,6 +71,6 @@ char							*gc_readline(t_app *app, const char *prompt);
 void							print_error(t_app *app, char *msg,
 									char *error_code);
 
-extern volatile sig_atomic_t	in_heredoc;
+extern volatile sig_atomic_t	g_in_heredoc;
 
 #endif
