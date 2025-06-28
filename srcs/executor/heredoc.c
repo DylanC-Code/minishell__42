@@ -104,6 +104,18 @@ static t_status	parent_heredoc(t_app *app, t_redir_list *heredoc_redir,
 	return (SUCCESS);
 }
 
+void check_eof(t_app *app, char *line, t_redir_list *heredoc)
+{
+	char *msg;
+
+	if (line == NULL)
+	{
+		msg = ft_strjoin("minishell: warning: here-document delimited by end-of-file (wanted `", heredoc->name, &app->curr_gc);
+		msg = ft_strjoin(msg, "')\n", &app->curr_gc);
+		ft_putstr_fd(msg, 1);
+	}
+}
+
 static void	child_heredoc(t_app *app, t_redir_list *heredoc_redir, int fds[2],
 		pid_t pid)
 {
@@ -125,9 +137,9 @@ static void	child_heredoc(t_app *app, t_redir_list *heredoc_redir, int fds[2],
 		write(fds[1], "\n", 1);
 		line = readline("> ");
 	}
+	check_eof(app, line, heredoc_redir);
 	close(fds[1]);
 	exit(0);
-
 	// close(fds[1]);
 	// exit(22);
 }
