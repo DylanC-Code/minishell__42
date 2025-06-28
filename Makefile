@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/28 22:41:42 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/28 23:01:55 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,6 +93,7 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		signals/signals.c \
 		\
 		utils/cleanup.c \
+		utils/env_set.c \
 		utils/env_utils.c \
 		utils/error.c \
 		utils/fd_utils.c \

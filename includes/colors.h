@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 16:50:25 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/18 16:50:28 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/28 22:59:35 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,5 @@
 /* === PROMPT HELPERS FOR READLINE (non-counted chars) === */
 # define BEGIN_IGNORE "\001"
 # define END_IGNORE "\002"
-
-/* === PROMPT BUILDER EXAMPLE === */
-# define PROMPT BEGIN_IGNORE BBLUE END_IGNORE SHELL_EMOJI " " BEGIN_IGNORE BBLUE END_IGNORE "minishell" BEGIN_IGNORE RESET END_IGNORE ":" BEGIN_IGNORE BLUE END_IGNORE "%s" BEGIN_IGNORE RESET END_IGNORE "$ "
 
 #endif
