@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 17:19:45 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/28 22:10:43 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define PS2_PROMPT MAGENTA "> " RESET
 # define PS3_PROMPT CYAN ">> " RESET
 # define OPERATORS "<>|&()"
+# define PWD_BUFFER_SIZE 50000
 
 /* Builtins */
 void							env_builtin(t_app *app, char **args);

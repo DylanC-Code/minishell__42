@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 17:20:18 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/28 22:11:44 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,12 @@ typedef struct s_parser
 
 t_token						*read_complete_command(t_app *app);
 char						*get_prompt(t_app *app);
+
+/* ********************** */
+/* ******* Parser ******* */
+/* ********************** */
+
+size_t						count_words(t_token *start_token);
 
 /* ********************** */
 /* ******* Syntax ******* */

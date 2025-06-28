@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/26 17:23:20 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/28 22:12:30 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,10 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		init/init_env.c \
 		init/init.c \
 		\
+		input/parser/cmd_builders.c \
+		input/parser/parse_helper_utils.c \
+		input/parser/redir_list_builders.c \
+		\
 		input/tokenizer/token_factory.c \
 		input/tokenizer/token_operator.c \
 		input/tokenizer/token_special.c \
@@ -76,7 +80,6 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		input/read_command.c \
 		input/parse_tokens.c \
 		input/prompt.c \
-		input/parse_helpers.c \
 		\
 		memory/garbage.c \
 		\
