@@ -69,6 +69,7 @@ void							cleanup_and_exit(t_app *app, int status);
 char							*gc_readline(t_app *app, const char *prompt);
 void							print_error(t_app *app, char *msg,
 									char *error_code);
+void	sigs_handler(int sig_code);
 
 extern volatile sig_atomic_t	g_sig_code;
 

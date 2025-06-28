@@ -23,32 +23,41 @@ static void		child_heredoc(t_app *app, t_redir_list *heredoc_redir,
 t_status	collect_heredocs(t_app *app, t_cmd_sequence *head_seq)
 {
 	t_cmd	*cmd;
+	t_status ret_code;
 
+	signal(SIGINT, sigs_handler); 
 	while (head_seq)
 	{
 		cmd = head_seq->cmds;
 		while (cmd)
 		{
-			if (!handle_heredocs_cmd(app, cmd))
-				return (ERROR);
+			ret_code = handle_heredocs_cmd(app, cmd);
+			if (!ret_code)
+			{
+				signal(SIGINT, SIG_DFL);
+				return (ret_code);
+			}
 			cmd = cmd->next;
 		}
 		head_seq = head_seq->next;
 	}
+	signal(SIGINT, sigs_handler); 
 	return (SUCCESS);
 }
 
 static t_status	handle_heredocs_cmd(t_app *app, t_cmd *cmd)
 {
 	t_redir_list	*redir_head;
+	t_status		ret_code;
 
 	redir_head = cmd->redir_list;
 	while (redir_head)
 	{
+		ret_code = handle_heredoc(app, redir_head);
 		if (redir_head->type != TOKEN_REDIR_HEREDOC)
 			;
-		else if (!handle_heredoc(app, redir_head))
-			return (ERROR);
+		else if (!ret_code)
+			return (ret_code);
 		redir_head = redir_head->next;
 	}
 	return (SUCCESS);
@@ -80,8 +89,16 @@ static t_status	parent_heredoc(t_app *app, t_redir_list *heredoc_redir,
 	(void)heredoc_redir;
 	(void)fds;
 	waitpid(pid, &status, 0);
-	printf("Parent process: PID %d, child exited with status %d\n", pid,
-		WEXITSTATUS(status));
+
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		// printf("Parent process: PID %d, child exited with status %d\n", pid, WEXITSTATUS(status));
+		// printf("Heredoc child recieved SIGINT\n");
+		//ft_putstr_fd("^C\n", 1);
+		close(fds[0]);
+		return (WEXITSTATUS(status));
+	}
+
 	close(fds[1]); 
 	heredoc_redir->fd = fds[0];
 	return (SUCCESS);
