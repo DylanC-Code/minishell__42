@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:10:34 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 11:10:47 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/28 22:30:50 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ static int	count_cmds(t_cmd *cmd)
 
 static void	assign_pipe_fds(t_cmd *cmd, int **pipes, int count)
 {
-	for (int i = 0; i < count; i++)
+	int	i;
+
+	i = -1;
+	while (++i < count)
 	{
 		if (cmd->fd_in == -1 && i > 0)
 			cmd->fd_in = pipes[i - 1][0];

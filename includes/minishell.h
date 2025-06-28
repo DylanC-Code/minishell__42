@@ -6,13 +6,14 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/28 22:26:10 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/28 22:40:51 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "builtins.h"
 # include "colors.h"
 # include "executor.h"
 # include "expansion.h"
@@ -38,15 +39,6 @@
 # define PS3_PROMPT CYAN ">> " RESET
 # define OPERATORS "<>|&()"
 # define PWD_BUFFER_SIZE 50000
-
-/* Builtins */
-void							env_builtin(t_app *app, char **args);
-void							exit_builtin(t_app *app, char **args);
-void							cd_builtin(t_app *app, char **args);
-void							echo_builtin(t_app *app, char **args);
-void							export_builtin(t_app *app, char **args);
-void							pwd_builtin(t_app *app, char **args);
-void							unset_builtin(t_app *app, char **args);
 
 /* Init */
 void							init(t_app *app, char *envp[]);

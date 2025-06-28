@@ -1,66 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   export_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/23 09:05:19 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/26 14:09:43 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/28 22:37:16 by dcastor           #+#    #+#             */
+/*   Updated: 2025/06/28 22:38:19 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	valid_first_char(char c)
-{
-	return ((c >= 'a' && c <= 'z')
-			|| (c >= 'A' && c <= 'Z')
-			|| c == '_');
-}
-
-int	valid_char(char c)
-{
-	return ((c >= 'a' && c <= 'z')
-		|| (c >= 'A' && c <= 'Z') || (c >= '0'&& c <= '9')
-		|| c == '_');
-}
-
-int	check_varname_syntax(char *arg)
-{
-	int	i;
-
-	i = 0;
-	if (!valid_first_char(arg[i]))
-		return (0);
-	while (arg[i] && valid_char(arg[i]))
-		i++;
-	if (arg[i] != '=' && arg[i] != 0)
-		return (0);
-	return (1);
-}
-
-char	*get_varname_value(char *arg)
-{
-	int	i;
-
-	i = 0;
-	while (arg[i] && arg[i] != '=')
-		i++;
-	if (arg[i] != '=')
-		return (NULL);
-	return (arg + (i + 1));
-}
-
-char	*get_varname_key(char *arg, t_app *app)
-{
-	int	i;
-
-	i = 0;
-	while (arg[i] && arg[i] != '=')
-		i++;
-	return (ft_strndup(arg, i, &app->app_gc));
-}
 
 t_env	*create_env_node(char *key, char *value, t_app *app)
 {
@@ -106,34 +56,15 @@ int	add_env_var(t_env **env_head, char *key, char *value, t_app *app)
 	return (1);
 }
 
-void export_error(t_app *app, char *key)
+void	export_error(t_app *app, char *key)
 {
-	char *res;
+	char	*res;
 
 	res = ft_strjoin("export: `", key, &app->curr_gc);
-	// TODO: handle error
+	if (!res)
+		cleanup_and_exit(app, EXIT_FAILURE);
 	res = ft_strjoin(res, "': not a valid identifier\n", &app->curr_gc);
+	if (!res)
+		cleanup_and_exit(app, EXIT_FAILURE);
 	print_error(app, res, "1");
-}
-
-
-void	export_builtin(t_app *app, char **args)
-{
-	int	i;
-
-	i = 0;
-	if (!args || !args[0])
-		return (env_builtin(app, args));
-	set_env_value(app, "?", "0");
-	while (args[i])
-	{
-		if (!check_varname_syntax(args[i]))
-			export_error(app, get_varname_key(args[i], app));
-		else
-		{
-			add_env_var(&app->env_head, get_varname_key(args[i], app),
-				get_varname_value(args[i]), app);
-		}
-		i++;
-	}
 }

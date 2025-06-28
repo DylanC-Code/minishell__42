@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/28 22:25:04 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/28 22:41:42 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,14 @@ RM := rm -rf
 
 # 📁 Sources & Objets
 SRCS := $(addprefix $(SRCS_DIR), \
+		builtins/export/export_env.c\
+		builtins/export/export_syntax.c\
+		builtins/export/export.c\
+		\
 		builtins/cd.c \
 		builtins/echo.c \
 		builtins/env.c \
 		builtins/exit.c \
-		builtins/export.c\
 		builtins/pwd.c\
 		builtins/unset.c\
 		\
