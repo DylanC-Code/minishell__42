@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:58:46 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 20:45:32 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:54:02 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strdup(const char *s, t_garbage **gc)
 	size_t			i;
 
 	(void)gc;
-	res = gc_malloc(sizeof(char) * len + 1, gc);
+	res = gc_malloc(len + 1, gc);
 	if (!res)
 		return (NULL);
 	i = 0;

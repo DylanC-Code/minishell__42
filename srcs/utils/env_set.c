@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 23:00:58 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/28 23:01:21 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/29 10:51:21 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	add_env_node(t_app *app, const char *key, const char *value)
 
 	new_env = gc_malloc(sizeof(t_env), &app->app_gc);
 	if (!new_env)
-		return ;
+		cleanup_and_exit(app, EXIT_FAILURE);
 	new_env->key = ft_strdup(key, &app->app_gc);
 	if (!new_env->key)
-		return ;
+		cleanup_and_exit(app, EXIT_FAILURE);
 	new_env->value = ft_strdup(value, &app->app_gc);
 	if (!new_env->value)
-		return ;
+		cleanup_and_exit(app, EXIT_FAILURE);
 	new_env->next = NULL;
 	add_env_back(&app->env_head, new_env);
 }
