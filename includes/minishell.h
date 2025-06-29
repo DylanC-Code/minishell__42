@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/29 11:08:39 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/29 16:37:59 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void							print_error(t_app *app, char *msg,
 									char *error_code);
 void							add_env_node(t_app *app, const char *key,
 									const char *value);
-void							sigs_handler(int sig_code);
+int								change_dir(t_app *app, char *path);
 
 extern volatile sig_atomic_t	g_sig_code;
 
