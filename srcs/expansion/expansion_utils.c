@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:20:49 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/28 22:20:54 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/29 16:51:37 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	valid_env_start(char c)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_');
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_'
+		|| c == '?' || c == '$');
 }
 
 int	valid_var_char(char c)

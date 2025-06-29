@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:22:03 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/29 10:46:33 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/29 16:54:05 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@ char	*build_var(char *s, int *i, t_app *app)
 	int		var_start;
 
 	result = ft_strndup(s, *i, &app->curr_gc);
+	if (s[*i + 1] == '$')
+	{
+		(*i) += 2;
+		value = ft_itoa(getpid(), &app->curr_gc);
+		result = ft_strjoin(result, value, &app->curr_gc);
+		return (ft_strjoin(result, s + *i, &app->curr_gc));
+	}
+	else if (s[*i + 1] == '?')
+	{
+		(*i) += 2;
+		value = get_env_value(app->env_head, "?");
+		result = ft_strjoin(result, value, &app->curr_gc);
+		return (ft_strjoin(result, s + *i, &app->curr_gc));
+	}
 	var_start = *i + 1;
 	(*i)++;
 	while (s[*i] && valid_var_char(s[*i]))
