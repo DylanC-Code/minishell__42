@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:23:40 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/28 22:28:37 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/29 16:31:24 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ char	*process_mixed_quotes(char *arg, t_app *app);
 char	*process_variable_expansion(char *section, t_app *app);
 char	*process_section_literal(char *s, int start, int end, t_app *app);
 char	*process_section_expand(char *s, int start, int end, t_app *app);
+char	*process_argument(char *arg, t_app *app);
 
 #endif

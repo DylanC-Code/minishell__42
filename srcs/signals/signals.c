@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:22:18 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/29 11:10:26 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/29 16:17:04 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,38 @@
 
 volatile sig_atomic_t	g_sig_code = 0;
 
-void	sigs_handler(int sig_code)
+void	clear_rl_line(void)
 {
-	if (sig_code == SIGINT)
-	{
-		write(STDOUT_FILENO, "\n", 1);
-		rl_replace_line(NULL, 0);
-		rl_on_new_line();
-		rl_redisplay();
+	rl_replace_line("", 0);
+	rl_on_new_line();
+}
 
-		g_sig_code = SIGINT;
-	}
-	else if (sig_code == SIGQUIT)
-		g_sig_code = SIGQUIT;
-	else
-		sig_code = 0;
+static void	handle_sigint(int code)
+{
+	(void)code;
+	printf("\n");
+	clear_rl_line();
+	if (g_sig_code == 0)
+		rl_redisplay();
+}
+
+static void	handle_sigsegv(int code)
+{
+	(void)code;
+	write(2, "Segmentation fault\n", 19);
+	exit(11);
+}
+
+static void	handle_sigabrt(int code)
+{
+	(void)code;
+	write(1, "abort\n", 6);
 }
 
 void	init_signals(void)
 {
-	struct sigaction	act;
-
-	ft_bzero(&act, sizeof(struct sigaction));
-	act.sa_handler = &sigs_handler;
-	sigemptyset(&act.sa_mask);
-	act.sa_flags = 0;
-	sigaction(SIGQUIT, &act, NULL);
-	sigaction(SIGINT, &act, NULL);
+	signal(SIGINT, &handle_sigint);
+	signal(SIGSEGV, &handle_sigsegv);
+	signal(SIGABRT, &handle_sigabrt);
+	signal(SIGQUIT, SIG_IGN);
 }
