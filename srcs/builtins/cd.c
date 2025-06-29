@@ -19,11 +19,11 @@ void	cd_builtin(t_app *app, char **args)
 	else if (access(*args, R_OK) == -1)
 	{
 		perror("cd");
-		cleanup_and_exit(app, errno);
+		//cleanup_and_exit(app, errno);
 	}
 	else if (access(*args, F_OK) == -1)
 	{
 		perror("cd");
-		cleanup_and_exit(app, errno);
+		//cleanup_and_exit(app, errno);
 	}
 }

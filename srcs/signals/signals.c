@@ -18,10 +18,11 @@ void	sigs_handler(int sig_code)
 {
 	if (sig_code == SIGINT)
 	{
-		rl_replace_line("", 0);       // Efface la ligne en cours
-		rl_on_new_line();             // Signale une nouvelle ligne
-		write(STDIN_FILENO, "\n", 1); // Force retour à la ligne
-		rl_done = 1;
+		write(STDOUT_FILENO, "\n", 1);
+		rl_replace_line(NULL, 0);
+		rl_on_new_line();
+		rl_redisplay();
+
 		g_sig_code = SIGINT;
 	}
 	else if (sig_code == SIGQUIT)

@@ -92,15 +92,17 @@ static t_status	parent_heredoc(t_app *app, t_redir_list *heredoc_redir,
 
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
-		// printf("Parent process: PID %d, child exited with status %d\n", pid, WEXITSTATUS(status));
-		// printf("Heredoc child recieved SIGINT\n");
+		printf("Parent process: PID %d, child exited with status %d\n", pid, WTERMSIG(status));
+		printf("Heredoc child recieved SIGINT\n");
 		//ft_putstr_fd("^C\n", 1);
 		close(fds[0]);
+		set_env_value(app, "?", "130");
 		return (WEXITSTATUS(status));
 	}
 
 	close(fds[1]);
 	heredoc_redir->fd = fds[0];
+	set_env_value(app, "?", "0");
 	return (SUCCESS);
 }
 
