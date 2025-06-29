@@ -6,18 +6,28 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:22:18 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/28 22:18:42 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/29 11:10:26 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-volatile sig_atomic_t	g_in_heredoc = 0;
+volatile sig_atomic_t	g_sig_code = 0;
 
-void	sigs_handler(int signal)
+void	sigs_handler(int sig_code)
 {
-	if (signal == SIGINT && !g_in_heredoc)
-		write(STDOUT_FILENO, "\n" PS2_PROMPT, ft_strlen(PS2_PROMPT) + 1);
+	if (sig_code == SIGINT)
+	{
+		rl_replace_line("", 0);       // Efface la ligne en cours
+		rl_on_new_line();             // Signale une nouvelle ligne
+		write(STDIN_FILENO, "\n", 1); // Force retour à la ligne
+		rl_done = 1;
+		g_sig_code = SIGINT;
+	}
+	else if (sig_code == SIGQUIT)
+		g_sig_code = SIGQUIT;
+	else
+		sig_code = 0;
 }
 
 void	init_signals(void)
