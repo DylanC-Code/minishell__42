@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 14:14:27 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 16:03:05 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:56:30 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ char	*get_core(t_app *app)
 {
 	char		cwd[1024];
 	const char	*prefix = MAGENTA "@" BLUE "minishell: ";
+	const char	*unknown = "unknown";
 
 	if (!getcwd(cwd, sizeof(cwd)))
-		return (NULL);
+		return (ft_strjoin(prefix, unknown, &app->curr_gc));
 	return (ft_strjoin(prefix, cwd, &app->curr_gc));
 }
