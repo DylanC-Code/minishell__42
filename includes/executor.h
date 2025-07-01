@@ -18,8 +18,6 @@ void		close_pipes(t_cmd *cmd);
 void		exec_builtin(t_app *app, t_cmd *cmd);
 bool		is_builtin(const char *cmd);
 int			handle_expansion(t_app *app, t_cmd_sequence *head_seq);
-void		exec_builtin(t_app *app, t_cmd *cmd);
-bool		is_builtin(const char *cmd);
-int			handle_expansion(t_app *app, t_cmd_sequence *head_seq);
+void		exec_single_builtin(t_app *app, t_cmd *cmd);
 
 #endif

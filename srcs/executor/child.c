@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 14:32:47 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 11:25:18 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:39:08 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	child_exec(t_app *app, t_cmd *cmd)
 	if (cmd->fd_out != STDOUT_FILENO && cmd->fd_out >= 0)
 		dup2(cmd->fd_out, STDOUT_FILENO);
 	close_fds_and_pipes(cmd);
+	if (is_builtin(cmd->args[0]))
+		return (exec_builtin(app, cmd));
 	exec_or_died(app, cmd);
 }
 

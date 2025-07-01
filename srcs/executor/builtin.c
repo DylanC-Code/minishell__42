@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:10:41 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/29 16:38:24 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:42:10 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,16 @@ static void	dispatch_builtin(t_app *app, t_cmd *cmd)
 
 void	exec_builtin(t_app *app, t_cmd *cmd)
 {
-	int	saved_stdout;
+	char	*exit_status;
 
-	if (cmd->fd_out != STDOUT_FILENO && cmd->fd_out != -1)
-	{
-		saved_stdout = dup(STDOUT_FILENO);
-		if (dup2(cmd->fd_out, STDOUT_FILENO) < 0)
-			exit_with_error(app, "dup2");
-	}
 	dispatch_builtin(app, cmd);
-	if (cmd->fd_out != STDOUT_FILENO && cmd->fd_out != -1)
-	{
-		safe_close(&cmd->fd_out);
-		safe_close(&cmd->fd_in);
-		if (dup2(saved_stdout, STDOUT_FILENO) < 0)
-			exit_with_error(app, "dup2");
-		safe_close(&saved_stdout);
-	}
+	exit_status = get_env_value(app->env_head, "?");
+	cleanup_and_exit(app, ft_atoi(exit_status));
+}
+
+void	exec_single_builtin(t_app *app, t_cmd *cmd)
+{
+	dispatch_builtin(app, cmd);
+	safe_close(&cmd->fd_out);
+	safe_close(&cmd->fd_in);
 }
