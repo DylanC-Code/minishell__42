@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 10:58:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/29 16:36:38 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/01 13:49:09 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static bool	read_in_stdin(t_app *app, int fd, char *word)
 	while (1)
 	{
 		buf = NULL;
-		buf = readline("> ");
+		buf = readline(PS3_PROMPT);
 		if (!buf)
 		{
 			printf("warning: here-document delimited by end-of-file ");
@@ -85,6 +85,8 @@ static t_status	handle_heredoc(t_app *app, t_redir_list *heredoc_redir)
 {
 	int	fd;
 
+	if (heredoc_redir->type != TOKEN_REDIR_HEREDOC)
+		return (NOOP);
 	fd = open(".heredoc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		exit_with_error(app, "open");
