@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:26:36 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/29 16:38:12 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/01 11:35:33 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,20 +97,33 @@ int	update_oldpwd(t_app *app)
 	set_env_value(app, "OLDPWD", ft_strdup(cwd, &app->curr_gc));
 	return (1);
 }
+static void	cd_home(t_app *app)
+{
+	char	*home;
+
+	home = get_env_value(app->env_head, "HOME");
+	if (!change_dir(app, home))
+	{
+		set_env_value(app, "?", "1");
+	}
+	else
+		set_env_value(app, "?", "0");
+}
 
 void	cd_builtin(t_app *app, char **args)
 {
 	char	*dir;
 
+	if (!args || !*args)
+	{
+		cd_home(app);
+		return ;
+	}
 	if (!check_args(app, args))
 		return ;
 	dir = get_cd_dir(app, args);
-	if (!dir || !check_dir(app, dir))
-	{
-		set_env_value(app, "?", "1");
-		return ;
-	}
-	if (!update_oldpwd(app) || !change_dir(app, dir))
+	if (!dir || !check_dir(app, dir) || !update_oldpwd(app) || !change_dir(app,
+			dir))
 	{
 		set_env_value(app, "?", "1");
 		return ;
