@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:24:44 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/01 13:34:56 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/01 14:32:07 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ static bool	check_logical_op(t_cmd_sequence *seq)
 
 static bool	only_one_cmd_and_is_builtin(t_cmd *cmds)
 {
-	if (!cmds || !cmds->next)
+	if (!cmds || !*cmds->args)
+		return (false);
+	if (!cmds->next)
 		return (is_builtin(cmds->args[0]));
 	return (false);
 }

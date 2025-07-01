@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 10:58:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/01 13:49:09 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/01 15:38:11 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,23 @@ t_status	collect_heredocs(t_app *app, t_cmd_sequence *head_seq)
 static t_status	handle_heredocs_cmd(t_app *app, t_cmd *cmd)
 {
 	t_redir_list	*redir_head;
-	t_status		ret_code;
 
 	redir_head = cmd->redir_list;
 	while (redir_head)
 	{
-		ret_code = handle_heredoc(app, redir_head);
-		if (redir_head->type != TOKEN_REDIR_HEREDOC)
-			;
-		else if (!ret_code)
-			return (ret_code);
+		if (redir_head->type == TOKEN_REDIR_HEREDOC)
+		{
+			if (!handle_heredoc(app, redir_head))
+				cmd->failed = true;
+			else
+				cmd->failed = false;
+		}
 		redir_head = redir_head->next;
 	}
 	return (SUCCESS);
 }
 
-static bool	read_in_stdin(t_app *app, int fd, char *word)
+static t_status	read_in_stdin(t_app *app, int fd, char *word)
 {
 	char	*buf;
 	char	*tmp;
@@ -64,11 +65,10 @@ static bool	read_in_stdin(t_app *app, int fd, char *word)
 		buf = readline(PS3_PROMPT);
 		if (!buf)
 		{
-			printf("warning: here-document delimited by end-of-file ");
-			printf("(wanted '");
-			printf("%s", word);
-			printf("')\n");
-			break ;
+			printf("warning: here-document delimited by end-of-file (wanted '%s')\n",
+				word);
+			close(fd);
+			return (ERROR);
 		}
 		if (!ft_strncmp(word, buf, INT_MAX))
 			break ;
@@ -78,7 +78,7 @@ static bool	read_in_stdin(t_app *app, int fd, char *word)
 		write(fd, "\n", 1);
 	}
 	close(fd);
-	return (true);
+	return (SUCCESS);
 }
 
 static t_status	handle_heredoc(t_app *app, t_redir_list *heredoc_redir)

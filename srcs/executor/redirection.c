@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:27:39 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 14:48:54 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/01 15:26:20 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ void	resolve_all_redirection(t_app *app, t_cmd_sequence *seq)
 		cmd = seq->cmds;
 		while (cmd)
 		{
+			if (cmd->failed)
+			{
+				cmd = cmd->next;
+				continue ;
+			}
 			redir = cmd->redir_list;
 			while (redir)
 			{
