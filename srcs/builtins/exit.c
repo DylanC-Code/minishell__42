@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:56:46 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/27 10:04:49 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/01 10:39:17 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	exit_builtin(t_app *app, char **args)
 
 	status_code = ft_atoi(get_env_value(app->env_head, "?"));
 	printf("exit\n");
-	if (!*args)
+	if (!args || !*args)
 		cleanup_and_exit(app, status_code);
 	if (!is_valid_number(*args))
 		non_numeric_arg_error(app, *args);

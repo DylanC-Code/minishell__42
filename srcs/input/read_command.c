@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:26:29 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/27 10:06:55 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/01 10:37:56 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*get_user_input(t_app *app)
 		cleanup_and_exit(app, EXIT_FAILURE);
 	line = readline(prompt);
 	if (!line)
-		cleanup_and_exit(app, EXIT_SUCCESS);
+		exit_builtin(app, NULL);
 	add_history(line);
 	add_to_gc(&app->curr_gc, line);
 	return (line);
