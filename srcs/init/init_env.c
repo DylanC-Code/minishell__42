@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 09:42:38 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/29 11:00:18 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/02 11:29:11 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ void	init_env(t_app *app, char *envp[])
 		add_env_back(&app->env_head, new_env);
 		envp++;
 	}
+	set_env_value(app, "?", "0");
 }

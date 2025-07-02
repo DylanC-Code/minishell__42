@@ -6,27 +6,22 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:22:18 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/02 10:50:14 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/02 13:50:43 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-volatile sig_atomic_t	g_in_heredoc = 0;
-
-void	clear_rl_line(void)
-{
-	rl_replace_line("", 0);
-	rl_on_new_line();
-}
-
-static void	handle_sigint(int code)
+static void	handle_sigint_in_child(int code)
 {
 	(void)code;
+	// if (g_sigint)
+	// 	return ;
 	printf("\n");
-	clear_rl_line();
-	if (g_in_heredoc == 0)
-		rl_redisplay();
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	// if (g_sigint == 0)
+	rl_redisplay();
 }
 
 static void	handle_sigsegv(int code)
@@ -44,7 +39,7 @@ static void	handle_sigabrt(int code)
 
 void	init_signals(void)
 {
-	signal(SIGINT, &handle_sigint);
+	signal(SIGINT, &handle_sigint_in_child);
 	signal(SIGSEGV, &handle_sigsegv);
 	signal(SIGABRT, &handle_sigabrt);
 	signal(SIGQUIT, SIG_IGN);
