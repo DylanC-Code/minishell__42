@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:16:45 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/03 17:18:11 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/03 17:21:16 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	exec_simple_cmd(t_app *app, t_cmd *cmd)
 	if (cmd->failed || !*cmd->args)
 	{
 		set_env_value(app, "?", "0");
+		safe_close(&cmd->fd_in);
+		safe_close(&cmd->fd_out);
 		return ;
 	}
 	cmd->pid = fork();

@@ -6,17 +6,15 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 10:58:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/02 14:05:24 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/02 21:20:05 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_status			handle_heredocs_cmd(t_app *app, t_cmd *cmd);
-static t_status			handle_heredoc(t_app *app, t_cmd *cmd,
-							t_redir_list *heredoc_redir);
-
-volatile sig_atomic_t	g_sigint = 0;
+static t_status	handle_heredocs_cmd(t_app *app, t_cmd *cmd);
+static t_status	handle_heredoc(t_app *app, t_cmd *cmd,
+					t_redir_list *heredoc_redir);
 
 t_status	collect_heredocs(t_app *app, t_cmd_sequence *head_seq)
 {
@@ -78,7 +76,6 @@ static t_status	read_in_stdin(t_app *app, int fd, char *word)
 void	heredoc_child(t_app *app, t_redir_list *heredoc_redir, int fds[2])
 {
 	safe_close(&fds[0]);
-	signal(SIGINT, SIG_DFL);
 	if (!read_in_stdin(app, fds[1], heredoc_redir->name))
 	{
 		safe_close(&fds[1]);
@@ -94,8 +91,11 @@ t_status	heredoc_parent(t_app *app, t_redir_list *redir_list, pid_t pid,
 	int	status;
 
 	(void)app;
+	(void)redir_list;
 	safe_close(&fds[1]);
+	g_in_heredoc = true;
 	waitpid(pid, &status, 0);
+	g_in_heredoc = false;
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 2)
 	{
 		safe_close(&fds[0]);
@@ -107,7 +107,6 @@ t_status	heredoc_parent(t_app *app, t_redir_list *redir_list, pid_t pid,
 		set_env_value(app, "?", "130");
 		return (-1);
 	}
-	redir_list->fd = fds[0];
 	return (SUCCESS);
 }
 
@@ -123,19 +122,21 @@ static t_status	handle_heredoc(t_app *app, t_cmd *cmd,
 	if (pipe(fds) == -1)
 		exit_with_error(app, "pipe");
 	pid = fork();
+	heredoc_redir->fd = fds[0];
 	if (pid < 0)
+	{
+		safe_close(&fds[1]);
+		safe_close(&heredoc_redir->fd);
 		exit_with_error(app, "fork");
+	}
 	if (pid == 0)
 	{
 		heredoc_child(app, heredoc_redir, fds);
 		return (SUCCESS);
 	}
 	heredoc_res = heredoc_parent(app, heredoc_redir, pid, fds);
-	if (heredoc_res == ERROR)
-		cmd->failed = true;
-	else if (heredoc_res == SUCCESS)
-		cmd->failed = false;
-	else
-		return (ERROR);
+	cmd->failed = heredoc_res == ERROR;
+	if (cmd->failed)
+		safe_close(&heredoc_redir->fd);
 	return (SUCCESS);
 }
