@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/29 16:37:40 by dcastor          ###   ########.fr        #
+#    Updated: 2025/07/02 10:36:46 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,16 +49,13 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		executor/child.c \
 		executor/exec_prepare.c \
 		executor/executor.c \
+		executor/expansion.c \
 		executor/heredoc.c \
 		executor/pipe_setup.c \
 		executor/redirection.c \
 		executor/sequence_exec.c \
 		executor/simple_exec.c \
 		\
-		expansion/expansion_build.c \
-		expansion/expansion_process.c \
-		expansion/expansion_quotes.c \
-		expansion/expansion_utils.c \
 		\
 		init/init_env.c \
 		init/init.c \
