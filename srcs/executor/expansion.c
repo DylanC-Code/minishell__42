@@ -16,7 +16,8 @@ int	valid_env_start(char c)
 {
 	return ((c >= 'a' && c <= 'z')
 		|| (c >= 'A' && c <= 'Z')
-		|| c == '_');
+		|| c == '_'
+		|| c == '?');
 }
 
 int	valid_var_char(char c)
@@ -76,6 +77,8 @@ int	find_var_end(char *str, int start)
 	int	i;
 
 	i = start;
+	if (str[i] == '?')
+		return (i + 1);
 	while (str[i] && valid_var_char(str[i]))
 		i++;
 	return (i);
