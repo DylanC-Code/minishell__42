@@ -23,7 +23,10 @@ void	export_builtin(t_app *app, char **args)
 	while (args[i])
 	{
 		if (!check_varname_syntax(args[i]))
+		{
 			export_error(app, get_varname_key(args[i], app));
+			set_env_value(app, "?", "1");
+		}
 		else
 		{
 			add_env_var(&app->env_head, get_varname_key(args[i], app),

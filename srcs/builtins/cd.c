@@ -31,10 +31,7 @@ char	*get_cd_dir(t_app *app, char **args)
 	{
 		home_env = get_env_value(app->env_head, "HOME");
 		if (!home_env || !*home_env)
-		{
-			print_error(app, "cd: HOME not set\n", "1");
-			return (NULL);
-		}
+			return (print_error(app, "cd: HOME not set\n", "1"), (NULL));
 		return (home_env);
 	}
 	else if (ft_strcmp(args[0], "-") == 0)
@@ -56,16 +53,24 @@ int	check_dir(t_app *app, char *path)
 	struct stat	path_info;
 	char		*msg;
 
-	if (access(path, X_OK) == -1)
+	if (access(path, F_OK) == -1)
 	{
-		print_error(app, NULL, "1");
-		perror("cd");
+		msg = ft_strjoin("cd: ", path, &app->curr_gc);
+		msg = ft_strjoin(msg, ": No such file or directory\n", &app->curr_gc);
+		print_error(app, msg, "1");
 		return (0);
 	}
 	if (stat(path, &path_info) == 0 && !S_ISDIR(path_info.st_mode))
 	{
 		msg = ft_strjoin("cd: ", path, &app->curr_gc);
 		msg = ft_strjoin(msg, ": Not a directory\n", &app->curr_gc);
+		print_error(app, msg, "1");
+		return (0);
+	}
+	if (access(path, X_OK) == -1)
+	{
+		msg = ft_strjoin("cd: ", path, &app->curr_gc);
+		msg = ft_strjoin(msg, ": Permission denied\n", &app->curr_gc);
 		print_error(app, msg, "1");
 		return (0);
 	}

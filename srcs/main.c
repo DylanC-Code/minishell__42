@@ -31,6 +31,7 @@ int	main(int argc, char const *argv[], char *envp[])
 			continue ;
 		seq_head = parse_tokens(token_head, &app.curr_gc);
 		handle_expansion(&app, seq_head);
+		//display_seq(seq_head);
 		handle_exec(&app, seq_head);
 	}
 	cleanup_and_exit(&app, EXIT_FAILURE);

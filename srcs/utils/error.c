@@ -18,7 +18,7 @@ void	print_error(t_app *app, char *msg, char *error_code)
 
 	set_env_value(app, "?", error_code);
 	res = ft_strjoin("minishell: ", msg, &app->curr_gc);
-	if (!res)
+	if (!res || !msg)
 		cleanup_and_exit(app, EXIT_FAILURE);
 	ft_putstr_fd(res, STDERR_FILENO);
 }

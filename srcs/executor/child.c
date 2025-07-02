@@ -38,11 +38,23 @@ void	close_fds_and_pipes(t_cmd *cmd)
 	}
 }
 
-char	*find_in_path(t_app *app, const char *cmd)
+char	*build_path(t_app *app, char *dir, char *cmd)
 {
 	char	*path;
+
+	path = ft_strjoin(dir, "/", &app->curr_gc);
+	if (!path)
+		return (NULL);
+	path = ft_strjoin(path, cmd, &app->curr_gc);
+	return (path);
+}
+
+
+char *find_in_path(t_app *app, char *cmd)
+{
 	char	*env_path;
 	char	**paths;
+	char	*result;
 	int		i;
 
 	env_path = get_env_value(app->env_head, "PATH");
@@ -54,20 +66,15 @@ char	*find_in_path(t_app *app, const char *cmd)
 	i = 0;
 	while (paths[i])
 	{
-		path = ft_strjoin(paths[i], "/", &app->curr_gc);
-		if (!path)
+		result = build_path(app, paths[i], cmd);
+		if (!result)
 			return (NULL);
-		path = ft_strjoin(path, cmd, &app->curr_gc);
-		if (!path)
-			return (NULL);
-		if (!access(path, X_OK))
-			break ;
+		if (access(result, X_OK) == 0)
+			return (result);
 		if (errno == 13)
-			exit_with_error(app, path);
+			exit_with_error(app, result);
 		i++;
 	}
-	if (!access(path, X_OK))
-		return (path);
 	return (NULL);
 }
 
@@ -77,21 +84,58 @@ void	exec(t_app *app, t_cmd *cmd, char *path)
 	exit_with_error(app, "execve");
 }
 
-void	exec_or_died(t_app *app, t_cmd *cmd)
+void handle_direct_path(t_app *app, t_cmd *cmd)
+{
+	struct stat	stat_buf;
+	char		*msg;
+
+	if (access(cmd->args[0], F_OK) != 0)
+	{
+		msg = ft_strjoin(cmd->args[0], ": No such file or directory\n", &app->curr_gc);
+		print_error(app, msg, "127");
+		cleanup_and_exit(app, 127);
+	}
+	if (stat(cmd->args[0], &stat_buf) == 0 && S_ISDIR(stat_buf.st_mode))
+	{
+		msg = ft_strjoin(cmd->args[0], ": Is a directory\n", &app->curr_gc);
+		print_error(app, msg, "126");
+		cleanup_and_exit(app, 126);
+	}
+	if (access(cmd->args[0], X_OK) != 0)
+	{
+		msg = ft_strjoin(cmd->args[0], ": Permission denied\n", &app->curr_gc);
+		print_error(app, msg, "126");
+		cleanup_and_exit(app, 126);
+	}
+	exec(app, cmd, cmd->args[0]);
+}
+
+void handle_path_search(t_app *app, t_cmd *cmd)
 {
 	char	*path;
 	char	*msg;
 
-	if (!access(cmd->args[0], X_OK))
-		return (exec(app, cmd, cmd->args[0]));
-	if (errno == 13)
-		exit_with_error(app, cmd->args[0]);
 	path = find_in_path(app, cmd->args[0]);
 	if (path)
-		return (exec(app, cmd, path));
-	msg = ft_strjoin(cmd->args[0], " command not found\n", &app->app_gc);
-	if (!msg)
-		cleanup_and_exit(app, errno);
+	{
+		if (access(path, X_OK) == 0)
+		{
+			exec(app, cmd, path);
+			return ;
+		}
+		msg = ft_strjoin(path, ": Permission denied\n", &app->curr_gc);
+		print_error(app, msg, "126");
+		cleanup_and_exit(app, 126);
+	}
+	msg = ft_strjoin(cmd->args[0], ": command not found\n", &app->curr_gc);
 	print_error(app, msg, "127");
 	cleanup_and_exit(app, 127);
+}
+
+void exec_or_died(t_app *app, t_cmd *cmd)
+{
+	if (ft_strchr(cmd->args[0], '/'))
+		handle_direct_path(app, cmd);
+	else
+		handle_path_search(app, cmd);
 }
