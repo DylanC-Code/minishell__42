@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:26:29 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/01 13:48:16 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/02 10:57:21 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ char	*get_user_input(t_app *app)
 	line = readline(prompt);
 	if (!line)
 		exit_builtin(app, NULL);
-	add_history(line);
+	if (*line)
+		add_history(line);
 	add_to_gc(&app->curr_gc, line);
 	return (line);
 }

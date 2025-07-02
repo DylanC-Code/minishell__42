@@ -6,13 +6,13 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:22:18 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/29 16:17:04 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/02 10:50:14 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-volatile sig_atomic_t	g_sig_code = 0;
+volatile sig_atomic_t	g_in_heredoc = 0;
 
 void	clear_rl_line(void)
 {
@@ -25,7 +25,7 @@ static void	handle_sigint(int code)
 	(void)code;
 	printf("\n");
 	clear_rl_line();
-	if (g_sig_code == 0)
+	if (g_in_heredoc == 0)
 		rl_redisplay();
 }
 

@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/29 16:37:59 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/02 10:50:14 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ void							add_env_node(t_app *app, const char *key,
 									const char *value);
 int								change_dir(t_app *app, char *path);
 
-extern volatile sig_atomic_t	g_sig_code;
+extern volatile sig_atomic_t	g_in_heredoc;
 
 #endif
