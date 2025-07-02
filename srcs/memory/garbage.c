@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 10:13:03 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/15 16:20:34 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 16:36:04 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,16 @@ void	*gc_malloc(size_t size, t_garbage **garbage_list)
 	void		*alloc;
 
 	new_gb = ft_calloc(1, sizeof(t_garbage));
-	if (!new_gb)
-		exit_with_error("gc_malloc", garbage_list);
 	alloc = malloc(size);
-	if (!alloc)
-		(free(new_gb), exit_with_error("gc_malloc", garbage_list));
+	if (!alloc || !new_gb)
+	{
+		free(alloc);
+		free(new_gb);
+		perror("gc_malloc");
+		return (NULL);
+	}
+	ft_bzero(new_gb, sizeof(t_garbage));
+	ft_bzero(alloc, size);
 	new_gb->alloc = alloc;
 	add_gb_to_back(garbage_list, new_gb);
 	return (alloc);
@@ -48,7 +53,7 @@ void	gc_cleanup(t_garbage **garbage_list)
 	*garbage_list = NULL;
 }
 
-void	add_to_gc(t_garbage **garbage_list, void *alloc)
+void	add_to_gc(t_garbage **gc, void *alloc)
 {
 	t_garbage	*new_gb;
 
@@ -56,9 +61,13 @@ void	add_to_gc(t_garbage **garbage_list, void *alloc)
 		return ;
 	new_gb = ft_calloc(1, sizeof(t_garbage));
 	if (!new_gb)
-		(free(alloc), exit_with_error("gc_malloc", garbage_list));
+	{
+		perror("gc_malloc");
+		free(alloc);
+		return ;
+	}
 	new_gb->alloc = alloc;
-	add_gb_to_back(garbage_list, new_gb);
+	add_gb_to_back(gc, new_gb);
 }
 
 static void	add_gb_to_back(t_garbage **garbage_list, t_garbage *new_gb)

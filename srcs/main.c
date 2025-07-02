@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:54:21 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 12:21:13 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 16:29:58 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,14 @@ int	main(int argc, char const *argv[], char *envp[])
 	init(&app, envp);
 	while (1)
 	{
-		token_head = read_complete_command(&app);
-		if (check_syntax(&app, token_head))
-		{
-			seq_head = parse_tokens(token_head, &app.curr_gc);
-			display_seq(seq_head);
-			handle_expansion(&app, seq_head);
-			handle_exec(&app, seq_head);
-		}
 		gc_cleanup(&app.curr_gc);
+		token_head = read_complete_command(&app);
+		if (!check_syntax(&app, token_head))
+			continue ;
+		seq_head = parse_tokens(token_head, &app.curr_gc);
+		handle_expansion(&app, seq_head);
+		handle_exec(&app, seq_head);
 	}
-	gc_cleanup(&app.app_gc);
+	cleanup_and_exit(&app, EXIT_FAILURE);
 	return (0);
 }

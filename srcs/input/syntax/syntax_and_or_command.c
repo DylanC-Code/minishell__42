@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 15:18:44 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/21 08:40:46 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/28 22:54:34 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,27 @@
 static bool	is_and_or_token(t_token *token);
 static bool	is_invalid_token(t_token *token);
 
-t_status	syntax_handle_and_or_command(t_token **token_list)
+t_status	syntax_handle_and_or_command(t_app *app, t_token **token_list)
 {
 	t_status	pipeline_handled;
+	t_token		*token;
 
-	if (is_and_or_token(*token_list))
-		return (print_syntax_error((*token_list)->value), ERROR);
-	pipeline_handled = syntax_handle_pipeline(token_list);
+	token = *token_list;
+	if (is_and_or_token(token))
+		return (unexpected_token_error(app, token->value), ERROR);
+	pipeline_handled = syntax_handle_pipeline(app, &token);
 	if (pipeline_handled != SUCCESS)
 		return (pipeline_handled);
-	while (is_and_or_token(*token_list))
+	while (is_and_or_token(token))
 	{
-		*token_list = (*token_list)->next;
-		if (is_invalid_token(*token_list))
-			return (print_syntax_error((*token_list)->value), ERROR);
-		pipeline_handled = syntax_handle_pipeline(token_list);
+		token = token->next;
+		if (is_invalid_token(token))
+			return (unexpected_token_error(app, token->value), ERROR);
+		pipeline_handled = syntax_handle_pipeline(app, &token);
 		if (pipeline_handled == ERROR)
 			return (ERROR);
 	}
+	*token_list = token;
 	return (SUCCESS);
 }
 

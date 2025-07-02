@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 15:23:53 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/28 22:11:44 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,35 +96,49 @@ t_token						*read_complete_command(t_app *app);
 char						*get_prompt(t_app *app);
 
 /* ********************** */
+/* ******* Parser ******* */
+/* ********************** */
+
+size_t						count_words(t_token *start_token);
+
+/* ********************** */
 /* ******* Syntax ******* */
 /* ********************** */
 
 bool						check_syntax(t_app *app, t_token *head_token);
-bool						check_word(char *value);
+bool						check_word(t_app *app, char *word);
 
 /* ~ Command ~ */
-t_status					syntax_handle_command(t_token **token_list);
+t_status					syntax_handle_command(t_app *app,
+								t_token **token_list);
 
 /* ~ And Or Command ~ */
-t_status					syntax_handle_and_or_command(t_token **token_list);
+t_status					syntax_handle_and_or_command(t_app *app,
+								t_token **token_list);
 
 /* ~ Pipeline ~ */
-t_status					syntax_handle_pipeline(t_token **token_list);
+t_status					syntax_handle_pipeline(t_app *app,
+								t_token **token_list);
 
 /* ~ Redirection ~ */
-t_status					syntax_handle_redirection(t_token **token_list);
+t_status					syntax_handle_redirection(t_app *app,
+								t_token **token_list);
 void						consume_redirection_sequence(t_token **token_list);
 bool						is_redirection_op(t_token *token);
 bool						is_redirection_sequence(t_token *token);
 
 /* ~ Simple Command ~ */
-t_status					syntax_handle_simple_command(t_token **token_list);
+t_status					syntax_handle_simple_command(t_app *app,
+								t_token **token_list);
 
 /* ~ Subshell ~ */
-t_status					syntax_handle_subshell(t_token **token_list);
+t_status					syntax_handle_subshell(t_app *app,
+								t_token **token_list);
 
 /* ~ Error ~ */
-void						syntax_error(t_token *token);
+void						unexpected_token_error(t_app *app,
+								char *token_value);
+void						unexpected_eof_error(t_app *app, char *quote_type);
 
 void						display_seq(t_cmd_sequence *seq_head);
 int							handle_redirection(t_parser *parser,
@@ -144,15 +158,10 @@ char						*token_to_str(t_token_type type);
 /* ******* Tokenizer ******* */
 /* ************************* */
 
-t_token						*tokenizer(char *line, t_garbage **gb_list);
-
+t_token						*tokenizer(t_app *app, char *line);
 t_token						*get_token(char *str, t_garbage **gb_list);
 
 void						handle_word_token(t_token *token, char *str,
-								t_garbage **gc);
-void						handle_single_quote_token(t_token *token, char *str,
-								t_garbage **gc);
-void						handle_double_quote_token(t_token *token, char *str,
 								t_garbage **gc);
 void						handle_operator_token(t_token *token, char *str,
 								t_garbage **gc);
@@ -177,15 +186,5 @@ void						display_seq(t_cmd_sequence *seq_head);
 t_cmd						*cmd_builder(t_token *token, t_garbage **gc);
 t_cmd_sequence				*sequence_builder(t_garbage **gc);
 t_token						*get_token(char *str, t_garbage **gb_list);
-t_token_type				get_token_type(char *token_value);
-
-char						*get_word(char *str);
-char						*get_value_between(char *str, char quote_delimiter);
-char						*get_operator(char *str);
-
-void						add_token_back(t_token **token_list,
-								t_token *new_token);
-
-t_token						*tokenizer(char *line, t_garbage **gb_list);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/06/26 10:36:52 by dcastor          ###   ########.fr        #
+#    Updated: 2025/06/29 16:37:40 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,16 @@ RM := rm -rf
 
 # 📁 Sources & Objets
 SRCS := $(addprefix $(SRCS_DIR), \
+		builtins/export/export_env.c\
+		builtins/export/export_syntax.c\
+		builtins/export/export.c\
+		\
+		builtins/cd.c \
+		builtins/echo.c \
 		builtins/env.c \
 		builtins/exit.c \
-		builtins/export.c\
-		builtins/cd.c \
+		builtins/pwd.c\
+		builtins/unset.c\
 		\
 		executor/builtin.c \
 		executor/child.c \
@@ -48,10 +54,18 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		executor/redirection.c \
 		executor/sequence_exec.c \
 		executor/simple_exec.c \
-		executor/expansion.c \
+		\
+		expansion/expansion_build.c \
+		expansion/expansion_process.c \
+		expansion/expansion_quotes.c \
+		expansion/expansion_utils.c \
 		\
 		init/init_env.c \
 		init/init.c \
+		\
+		input/parser/cmd_builders.c \
+		input/parser/parse_helper_utils.c \
+		input/parser/redir_list_builders.c \
 		\
 		input/tokenizer/token_factory.c \
 		input/tokenizer/token_operator.c \
@@ -62,6 +76,7 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		\
 		input/syntax/syntax_and_or_command.c \
 		input/syntax/syntax_command.c \
+		input/syntax/syntax_error.c \
 		input/syntax/syntax_pipeline.c \
 		input/syntax/syntax_redirection.c \
 		input/syntax/syntax_simple_command.c \
@@ -72,13 +87,13 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		input/read_command.c \
 		input/parse_tokens.c \
 		input/prompt.c \
-		input/parse_helpers.c \
 		\
 		memory/garbage.c \
 		\
 		signals/signals.c \
 		\
 		utils/cleanup.c \
+		utils/env_set.c \
 		utils/env_utils.c \
 		utils/error.c \
 		utils/fd_utils.c \

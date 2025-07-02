@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:25:19 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 12:19:27 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/28 22:53:41 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ static void	handle_double_quote(char *str, size_t *i);
 
 void	handle_word_token(t_token *token, char *str, t_garbage **gc)
 {
-	char	symbols[] = "<>|&()";
+	char	*symbols;
 	size_t	i;
 
+	symbols = "<>|&()";
 	i = 0;
 	token->type = TOKEN_WORD;
 	while (str[i])

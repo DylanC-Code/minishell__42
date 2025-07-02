@@ -6,28 +6,46 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:22:18 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/24 16:28:00 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/29 16:17:04 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-volatile sig_atomic_t	in_heredoc = 0;
+volatile sig_atomic_t	g_sig_code = 0;
 
-void	sigs_handler(int signal)
+void	clear_rl_line(void)
 {
-	if (signal == SIGINT && !in_heredoc)
-		write(STDOUT_FILENO, "\n" PS2_PROMPT, ft_strlen(PS2_PROMPT) + 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+}
+
+static void	handle_sigint(int code)
+{
+	(void)code;
+	printf("\n");
+	clear_rl_line();
+	if (g_sig_code == 0)
+		rl_redisplay();
+}
+
+static void	handle_sigsegv(int code)
+{
+	(void)code;
+	write(2, "Segmentation fault\n", 19);
+	exit(11);
+}
+
+static void	handle_sigabrt(int code)
+{
+	(void)code;
+	write(1, "abort\n", 6);
 }
 
 void	init_signals(void)
 {
-	struct sigaction	act;
-
-	ft_bzero(&act, sizeof(struct sigaction));
-	act.sa_handler = &sigs_handler;
-	sigemptyset(&act.sa_mask);
-	act.sa_flags = 0;
-	sigaction(SIGQUIT, &act, NULL);
-	sigaction(SIGINT, &act, NULL);
+	signal(SIGINT, &handle_sigint);
+	signal(SIGSEGV, &handle_sigsegv);
+	signal(SIGABRT, &handle_sigabrt);
+	signal(SIGQUIT, SIG_IGN);
 }

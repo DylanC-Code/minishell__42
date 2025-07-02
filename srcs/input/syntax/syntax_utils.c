@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:31:37 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/25 15:41:41 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 15:46:22 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	check_quote(char *word, size_t *i, char quote_char);
 
-bool	check_word(char *word)
+bool	check_word(t_app *app, char *word)
 {
 	size_t	i;
 
@@ -22,9 +22,9 @@ bool	check_word(char *word)
 	while (word[++i])
 	{
 		if (word[i] == '\'' && !check_quote(word, &i, '\''))
-			return (print_unexpected_eof('\''), false);
+			return (unexpected_eof_error(app, "'"), false);
 		else if (word[i] == '"' && !check_quote(word, &i, '"'))
-			return (print_unexpected_eof('"'), false);
+			return (unexpected_eof_error(app, "\""), false);
 	}
 	return (true);
 }

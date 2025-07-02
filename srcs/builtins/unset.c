@@ -6,27 +6,42 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 10:08:38 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/25 15:47:28 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/01 11:24:04 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	unset_builtin(char *env_key, t_app *app)
+static void	remove_env_var(t_app *app, const char *key)
 {
-	t_env	*curr;
+	t_env	*prev;
+	t_env	*env;
 
-	if(!*env_key || !env_key)
-		return (0);
-	curr = app->env_head;
-	while (curr)
+	prev = NULL;
+	env = app->env_head;
+	while (env)
 	{
-		if (ft_strcmp(env_key, curr->key) == 0)
+		if (ft_strcmp(env->key, key) == 0)
 		{
-			curr->value = ft_strdup("", &app->app_gc);
-			return (0);
+			if (prev)
+				prev->next = env->next;
+			else
+				app->env_head = env->next;
+			break ;
 		}
-		curr = curr->next;
+		prev = env;
+		env = env->next;
 	}
-	return (0);
+}
+
+void	unset_builtin(t_app *app, char **args)
+{
+	if (!args || !*args)
+		return ;
+	while (*args)
+	{
+		remove_env_var(app, *args);
+		args++;
+	}
+	set_env_value(app, "?", "0");
 }

@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   executor.h                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 15:24:56 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/25 15:21:26 by dcastor          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
@@ -29,5 +18,6 @@ void		close_pipes(t_cmd *cmd);
 void		exec_builtin(t_app *app, t_cmd *cmd);
 bool		is_builtin(const char *cmd);
 int			handle_expansion(t_app *app, t_cmd_sequence *head_seq);
+void		exec_single_builtin(t_app *app, t_cmd *cmd);
 
 #endif

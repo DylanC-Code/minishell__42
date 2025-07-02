@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 11:55:49 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 16:06:22 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/23 09:05:19 by saal-kur          #+#    #+#             */
+/*   Updated: 2025/06/28 22:39:51 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_error(t_app *app, char *msg, char *error_code)
+void	export_builtin(t_app *app, char **args)
 {
-	char	*res;
+	int	i;
 
-	set_env_value(app, "?", error_code);
-	res = ft_strjoin("minishell: ", msg, &app->curr_gc);
-	if (!res)
-		cleanup_and_exit(app, EXIT_FAILURE);
-	ft_putstr_fd(res, STDERR_FILENO);
-}
-
-void	exit_with_error(t_app *app, char *msg)
-{
-	perror(msg);
-	cleanup(app);
-	exit(errno);
+	i = 0;
+	if (!args || !args[0])
+		return (env_builtin(app, args));
+	set_env_value(app, "?", "0");
+	while (args[i])
+	{
+		if (!check_varname_syntax(args[i]))
+			export_error(app, get_varname_key(args[i], app));
+		else
+		{
+			add_env_var(&app->env_head, get_varname_key(args[i], app),
+				get_varname_value(args[i]), app);
+		}
+		i++;
+	}
 }

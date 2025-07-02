@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 14:32:47 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 11:25:18 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/01 14:58:50 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	child_exec(t_app *app, t_cmd *cmd)
 	if (cmd->fd_out != STDOUT_FILENO && cmd->fd_out >= 0)
 		dup2(cmd->fd_out, STDOUT_FILENO);
 	close_fds_and_pipes(cmd);
+	if (is_builtin(cmd->args[0]))
+		return (exec_builtin(app, cmd));
 	exec_or_died(app, cmd);
 }
 
@@ -60,27 +62,36 @@ char	*find_in_path(t_app *app, const char *cmd)
 			return (NULL);
 		if (!access(path, X_OK))
 			break ;
+		if (errno == 13)
+			exit_with_error(app, path);
 		i++;
 	}
-	return (path);
+	if (!access(path, X_OK))
+		return (path);
+	return (NULL);
+}
+
+void	exec(t_app *app, t_cmd *cmd, char *path)
+{
+	execve(path, cmd->args, env_list_to_envp(app->env_head, &app->app_gc));
+	exit_with_error(app, "execve");
 }
 
 void	exec_or_died(t_app *app, t_cmd *cmd)
 {
 	char	*path;
+	char	*msg;
 
 	if (!access(cmd->args[0], X_OK))
-	{
-		execve(cmd->args[0], cmd->args, env_list_to_envp(app->env_head,
-				&app->app_gc));
-		printf("minishell: %s: command not found\n", cmd->args[0]);
-		cleanup(app);
-		exit(127);
-		return ;
-	}
+		return (exec(app, cmd, cmd->args[0]));
+	if (errno == 13)
+		exit_with_error(app, cmd->args[0]);
 	path = find_in_path(app, cmd->args[0]);
-	execve(path, cmd->args, env_list_to_envp(app->env_head, &app->app_gc));
-	printf("minishell: %s: command not found\n", cmd->args[0]);
-	cleanup(app);
-	exit(127);
+	if (path)
+		return (exec(app, cmd, path));
+	msg = ft_strjoin(cmd->args[0], " command not found\n", &app->app_gc);
+	if (!msg)
+		cleanup_and_exit(app, errno);
+	print_error(app, msg, "127");
+	cleanup_and_exit(app, 127);
 }

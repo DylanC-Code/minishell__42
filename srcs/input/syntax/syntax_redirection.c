@@ -6,13 +6,13 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:30:55 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/23 21:40:35 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/06/26 15:42:37 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_status	syntax_handle_redirection(t_token **token_list)
+t_status	syntax_handle_redirection(t_app *app, t_token **token_list)
 {
 	t_token	*token;
 	bool	has_io_number;
@@ -25,8 +25,8 @@ t_status	syntax_handle_redirection(t_token **token_list)
 		return (NOOP);
 	token = token->next;
 	if (token->type != TOKEN_WORD)
-		return (print_syntax_error(token->value), ERROR);
-	if (!check_word(token->value))
+		return (unexpected_token_error(app, token->value), ERROR);
+	if (!check_word(app, token->value))
 		return (ERROR);
 	*token_list = token->next;
 	return (SUCCESS);
