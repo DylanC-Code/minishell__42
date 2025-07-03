@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:45:36 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/07/02 10:36:27 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/03 16:29:01 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ char	*handle_regular_var(char *str, int *pos, t_app *app)
 	part = get_var_value(str, last_pos, *pos, app);
 	return (part);
 }
+
 void	set_build_vars_variables(int *pos, int *last_pos, char **res, t_app *app)
 {
 	*pos = 0;
@@ -135,6 +136,7 @@ void	set_build_vars_variables(int *pos, int *last_pos, char **res, t_app *app)
 	if(!res)
 		cleanup_and_exit(app, EXIT_FAILURE);
 }
+
 char	*build_vars(char *str, t_app *app)
 {
 	char	*result;
@@ -145,7 +147,7 @@ char	*build_vars(char *str, t_app *app)
 	set_build_vars_variables(&pos, &last_pos, &result, app);
 	while (str[pos])
 	{
-		if (str[pos] == '$' && str[pos + 1] && (valid_env_start(str[pos + 1]) 
+		if (str[pos] == '$' && str[pos + 1] && (valid_env_start(str[pos + 1])
 			|| str[pos + 1] == '"'))
 		{
 			part = add_text_part(str, last_pos, pos, app);
