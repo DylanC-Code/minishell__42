@@ -6,14 +6,14 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 14:32:47 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/03 16:32:54 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/03 17:21:49 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	exec_or_died(t_app *app, t_cmd *cmd);
-void	close_fds_and_pipes(t_cmd *cmd);
+void	close_fds_and_pipes(t_cmd_sequence *seq_head, t_cmd *current_cmd);
 
 void	child_exec(t_app *app, t_cmd *cmd)
 {
@@ -21,21 +21,33 @@ void	child_exec(t_app *app, t_cmd *cmd)
 		dup2(cmd->fd_in, STDIN_FILENO);
 	if (cmd->fd_out != STDOUT_FILENO && cmd->fd_out >= 0)
 		dup2(cmd->fd_out, STDOUT_FILENO);
-	close_fds_and_pipes(cmd);
+	close_fds_and_pipes(app->seq_head, cmd);
 	if (is_builtin(cmd->args[0]))
 		return (exec_builtin(app, cmd));
 	exec_or_died(app, cmd);
 }
 
-void	close_fds_and_pipes(t_cmd *cmd)
+void	close_other_fds(t_cmd_sequence *seq_head)
 {
-	close_pipes(cmd);
-	while (cmd)
+	t_cmd	*cmd;
+
+	while (seq_head)
 	{
-		safe_close(&cmd->fd_in);
-		safe_close(&cmd->fd_out);
-		cmd = cmd->next;
+		cmd = seq_head->cmds;
+		while (cmd)
+		{
+			safe_close(&cmd->fd_in);
+			safe_close(&cmd->fd_out);
+			cmd = cmd->next;
+		}
+		seq_head = seq_head->next;
 	}
+}
+
+void	close_fds_and_pipes(t_cmd_sequence *seq_head, t_cmd *current_cmd)
+{
+	close_pipes(current_cmd);
+	close_other_fds(seq_head);
 }
 
 char	*build_path(t_app *app, char *dir, char *cmd)
@@ -49,8 +61,7 @@ char	*build_path(t_app *app, char *dir, char *cmd)
 	return (path);
 }
 
-
-char *find_in_path(t_app *app, char *cmd)
+char	*find_in_path(t_app *app, char *cmd)
 {
 	char	*env_path;
 	char	**paths;
@@ -84,14 +95,15 @@ void	exec(t_app *app, t_cmd *cmd, char *path)
 	exit_with_error(app, "execve");
 }
 
-void handle_direct_path(t_app *app, t_cmd *cmd)
+void	handle_direct_path(t_app *app, t_cmd *cmd)
 {
 	struct stat	stat_buf;
 	char		*msg;
 
 	if (access(cmd->args[0], F_OK) != 0)
 	{
-		msg = ft_strjoin(cmd->args[0], ": No such file or directory\n", &app->curr_gc);
+		msg = ft_strjoin(cmd->args[0], ": No such file or directory\n",
+				&app->curr_gc);
 		print_error(app, msg, "127");
 		cleanup_and_exit(app, 127);
 	}
@@ -110,7 +122,7 @@ void handle_direct_path(t_app *app, t_cmd *cmd)
 	exec(app, cmd, cmd->args[0]);
 }
 
-void handle_path_search(t_app *app, t_cmd *cmd)
+void	handle_path_search(t_app *app, t_cmd *cmd)
 {
 	char	*path;
 	char	*msg;
@@ -132,7 +144,7 @@ void handle_path_search(t_app *app, t_cmd *cmd)
 	cleanup_and_exit(app, 127);
 }
 
-void exec_or_died(t_app *app, t_cmd *cmd)
+void	exec_or_died(t_app *app, t_cmd *cmd)
 {
 	if (ft_strchr(cmd->args[0], '/'))
 		handle_direct_path(app, cmd);
