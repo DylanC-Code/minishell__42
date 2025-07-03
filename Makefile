@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/07/02 21:14:47 by dcastor          ###   ########.fr        #
+#    Updated: 2025/07/03 09:37:52 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,10 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		builtins/export/export_syntax.c\
 		builtins/export/export.c\
 		\
-		builtins/cd.c \
+		builtins/cd/cd_args.c \
+		builtins/cd/cd_utils.c \
+		builtins/cd/cd.c \
+		\
 		builtins/echo.c \
 		builtins/env.c \
 		builtins/exit.c \

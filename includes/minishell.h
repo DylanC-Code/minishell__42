@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/02 21:04:07 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/03 09:29:24 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define PS2_PROMPT MAGENTA "> " RESET
-# define PS3_PROMPT CYAN ">> " RESET
+# define PS2_PROMPT "\033[0;35m> \033[0m"
+# define PS3_PROMPT "\033[0;36m>> \033[0m"
 # define OPERATORS "<>|&()"
 # define PWD_BUFFER_SIZE 50000
 

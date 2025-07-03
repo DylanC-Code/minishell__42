@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 14:54:21 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/26 16:29:58 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/03 09:29:40 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int argc, char const *argv[], char *envp[])
 			continue ;
 		seq_head = parse_tokens(token_head, &app.curr_gc);
 		handle_expansion(&app, seq_head);
-		//display_seq(seq_head);
 		handle_exec(&app, seq_head);
 	}
 	cleanup_and_exit(&app, EXIT_FAILURE);
