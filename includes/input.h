@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/28 22:11:44 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/03 11:13:31 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,14 @@ typedef struct s_parser
 	t_token					*token;
 	t_redir_list			*redir_head;
 }							t_parser;
+
+typedef struct s_app
+{
+	t_env					*env_head;
+	t_garbage				*app_gc;
+	t_garbage				*curr_gc;
+	t_cmd_sequence			*seq_head;
+}							t_app;
 
 t_token						*read_complete_command(t_app *app);
 char						*get_prompt(t_app *app);

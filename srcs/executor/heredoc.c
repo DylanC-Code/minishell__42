@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 10:58:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/02 21:20:05 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/03 11:27:52 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static t_status	handle_heredocs_cmd(t_app *app, t_cmd *cmd);
 static t_status	handle_heredoc(t_app *app, t_cmd *cmd,
 					t_redir_list *heredoc_redir);
+static void		close_previous_heredoc_fd(t_cmd_sequence *seq_head);
 
 t_status	collect_heredocs(t_app *app, t_cmd_sequence *head_seq)
 {
@@ -64,7 +65,10 @@ static t_status	read_in_stdin(t_app *app, int fd, char *word)
 			return (ERROR);
 		}
 		if (!ft_strncmp(word, buf, INT_MAX))
+		{
+			free(buf);
 			break ;
+		}
 		tmp = process_argument(buf, app);
 		free(buf);
 		write(fd, tmp, ft_strlen(tmp));
@@ -75,6 +79,7 @@ static t_status	read_in_stdin(t_app *app, int fd, char *word)
 
 void	heredoc_child(t_app *app, t_redir_list *heredoc_redir, int fds[2])
 {
+	close_previous_heredoc_fd(app->seq_head);
 	safe_close(&fds[0]);
 	if (!read_in_stdin(app, fds[1], heredoc_redir->name))
 	{
@@ -139,4 +144,27 @@ static t_status	handle_heredoc(t_app *app, t_cmd *cmd,
 	if (cmd->failed)
 		safe_close(&heredoc_redir->fd);
 	return (SUCCESS);
+}
+
+void	close_previous_heredoc_fd(t_cmd_sequence *seq_head)
+{
+	t_cmd			*cmd;
+	t_redir_list	*redir;
+
+	while (seq_head)
+	{
+		cmd = seq_head->cmds;
+		while (cmd)
+		{
+			redir = cmd->redir_list;
+			while (redir)
+			{
+				if (redir->type == TOKEN_REDIR_HEREDOC)
+					safe_close(&redir->fd);
+				redir = redir->next;
+			}
+			cmd = cmd->next;
+		}
+		seq_head = seq_head->next;
+	}
 }

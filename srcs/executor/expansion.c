@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:45:36 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/07/03 16:29:01 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/03 17:21:35 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,14 @@
 
 int	valid_env_start(char c)
 {
-	return ((c >= 'a' && c <= 'z')
-		|| (c >= 'A' && c <= 'Z')
-		|| c == '_'
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_'
 		|| c == '?');
 }
 
 int	valid_var_char(char c)
 {
-	return ((c >= 'a' && c <= 'z')
-		|| (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9')
-		|| c == '_');
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0'
+			&& c <= '9') || c == '_');
 }
 
 char	*look_up_env(char *var_name, t_env *env)
@@ -343,13 +339,13 @@ void	traverse_cmd(t_cmd *cmd_head, t_app *app)
 	}
 }
 
-int	handle_expansion(t_app *app, t_cmd_sequence *head_seq)
+int	handle_expansion(t_app *app)
 {
 	t_cmd_sequence	*curr_seq;
 
-	curr_seq = head_seq;
-	if (!app || !head_seq)
+	if (!app || !app->seq_head)
 		return (0);
+	curr_seq = app->seq_head;
 	while (curr_seq)
 	{
 		traverse_cmd(curr_seq->cmds, app);
