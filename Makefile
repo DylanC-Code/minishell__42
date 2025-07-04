@@ -6,7 +6,7 @@
 #    By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 14:36:04 by dcastor           #+#    #+#              #
-#    Updated: 2025/07/04 12:25:36 by dcastor          ###   ########.fr        #
+#    Updated: 2025/07/04 15:44:55 by dcastor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,7 +113,6 @@ SRCS := $(addprefix $(SRCS_DIR), \
 		utils/env_utils.c \
 		utils/error.c \
 		utils/fd_utils.c \
-		utils/print_utils.c \
 		utils/readline.c \
 		\
 		main.c \

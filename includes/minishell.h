@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 15:27:48 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 15:44:45 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ void							init_signals(void);
 
 /* Utils */
 void							exit_with_error(t_app *app, char *msg);
-void							display_tokens(t_token *head, char *input);
-void							print_banner(void);
 char							**env_list_to_envp(t_env *env_list,
 									t_garbage **gc);
 void							safe_close(int *fd);
