@@ -12,22 +12,46 @@
 
 #include "minishell.h"
 
+char	*build_cd_error_msg(t_app *app, char *path, char *error_msg)
+{
+	char	*temp;
+	char	*final_msg;
+
+	temp = ft_strjoin("cd: ", path, &app->curr_gc);
+	if (!temp)
+		cleanup_and_exit(app, EXIT_FAILURE);
+	final_msg = ft_strjoin(temp, error_msg, &app->curr_gc);
+	if (!final_msg)
+		cleanup_and_exit(app, EXIT_FAILURE);
+	return (final_msg);
+}
+
 int	check_dir(t_app *app, char *path)
 {
 	struct stat	path_info;
+	char		*msg;
 
 	if (access(path, F_OK) == -1)
-		return (print_error(app, ft_strjoin(ft_strjoin("cd: ", path,
-						&app->curr_gc), ": No such file or directory\n",
-					&app->curr_gc), "1"), 0);
+	{
+		msg = build_cd_error_msg(app, path, ": No such file or directory\n");
+		if (msg)
+			print_error(app, msg, "1");
+		return (0);
+	}
 	if (stat(path, &path_info) == 0 && !S_ISDIR(path_info.st_mode))
-		return (print_error(app, ft_strjoin(ft_strjoin("cd: ", path,
-						&app->curr_gc), ": Not a directory\n", &app->curr_gc),
-				"1"), 0);
+	{
+		msg = build_cd_error_msg(app, path, ": Not a directory\n");
+		if (msg)
+			print_error(app, msg, "1");
+		return (0);
+	}
 	if (access(path, X_OK) == -1)
-		return (print_error(app, ft_strjoin(ft_strjoin("cd: ", path,
-						&app->curr_gc), ": Permission denied\n", &app->curr_gc),
-				"1"), 0);
+	{
+		msg = build_cd_error_msg(app, path, ": Permission denied\n");
+		if (msg)
+			print_error(app, msg, "1");
+		return (0);
+	}
 	return (1);
 }
 
