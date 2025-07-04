@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:56:46 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/01 10:39:17 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 14:27:09 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	exit_builtin(t_app *app, char **args)
 	printf("exit\n");
 	if (!args || !*args)
 		cleanup_and_exit(app, status_code);
-	if (!is_valid_number(*args))
+	if (!is_valid_number(*args) || ft_strlen(*args) > 12)
 		non_numeric_arg_error(app, *args);
 	else if (args[1])
 		return (print_error(app, "exit:  too many arguments\n", "1"));
