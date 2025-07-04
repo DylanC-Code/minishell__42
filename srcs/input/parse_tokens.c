@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:20 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/28 22:58:27 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 13:33:54 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,28 +60,28 @@ int	handle_redirection(t_parser *parser, t_garbage **gc)
 
 t_cmd_sequence	*parse_tokens(t_token *head, t_garbage **gc, t_app *app)
 {
-	t_parser	parser;
+	t_parser	p;
 
-	parser.seq_head = sequence_builder(gc);
-	parser.cmd_head = cmd_builder(head, gc);
-	parser.curr_seq = parser.seq_head;
-	parser.curr_seq->cmds = parser.cmd_head;
-	parser.token = head;
-	parser.arg_count = 0;
-	parser.redir_head = NULL;
-	while (parser.token)
+	p.seq_head = sequence_builder(gc);
+	p.cmd_head = cmd_builder(head, gc);
+	p.curr_seq = p.seq_head;
+	p.curr_seq->cmds = p.cmd_head;
+	p.token = head;
+	p.arg_count = 0;
+	p.redir_head = NULL;
+	while (p.token)
 	{
-		if (parser.token->type == TOKEN_WORD)
+		if (p.token->type == TOKEN_WORD)
 		{
-			parser.cmd_head->args[parser.arg_count] = ft_strdup(parser.token->value, gc);
-			if (!parser.cmd_head->args[parser.arg_count++])
+			p.cmd_head->args[p.arg_count] = ft_strdup(p.token->value, gc);
+			if (!p.cmd_head->args[p.arg_count++])
 				cleanup_and_exit(app, EXIT_FAILURE);
 		}
-		else if (handle_pipe(&parser, gc) || handle_redirection(&parser, gc) == -1)
+		else if (handle_pipe(&p, gc) || handle_redirection(&p, gc) == -1)
 			return (NULL);
-		else if (handle_logical_operator(&parser, gc))
-			parser.arg_count = 0;
-		parser.token = parser.token->next;
+		else if (handle_logical_operator(&p, gc))
+			p.arg_count = 0;
+		p.token = p.token->next;
 	}
-	return (parser.cmd_head->args[parser.arg_count] = NULL, parser.seq_head);
+	return (p.cmd_head->args[p.arg_count] = NULL, p.seq_head);
 }

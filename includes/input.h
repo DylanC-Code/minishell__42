@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 12:08:08 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 13:31:33 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,6 @@ t_token						*append_newline_token(t_token **token_list,
 /* ******* Validator ******* */
 /* ************************* */
 
-t_cmd_sequence				*parse_tokens(t_token *head, t_garbage **gc);
-void						display_seq(t_cmd_sequence *seq_head);
 t_cmd						*cmd_builder(t_token *token, t_garbage **gc);
 t_cmd_sequence				*sequence_builder(t_garbage **gc);
 t_token						*get_token(char *str, t_garbage **gb_list);
