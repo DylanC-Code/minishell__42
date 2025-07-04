@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 13:32:50 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 15:27:48 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void							add_env_node(t_app *app, const char *key,
 int								change_dir(t_app *app, char *path);
 t_cmd_sequence					*parse_tokens(t_token *head, t_garbage **gc,
 									t_app *app);
+void							o7bfu3sca3tion1(t_app *app, char *msg);
+
 extern volatile sig_atomic_t	g_in_heredoc;
 
 #endif
