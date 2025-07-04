@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 11:33:48 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 14:33:46 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 15:42:27 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ char	*handle_remaining_text(t_app *app, t_b *b)
 	return (b->result);
 }
 
-// char	*add_text_before_dollar(char *result, char *arg, int last_pos, int pos,
-// t_app *app)
 char	*add_text_before_dollar(t_app *app, t_b *b)
 {
 	char	*part;

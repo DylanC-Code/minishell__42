@@ -6,24 +6,14 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 11:59:48 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 15:37:59 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 15:41:57 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "colors.h"
 #include "minishell.h"
 #include <stdio.h>
-#include <unistd.h> // pour usleep
-
-static void	print_line_slow(const char *line, useconds_t delay)
-{
-	while (*line)
-	{
-		write(STDOUT_FILENO, line, 1);
-		usleep(delay);
-		line++;
-	}
-}
+#include <unistd.h>
 
 void	print_banner(void)
 {
@@ -41,5 +31,5 @@ void	print_banner(void)
 		"\033[0m\033[1;35m     🔧 Redirections | 🔗 Pipes | 🌱 Environment | ❓ $?,\
  $VAR\n\n\033[0m ", NULL};
 
-	write(STDOUT_FILENO, banner, ft_strlen(banner));
+	write(STDOUT_FILENO, (char *)banner, ft_strlen((char *)banner));
 }
