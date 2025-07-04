@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 11:59:48 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 12:59:10 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 15:37:59 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	print_line_slow(const char *line, useconds_t delay)
 
 void	print_banner(void)
 {
-	size_t		i;
 	const char	*banner[] = {
 		"🐚 Welcome to\n\n\033[1;34m",
 		" ███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     \n",
@@ -42,7 +41,5 @@ void	print_banner(void)
 		"\033[0m\033[1;35m     🔧 Redirections | 🔗 Pipes | 🌱 Environment | ❓ $?,\
  $VAR\n\n\033[0m ", NULL};
 
-	i = -1;
-	while (banner[++i])
-		print_line_slow(banner[i], 500);
+	write(STDOUT_FILENO, banner, ft_strlen(banner));
 }
