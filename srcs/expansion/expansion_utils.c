@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:20:49 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 11:24:23 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:48:52 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	valid_var_char(char c)
 	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0'
 			&& c <= '9') || c == '_');
 }
+
 int	find_quote_end(char *s, int start, char quote_char)
 {
 	int	i;

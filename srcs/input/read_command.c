@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 22:26:29 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/02 10:57:21 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:49:05 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_token	*read_complete_command(t_app *app)
 	token_head = tokenizer(app, line);
 	if (!token_head)
 		cleanup_and_exit(app, EXIT_FAILURE);
-	// display_tokens(token_head, line);
 	return (token_head);
 }
 
