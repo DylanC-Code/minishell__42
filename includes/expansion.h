@@ -28,4 +28,10 @@ char	*process_section_literal(char *s, int start, int end, t_app *app);
 char	*process_section_expand(char *s, int start, int end, t_app *app);
 char	*process_argument(char *arg, t_app *app);
 
+typedef struct s_text_range
+{
+	int start;
+	int end;
+} t_text_range;
+
 #endif

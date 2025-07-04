@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expansion.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saal-kur <saal-kur@student.42.fr>          #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-07-04 09:56:11 by saal-kur          #+#    #+#             */
+/*   Updated: 2025-07-04 09:56:11 by saal-kur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "minishell.h"
 
 int	valid_env_start(char c)
@@ -134,7 +147,7 @@ char	*handle_regular_var(char *str, int *pos, t_app *app)
 	return (part);
 }
 
-void	set_build_vars_variables(int *pos, int *last_pos, char **res, t_app *app)
+void	set_build_variables(int *pos, int *last_pos, char **res, t_app *app)
 {
 	*pos = 0;
 	*last_pos = 0;
@@ -160,7 +173,7 @@ char	*build_vars(char *str, t_app *app)
 	int		pos;
 	int		last_pos;
 
-	set_build_vars_variables(&pos, &last_pos, &result, app);
+	set_build_variables(&pos, &last_pos, &result, app);
 	while (str[pos])
 	{
 		if (str[pos] == '$' && str[pos + 1] && (valid_env_start(str[pos + 1]) 
@@ -216,39 +229,41 @@ char	*handle_quoted_part(char *arg, int *i, t_app *app)
 	return (process_section_literal(arg, *i + 1, end, app));
 }
 
-char	*add_text_before_dollar(char *result, char *arg, int last_pos, int pos, t_app *app)
+char	*add_before_dollar(char *res, char *arg, t_text_range r, t_app *app)
 {
 	char	*part;
 
-	if (pos > last_pos)
+	if (r.end > r.start)
 	{
-		part = ft_strndup(arg + last_pos, pos - last_pos, &app->curr_gc);
+		part = ft_strndup(arg + r.start, r.end - r.start, &app->curr_gc);
 		if(!part)
 			cleanup_and_exit(app, EXIT_FAILURE);
 		part = process_variable_expansion(part, app);
-		result = ft_strjoin(result, part, &app->curr_gc);
+		res = ft_strjoin(res, part, &app->curr_gc);
+		if(!res)
+			cleanup_and_exit(app, EXIT_FAILURE);
+	}
+	return (res);
+}
+
+
+char	*h_rem_text(char *result, char *arg, t_text_range r, t_app *app)
+{
+	char	*p;
+
+	if (r.end > r.start)
+	{
+		p = ft_strndup(arg + r.start, r.end - r.start, &app->curr_gc);
+		if(!p)
+			cleanup_and_exit(app, EXIT_FAILURE);
+		p = process_variable_expansion(p, app);
+		result = ft_strjoin(result, p, &app->curr_gc);
 		if(!result)
 			cleanup_and_exit(app, EXIT_FAILURE);
 	}
 	return (result);
 }
 
-char	*handle_remaining_text(char *result, char *arg, int last_pos, int end, t_app *app)
-{
-	char	*part;
-
-	if (end > last_pos)
-	{
-		part = ft_strndup(arg + last_pos, end - last_pos, &app->curr_gc);
-		if(!part)
-			cleanup_and_exit(app, EXIT_FAILURE);
-		part = process_variable_expansion(part, app);
-		result = ft_strjoin(result, part, &app->curr_gc);
-		if(!result)
-			cleanup_and_exit(app, EXIT_FAILURE);
-	}
-	return (result);
-}
 char	*set_unquoted_vars(t_app *app, int *pos, int *last_pos, int start)
 {
 	char	*result;
@@ -262,10 +277,11 @@ char	*set_unquoted_vars(t_app *app, int *pos, int *last_pos, int start)
 }
 char	*process_unquoted_text(char *arg, int start, int end, t_app *app)
 {
-	char	*result;
-	char	*part;
-	int		pos;
-	int		last_pos;
+	char			*result;
+	char			*part;
+	int				pos;
+	int				last_pos;
+	t_text_range	r;
 
 	result = set_unquoted_vars(app, &pos, &last_pos, start);
 	while (pos < end)
@@ -273,7 +289,9 @@ char	*process_unquoted_text(char *arg, int start, int end, t_app *app)
 		if (arg[pos] == '$' && pos + 1 < end && (arg[pos + 1] == '"' 
 			|| arg[pos + 1] == '\''))
 		{
-			result = add_text_before_dollar(result, arg, last_pos, pos, app);
+			r.start = last_pos;
+			r.end = pos;
+			result = add_before_dollar(result, arg, r, app);
 			part = handle_dollar_patterns(arg, &pos, app);
 			result = ft_strjoin(result, part, &app->curr_gc);
 			if (!result)
@@ -283,7 +301,7 @@ char	*process_unquoted_text(char *arg, int start, int end, t_app *app)
 		else
 			pos++;
 	}
-	return (handle_remaining_text(result, arg, last_pos, end, app));
+	return (r.start = last_pos, r.end = end, h_rem_text(result, arg, r, app));
 }
 
 char	*handle_unquoted_part(char *arg, int start, int *i, t_app *app)
