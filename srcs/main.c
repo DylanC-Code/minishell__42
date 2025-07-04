@@ -28,7 +28,7 @@ int	main(int argc, char const *argv[], char *envp[])
 		token_head = read_complete_command(&app);
 		if (!check_syntax(&app, token_head))
 			continue ;
-		app.seq_head = parse_tokens(token_head, &app.curr_gc);
+		app.seq_head = parse_tokens(token_head, &app.curr_gc, &app);
 		handle_expansion(&app);
 		handle_exec(&app, app.seq_head);
 	}

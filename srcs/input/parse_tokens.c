@@ -58,7 +58,7 @@ int	handle_redirection(t_parser *parser, t_garbage **gc)
 	return (1);
 }
 
-t_cmd_sequence	*parse_tokens(t_token *head, t_garbage **gc)
+t_cmd_sequence	*parse_tokens(t_token *head, t_garbage **gc, t_app *app)
 {
 	t_parser	parser;
 
@@ -72,11 +72,12 @@ t_cmd_sequence	*parse_tokens(t_token *head, t_garbage **gc)
 	while (parser.token)
 	{
 		if (parser.token->type == TOKEN_WORD)
-			parser.cmd_head->args[parser.arg_count++] = ft_strdup(
-					parser.token->value, gc);
-		else if (handle_pipe(&parser, gc))
-			return (NULL);
-		else if (handle_redirection(&parser, gc) == -1)
+		{
+			parser.cmd_head->args[parser.arg_count] = ft_strdup(parser.token->value, gc);
+			if (!parser.cmd_head->args[parser.arg_count++])
+				cleanup_and_exit(app, EXIT_FAILURE);
+		}
+		else if (handle_pipe(&parser, gc) || handle_redirection(&parser, gc) == -1)
 			return (NULL);
 		else if (handle_logical_operator(&parser, gc))
 			parser.arg_count = 0;
