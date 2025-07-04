@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 11:33:48 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 11:35:26 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:09:50 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*process_unquoted_text(char *arg, int start, int end, t_app *app)
 	while (pos < end)
 	{
 		if (arg[pos] == '$' && pos + 1 < end && (arg[pos + 1] == '"' || arg[pos
-				+ 1] == '\''))
++ 1] == '\''))
 		{
 			result = add_text_before_dollar(result, arg, last_pos, pos, app);
 			part = handle_dollar_patterns(arg, &pos, app);

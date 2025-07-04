@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:08:43 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/28 22:09:03 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:07:59 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,4 @@ void	redir_node_addback(t_redir_list **redir_list, char *name,
 	while (current->next)
 		current = current->next;
 	current->next = new_node;
-}
-
-void	display_redir_list(t_redir_list *head)
-{
-	t_redir_list	*lst;
-	int				i;
-
-	lst = head;
-	i = 0;
-	while (lst)
-	{
-		printf("[Node %d] lst->name = %s lst->type %s\n", i, lst->name,
-			token_to_str(lst->type));
-		i++;
-		lst = lst->next;
-	}
 }

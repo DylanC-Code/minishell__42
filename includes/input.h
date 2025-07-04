@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/03 11:13:31 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:08:08 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ void						unexpected_token_error(t_app *app,
 								char *token_value);
 void						unexpected_eof_error(t_app *app, char *quote_type);
 
-void						display_seq(t_cmd_sequence *seq_head);
 int							handle_redirection(t_parser *parser,
 								t_garbage **gc);
 int							handle_logical_operator(t_parser *parser,
@@ -159,8 +158,6 @@ t_redir_list				*redir_node_builder(char *name, t_token_type type,
 void						redir_node_addback(t_redir_list **redir_list,
 								char *name, t_token_type type, t_garbage **gc);
 int							is_redirection_operator(t_token_type type);
-void						display_redir_list(t_redir_list *head);
-char						*token_to_str(t_token_type type);
 
 /* ************************* */
 /* ******* Tokenizer ******* */

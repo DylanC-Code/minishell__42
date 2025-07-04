@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 09:44:21 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/03 09:44:22 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:59:00 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_env	*create_env_node(char *key, char *value, t_app *app)
 	t_env	*new_node;
 	char	*k;
 	char	*v;
+
 	if (!key)
 		return (NULL);
 	new_node = gc_malloc(sizeof(t_env), &app->app_gc);

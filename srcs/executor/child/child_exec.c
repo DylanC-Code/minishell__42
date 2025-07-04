@@ -1,19 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child.c                                            :+:      :+:    :+:   */
+/*   child_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/21 14:32:47 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/03 17:21:49 by dcastor          ###   ########.fr       */
+/*   Created: 2025/07/04 12:02:32 by dcastor           #+#    #+#             */
+/*   Updated: 2025/07/04 12:04:05 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	exec_or_died(t_app *app, t_cmd *cmd);
-void	close_fds_and_pipes(t_cmd_sequence *seq_head, t_cmd *current_cmd);
 
 void	child_exec(t_app *app, t_cmd *cmd)
 {
@@ -25,68 +22,6 @@ void	child_exec(t_app *app, t_cmd *cmd)
 	if (is_builtin(cmd->args[0]))
 		return (exec_builtin(app, cmd));
 	exec_or_died(app, cmd);
-}
-
-void	close_other_fds(t_cmd_sequence *seq_head)
-{
-	t_cmd	*cmd;
-
-	while (seq_head)
-	{
-		cmd = seq_head->cmds;
-		while (cmd)
-		{
-			safe_close(&cmd->fd_in);
-			safe_close(&cmd->fd_out);
-			cmd = cmd->next;
-		}
-		seq_head = seq_head->next;
-	}
-}
-
-void	close_fds_and_pipes(t_cmd_sequence *seq_head, t_cmd *current_cmd)
-{
-	close_pipes(current_cmd);
-	close_other_fds(seq_head);
-}
-
-char	*build_path(t_app *app, char *dir, char *cmd)
-{
-	char	*path;
-
-	path = ft_strjoin(dir, "/", &app->curr_gc);
-	if (!path)
-		return (NULL);
-	path = ft_strjoin(path, cmd, &app->curr_gc);
-	return (path);
-}
-
-char	*find_in_path(t_app *app, char *cmd)
-{
-	char	*env_path;
-	char	**paths;
-	char	*result;
-	int		i;
-
-	env_path = get_env_value(app->env_head, "PATH");
-	if (!env_path)
-		return (NULL);
-	paths = ft_split(env_path, ':', &app->curr_gc);
-	if (!paths)
-		return (NULL);
-	i = 0;
-	while (paths[i])
-	{
-		result = build_path(app, paths[i], cmd);
-		if (!result)
-			return (NULL);
-		if (access(result, X_OK) == 0)
-			return (result);
-		if (errno == 13)
-			exit_with_error(app, result);
-		i++;
-	}
-	return (NULL);
 }
 
 void	exec(t_app *app, t_cmd *cmd, char *path)

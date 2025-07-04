@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 09:27:40 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/03 11:07:17 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:06:08 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,17 @@ void		exec_builtin(t_app *app, t_cmd *cmd);
 bool		is_builtin(const char *cmd);
 int			handle_expansion(t_app *app);
 void		exec_single_builtin(t_app *app, t_cmd *cmd);
+
+/* Child */
+char		*build_path(t_app *app, char *dir, char *cmd);
+char		*find_in_path(t_app *app, char *cmd);
+void		close_other_fds(t_cmd_sequence *seq_head);
+void		close_fds_and_pipes(t_cmd_sequence *seq_head, t_cmd *current_cmd);
+void		child_exec(t_app *app, t_cmd *cmd);
+void		exec(t_app *app, t_cmd *cmd, char *path);
+void		handle_direct_path(t_app *app, t_cmd *cmd);
+void		handle_path_search(t_app *app, t_cmd *cmd);
+void		exec_or_died(t_app *app, t_cmd *cmd);
 
 /* Redirection */
 void		resolve_all_redirection(t_app *app, t_cmd_sequence *seq);

@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 10:58:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/03 11:27:52 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:10:28 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ static t_status	read_in_stdin(t_app *app, int fd, char *word)
 		buf = readline(PS3_PROMPT);
 		if (!buf)
 		{
-			printf("warning: here-document delimited by end-of-file (wanted '%s')\n",
+			printf("warning: \
+				here-document delimited by end-of-file (wanted '%s')\n",
 				word);
 			return (ERROR);
 		}

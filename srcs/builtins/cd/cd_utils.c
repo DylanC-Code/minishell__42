@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 09:36:00 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/03 09:38:02 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:59:15 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	update_oldpwd(t_app *app)
 	if (!cwd)
 		return (0);
 	res = ft_strdup(cwd, &app->curr_gc);
-	if(!res)
+	if (!res)
 		cleanup_and_exit(app, EXIT_FAILURE);
 	set_env_value(app, "OLDPWD", res);
 	return (1);

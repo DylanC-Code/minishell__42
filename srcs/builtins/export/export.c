@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 09:05:19 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/06/28 22:39:51 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:58:48 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	export_builtin(t_app *app, char **args)
 		else
 		{
 			ret_val = add_env_var(&app->env_head, get_varname_key(args[i], app),
-				get_varname_value(args[i]), app);
+					get_varname_value(args[i]), app);
 			if (ret_val == -1)
 				cleanup_and_exit(app, EXIT_FAILURE);
 		}
