@@ -1,44 +1,334 @@
+# Valgrind suppression file for readline library leaks
+# Usage: valgrind --suppressions=readline.supp --leak-check=full ./minishell
+
+# Suppress readline initialization leaks
 {
-   libreadline_still_reachable
+   readline_init_leak
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
    ...
-   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
 }
 
 {
-   libtinfo_calloc_still_reachable
+   readline_init_leak_2
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   ...
+   fun:rl_initialize
+}
+
+# Suppress readline history leaks
+{
+   readline_history_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:add_history
+}
+
+{
+   readline_history_leak_2
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   ...
+   fun:add_history
+}
+
+# Suppress readline completion leaks
+{
+   readline_completion_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:rl_completion_matches
+}
+
+{
+   readline_completion_leak_2
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:calloc
    ...
-   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:rl_completion_matches
+}
+
+# Suppress readline internal buffer leaks
+{
+   readline_buffer_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:readline
 }
 
 {
-   libtinfo_realloc_still_reachable
+   readline_buffer_leak_2
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:realloc
    ...
-   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:readline
+}
+
+# Suppress readline terminal setup leaks
+{
+   readline_terminal_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:_rl_init_terminal_io
 }
 
 {
-   libreadline_xrealloc_still_reachable
+   readline_terminal_leak_2
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   ...
+   fun:_rl_init_terminal_io
+}
+
+# Suppress readline keymap leaks
+{
+   readline_keymap_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:rl_make_bare_keymap
+}
+
+{
+   readline_keymap_leak_2
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   ...
+   fun:rl_make_keymap
+}
+
+# Suppress readline function binding leaks
+{
+   readline_binding_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:rl_bind_key
+}
+
+{
+   readline_binding_leak_2
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:realloc
    ...
-   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_generic_bind
+}
+
+# Suppress readline macro leaks
+{
+   readline_macro_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:_rl_with_macro_input
+}
+
+# Suppress readline undo leaks
+{
+   readline_undo_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:rl_add_undo
+}
+
+# Suppress readline display leaks
+{
+   readline_display_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:rl_forced_update_display
 }
 
 {
-   libreadline_definitely_lost_teardown
+   readline_display_leak_2
    Memcheck:Leak
-   match-leak-kinds: definite
-   fun:xmalloc
+   match-leak-kinds: reachable
+   fun:realloc
    ...
-   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+}
+
+# Suppress readline search leaks
+{
+   readline_search_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:rl_search_history
+}
+
+# Suppress readline signal handling leaks
+{
+   readline_signal_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:rl_set_signals
+}
+
+# Suppress readline vi mode leaks
+{
+   readline_vi_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:rl_vi_editing_mode
+}
+
+# Suppress readline emacs mode leaks
+{
+   readline_emacs_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:rl_emacs_editing_mode
+}
+
+# Suppress readline variable leaks
+{
+   readline_variable_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:rl_variable_bind
+}
+
+# Suppress readline filename completion leaks
+{
+   readline_filename_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:rl_filename_completion_function
+}
+
+# Suppress readline tilde expansion leaks
+{
+   readline_tilde_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:tilde_expand
+}
+
+# Suppress readline username completion leaks
+{
+   readline_username_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:rl_username_completion_function
+}
+
+# General readline library leaks (catch-all)
+{
+   readline_general_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:*/libreadline.so*
+}
+
+{
+   readline_general_leak_2
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   obj:*/libreadline.so*
+}
+
+{
+   readline_general_leak_3
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   obj:*/libreadline.so*
+}
+
+# Suppress ncurses/termcap leaks (used by readline)
+{
+   ncurses_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:*/libncurses.so*
+}
+
+{
+   ncurses_leak_2
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   obj:*/libncurses.so*
+}
+
+{
+   termcap_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:*/libtermcap.so*
+}
+
+# Suppress dynamic linker leaks related to readline
+{
+   ld_readline_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_dl_*
+   ...
+   obj:*/libreadline.so*
+}
+
+# Suppress readline static data leaks
+{
+   readline_static_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:_rl_*
+}
+
+{
+   readline_static_leak_2
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   ...
+   fun:_rl_*
 }
