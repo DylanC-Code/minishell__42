@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion_quotes.c                                 :+:      :+:    :+:   */
+/*   expansion_mixed.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/28 22:22:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/28 22:22:50 by dcastor          ###   ########.fr       */
+/*   Created: 2025/07/04 11:36:07 by dcastor           #+#    #+#             */
+/*   Updated: 2025/07/04 11:36:33 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ char	*handle_quoted_part(char *arg, int *i, t_app *app)
 	return (process_section_literal(arg, *i + 1, end, app));
 }
 
-char	*handle_unquoted_part(char *arg, int start, int *i, t_app *app)
+void	set_mixed_quotes_vars(t_app *app, char **res, int *i)
 {
-	while (arg[*i] && arg[*i] != '"' && arg[*i] != '\'')
-		(*i)++;
-	return (process_section_expand(arg, start, *i, app));
+	*i = 0;
+	*res = ft_strdup("", &app->curr_gc);
+	if (!*res)
+		cleanup_and_exit(app, EXIT_FAILURE);
 }
 
 char	*process_mixed_quotes(char *arg, t_app *app)
@@ -38,8 +39,7 @@ char	*process_mixed_quotes(char *arg, t_app *app)
 	int		i;
 	int		start;
 
-	result = ft_strdup("", &app->curr_gc);
-	i = 0;
+	set_mixed_quotes_vars(app, &result, &i);
 	while (arg[i])
 	{
 		if (arg[i] == '"' || arg[i] == '\'')
@@ -53,6 +53,22 @@ char	*process_mixed_quotes(char *arg, t_app *app)
 			part = handle_unquoted_part(arg, start, &i, app);
 		}
 		result = ft_strjoin(result, part, &app->curr_gc);
+		if (!result)
+			cleanup_and_exit(app, EXIT_FAILURE);
 	}
 	return (result);
+}
+
+int	contains_quotes(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '"' || s[i] == '\'')
+			return (1);
+		i++;
+	}
+	return (0);
 }

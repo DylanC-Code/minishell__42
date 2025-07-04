@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 14:14:27 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/02 11:06:59 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:19:18 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_prompt(t_app *app)
 	const char	*core = get_core(app);
 	char		*result;
 
-	if (!user || !user || !core)
+	if (!user || !status || !core)
 		cleanup_and_exit(app, errno);
 	result = ft_strjoin(SHELL_EMOJI, user, &app->curr_gc);
 	if (!result)

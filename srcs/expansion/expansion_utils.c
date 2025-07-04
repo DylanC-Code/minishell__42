@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:20:49 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/29 16:51:37 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:24:23 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	valid_env_start(char c)
 {
 	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_'
-		|| c == '?' || c == '$');
+		|| c == '?');
 }
 
 int	valid_var_char(char c)
@@ -23,21 +23,6 @@ int	valid_var_char(char c)
 	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0'
 			&& c <= '9') || c == '_');
 }
-
-char	*look_up_env(char *var_name, t_env *env)
-{
-	t_env	*curr_env;
-
-	curr_env = env;
-	while (curr_env)
-	{
-		if (ft_strcmp(curr_env->key, var_name) == 0)
-			return (curr_env->value);
-		curr_env = curr_env->next;
-	}
-	return ("");
-}
-
 int	find_quote_end(char *s, int start, char quote_char)
 {
 	int	i;
@@ -48,16 +33,14 @@ int	find_quote_end(char *s, int start, char quote_char)
 	return (i);
 }
 
-int	contains_quotes(char *s)
+int	find_var_end(char *str, int start)
 {
 	int	i;
 
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '"' || s[i] == '\'')
-			return (1);
+	i = start;
+	if (str[i] == '?')
+		return (i + 1);
+	while (str[i] && valid_var_char(str[i]))
 		i++;
-	}
-	return (0);
+	return (i);
 }

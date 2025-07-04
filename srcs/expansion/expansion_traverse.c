@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion_process.c                                :+:      :+:    :+:   */
+/*   expansion_traverse.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/28 22:23:02 by dcastor           #+#    #+#             */
-/*   Updated: 2025/06/29 16:53:26 by dcastor          ###   ########.fr       */
+/*   Created: 2025/06/20 12:45:36 by saal-kur          #+#    #+#             */
+/*   Updated: 2025/07/04 11:36:49 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void	traverse_cmd(t_cmd *cmd_head, t_app *app)
 	}
 }
 
-int	handle_expansion(t_app *app, t_cmd_sequence *head_seq)
+int	handle_expansion(t_app *app)
 {
 	t_cmd_sequence	*curr_seq;
 
-	curr_seq = head_seq;
-	if (!app || !head_seq)
+	if (!app || !app->seq_head)
 		return (0);
+	curr_seq = app->seq_head;
 	while (curr_seq)
 	{
 		traverse_cmd(curr_seq->cmds, app);

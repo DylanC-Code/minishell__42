@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:34:10 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/03 16:31:34 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:21:33 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	exec_sequence(t_app *app, t_cmd_sequence *seq)
 	t_cmd	*cmd;
 
 	cmd = seq->cmds;
-
 	while (cmd)
 	{
 		if (!cmd->failed)
