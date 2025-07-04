@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 11:34:10 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 11:21:33 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:41:21 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	exec_sequence(t_app *app, t_cmd_sequence *seq)
 	{
 		if (!cmd->failed)
 			exec_simple_cmd(app, cmd);
+		else
+		{
+			safe_close(&cmd->fd_in);
+			safe_close(&cmd->fd_out);
+		}
 		cmd = cmd->next;
 	}
 	wait_all_children(app, seq);

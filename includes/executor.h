@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 09:27:40 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 12:06:08 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:25:22 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,12 @@ void		resolve_all_redirection(t_app *app, t_cmd_sequence *seq);
 void		handle_redir_out(t_app *app, t_cmd *cmd, t_redir_list *redir);
 void		handle_redir_append(t_app *app, t_cmd *cmd, t_redir_list *redir);
 void		handle_redir_in(t_app *app, t_cmd *cmd, t_redir_list *redir);
+
+/* Heredoc */
+void		heredoc_child(t_app *app, t_redir_list *heredoc_redir, int fds[2]);
+t_status	heredoc_parent(t_app *app, t_redir_list *redir_list, pid_t pid,
+				int fds[2]);
+t_status	collect_heredocs(t_app *app, t_cmd_sequence *head_seq);
+void		close_previous_heredoc_fd(t_cmd_sequence *seq_head);
 
 #endif

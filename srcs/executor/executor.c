@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:24:44 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/03 16:05:14 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:38:54 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	only_one_cmd_and_is_builtin(t_cmd *cmds);
 void	handle_exec(t_app *app, t_cmd_sequence *head_seq)
 {
 	if (!collect_heredocs(app, head_seq))
-		return ;
+		return (close_other_fds(head_seq));
 	resolve_all_redirection(app, head_seq);
 	while (head_seq)
 	{
