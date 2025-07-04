@@ -38,7 +38,11 @@ int	change_dir(t_app *app, char *path)
 	if (chdir(path) == -1)
 	{
 		msg = ft_strjoin("cd : ", path, &app->curr_gc);
+		if (!msg)
+			cleanup_and_exit(app, EXIT_FAILURE);
 		msg = ft_strjoin(msg, " :", &app->curr_gc);
+		if (!msg)
+			cleanup_and_exit(app, EXIT_FAILURE);
 		print_error(app, msg, "1");
 		perror("chdir");
 		return (0);
@@ -50,10 +54,14 @@ int	update_oldpwd(t_app *app)
 {
 	char	*cwd;
 	char	cwd_buf[PWD_BUFFER_SIZE];
+	char	*res;
 
 	cwd = getcwd(cwd_buf, sizeof(cwd_buf));
 	if (!cwd)
 		return (0);
-	set_env_value(app, "OLDPWD", ft_strdup(cwd, &app->curr_gc));
+	res = ft_strdup(cwd, &app->curr_gc);
+	if(!res)
+		cleanup_and_exit(app, EXIT_FAILURE);
+	set_env_value(app, "OLDPWD", res);
 	return (1);
 }

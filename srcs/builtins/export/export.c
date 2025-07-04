@@ -15,6 +15,7 @@
 void	export_builtin(t_app *app, char **args)
 {
 	int	i;
+	int	ret_val;
 
 	i = 0;
 	if (!args || !args[0])
@@ -29,8 +30,10 @@ void	export_builtin(t_app *app, char **args)
 		}
 		else
 		{
-			add_env_var(&app->env_head, get_varname_key(args[i], app),
+			ret_val = add_env_var(&app->env_head, get_varname_key(args[i], app),
 				get_varname_value(args[i]), app);
+			if (ret_val == -1)
+				cleanup_and_exit(app, EXIT_FAILURE);
 		}
 		i++;
 	}

@@ -15,14 +15,21 @@
 t_env	*create_env_node(char *key, char *value, t_app *app)
 {
 	t_env	*new_node;
-
+	char	*k;
+	char	*v;
 	if (!key)
 		return (NULL);
 	new_node = gc_malloc(sizeof(t_env), &app->app_gc);
 	if (!new_node)
 		return (NULL);
-	new_node->key = ft_strdup(key, &app->app_gc);
-	new_node->value = ft_strdup(value, &app->app_gc);
+	k = ft_strdup(key, &app->app_gc);
+	if (!k)
+		cleanup_and_exit(app, EXIT_FAILURE);
+	v = ft_strdup(value, &app->app_gc);
+	if (!v)
+		cleanup_and_exit(app, EXIT_FAILURE);
+	new_node->key = k;
+	new_node->value = v;
 	if (!new_node->value)
 		return (NULL);
 	new_node->next = NULL;
@@ -43,14 +50,14 @@ int	add_env_var(t_env **env_head, char *key, char *value, t_app *app)
 		{
 			current->value = ft_strdup(value, &app->app_gc);
 			if (!current->value)
-				return (0);
+				return (-1);
 			return (1);
 		}
 		current = current->next;
 	}
 	new_node = create_env_node(key, value, app);
 	if (!new_node)
-		return (0);
+		return (-1);
 	new_node->next = *env_head;
 	*env_head = new_node;
 	return (1);
