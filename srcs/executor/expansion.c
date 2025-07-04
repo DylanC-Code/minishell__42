@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:45:36 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/07/03 17:21:35 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:15:29 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,24 @@ char	*handle_dollar_quote(char *str, int *pos, t_app *app)
 	return (part);
 }
 
+char	*handle_dollar_single_quote(char *str, int *pos, t_app *app)
+{
+	char	*part;
+	int		last_pos;
+
+	(*pos)++;
+	(*pos)++;
+	last_pos = *pos;
+	while (str[*pos] && str[*pos] != '\'')
+		(*pos)++;
+	part = ft_strndup(str + last_pos, *pos - last_pos, &app->curr_gc);
+	if(!part)
+		cleanup_and_exit(app, EXIT_FAILURE);
+	if (str[*pos] == '\'')
+		(*pos)++;
+	return (part);
+}
+
 char	*handle_regular_var(char *str, int *pos, t_app *app)
 {
 	char	*part;
@@ -129,8 +147,18 @@ void	set_build_vars_variables(int *pos, int *last_pos, char **res, t_app *app)
 	*pos = 0;
 	*last_pos = 0;
 	*res = ft_strdup("", &app->curr_gc);
-	if(!res)
+	if(!*res)
 		cleanup_and_exit(app, EXIT_FAILURE);
+}
+
+char	*handle_dollar_patterns(char *str, int *pos, t_app *app)
+{
+	if (str[*pos + 1] == '"')
+		return (handle_dollar_quote(str, pos, app));
+	else if (str[*pos + 1] == '\'')
+		return (handle_dollar_single_quote(str, pos, app));
+	else
+		return (handle_regular_var(str, pos, app));
 }
 
 char	*build_vars(char *str, t_app *app)
@@ -144,14 +172,11 @@ char	*build_vars(char *str, t_app *app)
 	while (str[pos])
 	{
 		if (str[pos] == '$' && str[pos + 1] && (valid_env_start(str[pos + 1])
-			|| str[pos + 1] == '"'))
+			|| str[pos + 1] == '"' || str[pos + 1] == '\''))
 		{
 			part = add_text_part(str, last_pos, pos, app);
 			result = join_parts(result, part, app);
-			if (str[pos + 1] == '"')
-				part = handle_dollar_quote(str, &pos, app);
-			else
-				part = handle_regular_var(str, &pos, app);
+			part = handle_dollar_patterns(str, &pos, app);
 			result = join_parts(result, part, app);
 			last_pos = pos;
 		}
@@ -216,6 +241,33 @@ char	*add_text_before_dollar(char *result, char *arg, int last_pos, int pos, t_a
 	return (result);
 }
 
+char	*handle_remaining_text(char *result, char *arg, int last_pos, int end, t_app *app)
+{
+	char	*part;
+
+	if (end > last_pos)
+	{
+		part = ft_strndup(arg + last_pos, end - last_pos, &app->curr_gc);
+		if(!part)
+			cleanup_and_exit(app, EXIT_FAILURE);
+		part = process_variable_expansion(part, app);
+		result = ft_strjoin(result, part, &app->curr_gc);
+		if(!result)
+			cleanup_and_exit(app, EXIT_FAILURE);
+	}
+	return (result);
+}
+char	*set_unquoted_vars(t_app *app, int *pos, int *last_pos, int start)
+{
+	char	*result;
+	result = ft_strdup("", &app->curr_gc);
+	if(!result)
+		cleanup_and_exit(app, EXIT_FAILURE);
+	*pos = start;
+	*last_pos = start;
+	return (result);
+
+}
 char	*process_unquoted_text(char *arg, int start, int end, t_app *app)
 {
 	char	*result;
@@ -223,26 +275,23 @@ char	*process_unquoted_text(char *arg, int start, int end, t_app *app)
 	int		pos;
 	int		last_pos;
 
-	result = ft_strdup("", &app->curr_gc);
-	if(!result)
-		cleanup_and_exit(app, EXIT_FAILURE);
-	pos = start;
-	last_pos = start;
+	result = set_unquoted_vars(app, &pos, &last_pos, start);
 	while (pos < end)
 	{
-		if (arg[pos] == '$' && pos + 1 < end && arg[pos + 1] == '"')
+		if (arg[pos] == '$' && pos + 1 < end && (arg[pos + 1] == '"'
+			|| arg[pos + 1] == '\''))
 		{
 			result = add_text_before_dollar(result, arg, last_pos, pos, app);
-			part = handle_dollar_quote(arg, &pos, app);
+			part = handle_dollar_patterns(arg, &pos, app);
 			result = ft_strjoin(result, part, &app->curr_gc);
-			if(!result)
+			if (!result)
 				cleanup_and_exit(app, EXIT_FAILURE);
 			last_pos = pos;
 		}
 		else
 			pos++;
 	}
-	return (add_text_before_dollar(result, arg, last_pos, end, app));
+	return (handle_remaining_text(result, arg, last_pos, end, app));
 }
 
 char	*handle_unquoted_part(char *arg, int start, int *i, t_app *app)
@@ -252,27 +301,36 @@ char	*handle_unquoted_part(char *arg, int start, int *i, t_app *app)
 	end = start;
 	while (arg[end] && arg[end] != '"' && arg[end] != '\'')
 	{
-		if (arg[end] == '$' && arg[end + 1] == '"')
+		if (arg[end] == '$' && (arg[end + 1] == '"' || arg[end + 1] == '\''))
 		{
 			end += 2;
-			while (arg[end] && arg[end] != '"')
-				end++;
-			if (arg[end] == '"')
+			if (arg[end - 1] == '"')
+			{
+				while (arg[end] && arg[end] != '"')
+					end++;
+			}
+			else
+			{
+				while (arg[end] && arg[end] != '\'')
+					end++;
+			}
+			if (arg[end])
 				end++;
 		}
 		else
 			end++;
 	}
-	*i = end;
-	return (process_unquoted_text(arg, start, end, app));
+	return (*i = end, process_unquoted_text(arg, start, end, app));
 }
+
 void	set_mixed_quotes_vars(t_app *app, char **res, int *i)
 {
 	*i = 0;
 	*res = ft_strdup("", &app->curr_gc);
-	if(!res)
+	if(!*res)
 		cleanup_and_exit(app, EXIT_FAILURE);
 }
+
 char	*process_mixed_quotes(char *arg, t_app *app)
 {
 	char	*result;
