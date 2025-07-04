@@ -22,7 +22,7 @@ char	*get_prompt(t_app *app)
 	const char	*status = get_status(app);
 	const char	*core = get_core(app);
 	char		*result;
-
+	char		*ret;
 	if (!user || !user || !core)
 		cleanup_and_exit(app, errno);
 	result = ft_strjoin(SHELL_EMOJI, user, &app->curr_gc);
@@ -34,14 +34,17 @@ char	*get_prompt(t_app *app)
 	result = ft_strjoin(result, status, &app->curr_gc);
 	if (!result)
 		cleanup_and_exit(app, errno);
-	return (ft_strjoin(result, PS2_PROMPT, &app->curr_gc));
+	ret = ft_strjoin(result, PS2_PROMPT, &app->curr_gc);
+	if (!ret)
+		cleanup_and_exit(app, EXIT_FAILURE);
+	return (ret);
 }
 
 char	*get_status(t_app *app)
 {
 	const char	*status_code_str = get_env_value(app->env_head, "?");
 	char		*res;
-
+	char		*ret;
 	res = " ";
 	if (!status_code_str || !ft_strcmp(status_code_str, "0"))
 		return (ft_strdup(GREEN " 0 " RESET "\n", &app->curr_gc));
@@ -51,7 +54,10 @@ char	*get_status(t_app *app)
 	res = ft_strjoin(res, status_code_str, &app->curr_gc);
 	if (!res)
 		cleanup_and_exit(app, errno);
-	return (ft_strjoin(res, "\n" RESET, &app->curr_gc));
+	ret = ft_strjoin(res, "\n" RESET, &app->curr_gc);
+	if (!ret)
+		cleanup_and_exit(app, errno);
+	return (ret);
 }
 
 char	*get_user(t_app *app)

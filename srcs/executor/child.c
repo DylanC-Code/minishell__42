@@ -104,8 +104,7 @@ void	handle_direct_path(t_app *app, t_cmd *cmd)
 	{
 		msg = ft_strjoin(cmd->args[0], ": No such file or directory\n",
 				&app->curr_gc);
-		print_error(app, msg, "127");
-		cleanup_and_exit(app, 127);
+		return (print_error(app, msg, "127"), cleanup_and_exit(app, 127));
 	}
 	if (stat(cmd->args[0], &stat_buf) == 0 && S_ISDIR(stat_buf.st_mode))
 	{

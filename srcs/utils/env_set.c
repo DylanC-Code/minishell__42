@@ -22,6 +22,8 @@ void	set_env_value(t_app *app, const char *key, const char *value)
 		if (ft_strcmp(tmp->key, key) == 0)
 		{
 			tmp->value = ft_strdup(value, &app->app_gc);
+			if (!tmp->value)
+				cleanup_and_exit(app, EXIT_FAILURE);
 			return ;
 		}
 		tmp = tmp->next;
