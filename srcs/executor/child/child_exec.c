@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:02:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 15:28:36 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/07 10:00:50 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,10 @@ void	handle_path_search(t_app *app, t_cmd *cmd)
 
 void	exec_or_died(t_app *app, t_cmd *cmd)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGABRT, SIG_DFL);
+	signal(SIGKILL, SIG_DFL);
 	if (ft_strchr(cmd->args[0], '/'))
 		handle_direct_path(app, cmd);
 	else
