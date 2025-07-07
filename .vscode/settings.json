@@ -26,6 +26,7 @@
         "executor.h": "c",
         "init.h": "c",
         "strs.h": "c",
-        "colors.h": "c"
+        "colors.h": "c",
+        "builtins.h": "c"
     }
 }

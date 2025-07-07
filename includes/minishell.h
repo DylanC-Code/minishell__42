@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:26 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 15:44:45 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/07 11:06:20 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define PS2_PROMPT "\033[0;35m> \033[0m"
-# define PS3_PROMPT "\033[0;36m>> \033[0m"
+# define PS2_PROMPT "\001\033[0;35m\002> \001\033[0m\002"
+# define PS3_PROMPT "\001\033[0;36m\002>> \001\033[0m\002"
 # define OPERATORS "<>|&()"
 # define PWD_BUFFER_SIZE 50000
 

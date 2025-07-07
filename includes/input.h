@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:34:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/07 10:08:10 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/07 11:02:18 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_cmd
 	t_garbage				*gc;
 	t_redir_list			*redir_list;
 	struct s_cmd			*next;
-    struct s_cmd            *prev;
+	struct s_cmd			*prev;
 }							t_cmd;
 
 typedef struct s_cmd_sequence
