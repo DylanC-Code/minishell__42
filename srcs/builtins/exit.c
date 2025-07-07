@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:56:46 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 15:43:13 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/07 09:56:43 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,16 @@ static void	non_numeric_arg_error(t_app *app, char *arg);
 void	exit_builtin(t_app *app, char **args)
 {
 	char	status_code;
-	long	status_code_l;
 
-	status_code = 0;
-	status_code_l = ft_atol(get_env_value(app->env_head, "?"));
 	printf("exit\n");
+	status_code = ft_atoi(get_env_value(app->env_head, "?"));
 	if (!args || !*args)
 		cleanup_and_exit(app, status_code);
 	if (!is_valid_number(*args) || ft_strlen(*args) > 12)
 		non_numeric_arg_error(app, *args);
 	else if (args[1])
 		return (print_error(app, "exit:  too many arguments\n", "1"));
-	status_code = status_code_l;
+	status_code = ft_atoi(*args);
 	cleanup_and_exit(app, status_code);
 }
 
