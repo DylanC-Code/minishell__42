@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:01:28 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 12:01:38 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/07 10:42:44 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,16 @@ char	*find_in_path(t_app *app, char *cmd)
 		i++;
 	}
 	return (NULL);
+}
+
+void	sanitize_stdin(t_app *app)
+{
+	int	nullfd;
+
+	nullfd = open("/dev/null", O_RDONLY);
+	if (nullfd < 0)
+		exit_with_error(app, "open");
+	if (dup2(nullfd, STDIN_FILENO) == -1)
+		exit_with_error(app, "dup2");
+	close(nullfd);
 }

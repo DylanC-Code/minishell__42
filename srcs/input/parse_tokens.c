@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:11:20 by saal-kur          #+#    #+#             */
-/*   Updated: 2025/07/04 13:33:54 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/07 10:08:59 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	handle_pipe(t_parser *parser, t_garbage **gc)
 		return (1);
 	parser->cmd_head->args[parser->arg_count] = NULL;
 	parser->cmd_head->next = cmd_builder(parser->token->next, gc);
+	parser->cmd_head->next->prev = parser->cmd_head;
 	parser->cmd_head = parser->cmd_head->next;
 	parser->arg_count = 0;
 	return (0);

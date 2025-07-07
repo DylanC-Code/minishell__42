@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 09:27:40 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 12:25:22 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/07 10:42:39 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void		exec(t_app *app, t_cmd *cmd, char *path);
 void		handle_direct_path(t_app *app, t_cmd *cmd);
 void		handle_path_search(t_app *app, t_cmd *cmd);
 void		exec_or_died(t_app *app, t_cmd *cmd);
+void		sanitize_stdin(t_app *app);
 
 /* Redirection */
 void		resolve_all_redirection(t_app *app, t_cmd_sequence *seq);

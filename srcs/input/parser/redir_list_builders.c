@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:08:43 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/04 12:07:59 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/07 10:05:59 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_redir_list	*redir_node_builder(char *name, t_token_type type,
 					t_garbage **gc);
 void			redir_node_addback(t_redir_list **redir_list, char *name,
 					t_token_type type, t_garbage **gc);
-void			display_redir_list(t_redir_list *head);
 
 t_redir_list	*redir_node_builder(char *name, t_token_type type,
 		t_garbage **gc)

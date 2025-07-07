@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:02:32 by dcastor           #+#    #+#             */
-/*   Updated: 2025/07/07 10:00:50 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/07/07 10:42:48 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	child_exec(t_app *app, t_cmd *cmd)
 		dups[0] = dup2(cmd->fd_in, STDIN_FILENO);
 	if (cmd->fd_out != STDOUT_FILENO && cmd->fd_out >= 0)
 		dups[1] = dup2(cmd->fd_out, STDOUT_FILENO);
+	if (cmd->fd_in == -1)
+		sanitize_stdin(app);
 	if (dups[0] < 0 || dups[1] < 0)
 	{
 		close_fds_and_pipes(app->seq_head, cmd);
